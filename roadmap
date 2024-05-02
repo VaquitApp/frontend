@@ -1,0 +1,16 @@
+[x] setup
+account:
+[ ] register
+[ ] login
+[ ] recover
+groups:
+[ ] list
+[ ] create
+[ ] details
+expenses:
+[ ] list
+[ ] details
+budget:
+[ ] create
+categories:
+[ ] category
