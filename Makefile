@@ -1,5 +1,5 @@
 DIR := "my-app"
-NPM := "cd $(DIR) && npm"
+NPM := cd $(DIR) && npm
 
 install:
 	$(NPM) install
