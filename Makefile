@@ -10,6 +10,9 @@ dev:
 test:
 	$(NPM) run test:unit
 
+format:
+	$(NPM) run format
+
 image:
 	docker build -t $(DIR) $(DIR)
 
