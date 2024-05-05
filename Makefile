@@ -1,3 +1,4 @@
+NAME := "vaquitapp-frontend"
 DIR := "my-app"
 NPM := cd $(DIR) && npm
 
@@ -14,7 +15,13 @@ format:
 	$(NPM) run format
 
 image:
-	docker build -t $(DIR) $(DIR)
+	docker build -t $(NAME) $(DIR)
 
 start: image
-	docker run -dp 127.0.0.1:3000:3000 $(DIR)
+	docker run \
+		-dp 127.0.0.1:3000:3000 \
+		--name $(NAME) \
+		$(NAME)
+
+stop:
+	docker stop $(NAME)
