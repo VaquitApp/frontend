@@ -1,29 +1,18 @@
 <form method="POST">
-	<div>
+	<fieldset>
 		<label>
-			<span>Email</span>
-			<input type="email" name="email" />
+			Ingrese su email
+			<input type="email" name="email" placeholder="Email" />
 		</label>
-	</div>
-	<div>
 		<label>
-			<span>Nombre de usuario</span>
-			<input type="text" name="username" />
+			Ingrese una contraseña
+			<input type="password" name="password1" placeholder="Contraseña" />
 		</label>
-	</div>
-	<div>
 		<label>
-			<span>Ingrese una contraseña</span>
-			<input type="password" name="password1" />
+			Vuelva a repetir su contraseña
+			<input type="password" name="password2" placeholder="Contraseña" />
 		</label>
-	</div>
-	<div>
-		<label>
-			<span>Vuelva a repetir su contraseña</span>
-			<input type="password" name="password2" />
-		</label>
-	</div>
-	<div>
-		<button type="submit"> Registrarse </button>
-	</div>
+	</fieldset>
+	<button type="submit"> Registrarse </button>
+	<a href="/login">Ya tengo una cuenta</a>
 </form>

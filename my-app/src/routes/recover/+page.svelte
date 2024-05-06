@@ -1,11 +1,10 @@
 <form method="POST">
-	<div>
+	<fieldset>
 		<label>
-			<span>Email</span>
-			<input type="text" name="email" />
+			Ingrese su email
+			<input type="text" name="email" placeholder="Email" />
 		</label>
-	</div>
-	<div>
-		<button type="submit"> Enviar </button>
-	</div>
+	</fieldset>
+	<button type="submit"> Enviar </button>
+	<a href="/register">Registrarme</a>
 </form>

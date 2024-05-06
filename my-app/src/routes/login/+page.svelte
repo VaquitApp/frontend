@@ -1,17 +1,16 @@
 <form method="POST">
-	<div>
+	<fieldset>
 		<label>
-			<span>Nombre de usuario</span>
-			<input type="text" name="username" />
+			Ingrese su email
+			<input type="email" name="email" placeholder="Email" />
 		</label>
-	</div>
-	<div>
 		<label>
-			<span>Contraseña</span>
-			<input type="password" name="password" />
+			Ingrese su contraseña
+			<input type="password" name="password" placeholder="Contaseña" />
+			<a href="/recover">Olvidé mi contraseña</a>
 		</label>
-	</div>
-	<div>
-		<button type="submit"> Ingresar </button>
-	</div>
+	</fieldset>
+
+	<button type="submit">Ingresar</button>
+	<a href="/register">Registrarme</a>
 </form>
