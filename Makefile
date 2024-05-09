@@ -5,13 +5,13 @@ NPM := cd $(DIR) && npm
 install:
 	$(NPM) install
 
-dev:
+dev: install
 	$(NPM) run dev -- --open
 
-test:
+test: install
 	$(NPM) run test:unit
 
-format:
+format: install
 	$(NPM) run format
 
 image:
