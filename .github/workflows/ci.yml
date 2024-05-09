@@ -20,7 +20,7 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: cd my-app && npm ci
+        run: cd my-app && npm ci && npx playwright install --with-deps
 
       - name: Run tests
         run: cd my-app && npm run test
