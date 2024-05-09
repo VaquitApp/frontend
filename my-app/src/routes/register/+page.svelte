@@ -1,3 +1,11 @@
+<script>
+	import { title } from '$lib';
+</script>
+
+<svelte:head>
+	<title>{title} - Registro</title>
+</svelte:head>
+
 <form method="POST">
 	<fieldset>
 		<label>
