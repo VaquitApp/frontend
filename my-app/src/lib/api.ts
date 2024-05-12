@@ -7,7 +7,7 @@ type Request = {
 	token?: string;
 };
 
-const base = 'http://localhost:8000';
+const base = import.meta.env.VITE_API_URL;
 
 async function send({ method, path, data, token }: Request) {
 	const opts = { method, headers: {} };
