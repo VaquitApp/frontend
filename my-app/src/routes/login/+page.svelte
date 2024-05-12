@@ -18,11 +18,11 @@
 		<fieldset>
 			<label>
 				Ingrese su email
-				<input type="email" name="email" placeholder="Email" />
+				<input type="email" name="email" placeholder="Email" required />
 			</label>
 			<label>
 				Ingrese su contraseña
-				<input type="password" name="password" placeholder="Contaseña" />
+				<input type="password" name="password" placeholder="Contaseña" required />
 				<a href="/recover">Olvidé mi contraseña</a>
 			</label>
 		</fieldset>

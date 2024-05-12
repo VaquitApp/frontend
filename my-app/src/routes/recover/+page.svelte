@@ -2,7 +2,7 @@
 	<fieldset>
 		<label>
 			Ingrese su email
-			<input type="text" name="email" placeholder="Email" />
+			<input type="text" name="email" placeholder="Email" required />
 		</label>
 	</fieldset>
 	<button type="submit"> Enviar </button>
