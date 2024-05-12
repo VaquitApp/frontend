@@ -1,5 +1,5 @@
 <script lang="ts">
-	const title = 'VaquitApp';
+	import { title } from '$lib';
 	const colorOptions =
 		'azure, amber, blue, cyan, fuchsia, green, grey, indigo, jade, lime, orange, pink, pumpkin, purple, red, sand, slate, violet, yellow, zinc'.split(
 			', '
@@ -17,9 +17,7 @@
 </script>
 
 <svelte:head>
-	<title>
-		{title}
-	</title>
+	<title>{title}</title>
 	<!-- Pico -->
 	<meta name="color-scheme" content="light dark" />
 	<link
