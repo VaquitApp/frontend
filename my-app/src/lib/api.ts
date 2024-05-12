@@ -7,7 +7,7 @@ type Request = {
 	token?: string;
 };
 
-const base = 'http://localhost:8000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 async function send({ method, path, data, token }: Request) {
 	const opts = { method, headers: {} };
@@ -21,7 +21,8 @@ async function send({ method, path, data, token }: Request) {
 		opts.headers['Authorization'] = `Token ${token}`;
 	}
 
-	const res = await fetch(`${base}/${path}`, opts);
+	const url = `${BACKEND_URL}/${path}`;
+	const res = await fetch(url, opts);
 	if (res.ok) {
 		const text = await res.text();
 		return text ? JSON.parse(text) : {};
