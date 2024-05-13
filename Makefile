@@ -5,6 +5,9 @@ NPM := cd $(DIR) && npm
 install:
 	$(NPM) install
 
+env:
+	cp $(DIR)/.env.example $(DIR)/.env
+
 dev: install
 	$(NPM) run dev -- --open
 

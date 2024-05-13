@@ -10,6 +10,7 @@
 Open `Makefile` to see useful commands.
 
 - `make install`: install dependencies
+- `make env`: create .env file with env vars
 - `make dev`: start development server
 - `make test`: run tests
 - `make format`: format files
