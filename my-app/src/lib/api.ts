@@ -1,24 +1,26 @@
 import { error } from '@sveltejs/kit';
 
+type Method = 'GET' | 'POST' | 'DELETE' | 'PUT';
+type Headers = { [key: string]: string };
 type Request = {
-	method: 'GET' | 'POST' | 'DELETE' | 'PUT';
 	path: string;
 	data?: object;
-	token?: string;
+	headers?: Headers;
+};
+type Opts = {
+	method: Method;
+	headers: Headers;
+	body?: string;
 };
 
 const base = import.meta.env.VITE_API_URL;
 
-async function send({ method, path, data, token }: Request) {
-	const opts = { method, headers: {} };
+async function send(method: Method, { path, data, headers = {} }: Request) {
+	const opts: Opts = { method, headers };
 
 	if (data) {
 		opts.headers['Content-Type'] = 'application/json';
 		opts.body = JSON.stringify(data);
-	}
-
-	if (token) {
-		opts.headers['Authorization'] = `Token ${token}`;
 	}
 
 	const res = await fetch(`${base}/${path}`, opts);
@@ -30,18 +32,18 @@ async function send({ method, path, data, token }: Request) {
 	throw error(res.status);
 }
 
-export function get(path: string, token?: string) {
-	return send({ method: 'GET', path, token });
+export function get(path: string, headers?: Headers) {
+	return send('GET', { path, headers });
 }
 
-export function del(path: string, token?: string) {
-	return send({ method: 'DELETE', path, token });
+export function del(path: string, headers?: Headers) {
+	return send('DELETE', { path, headers });
 }
 
-export function post(path: string, data: object, token?: string) {
-	return send({ method: 'POST', path, data, token });
+export function post(path: string, data: object, headers?: Headers) {
+	return send('POST', { path, data, headers });
 }
 
-export function put(path: string, data: object, token?: string) {
-	return send({ method: 'PUT', path, data, token });
+export function put(path: string, data: object, headers?: Headers) {
+	return send('PUT', { path, data, headers });
 }
