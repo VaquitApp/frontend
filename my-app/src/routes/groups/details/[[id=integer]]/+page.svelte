@@ -9,6 +9,7 @@
 	<title>{title} - Nuevo Grupo</title>
 </svelte:head>
 
+<h2>Nuevo Grupo</h2>
 <form method="POST">
 	<fieldset>
 		<label>
