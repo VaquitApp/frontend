@@ -9,17 +9,20 @@
 	<title>{title} - {data.group.name}</title>
 </svelte:head>
 
-<header>
-	<h2>{data.group.name}</h2>
-	<p>{data.group.description}</p>
+<header class="row">
+	<div>
+		<h2>{data.group.name}</h2>
+		<p>{data.group.description}</p>
+	</div>
+	<div>
+		<a href="/spendings" role="button">Nuevo gasto</a>
+	</div>
 </header>
 {#each data.spendings as spending}
-	<article>
-		<header class="row">
-			<p>{spending.description}</p>
-			<p>$ {spending.amount.toLocaleString()}</p>
-		</header>
-		{spending.date.toLocaleString()}
+	<article class="row">
+		<p>{spending.date.toLocaleString()}</p>
+		<p>{spending.description}</p>
+		<p>$ {spending.amount.toLocaleString()}</p>
 	</article>
 {/each}
 
