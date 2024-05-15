@@ -1,14 +1,10 @@
+import { get } from '$lib/api';
+import { getAuthHeader } from '$lib/auth';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ cookies, params }) => {
 	const id = Number(params.id);
-	// TODO: load real group
-	const group: Group = {
-		id,
-		name: 'Grupo de Prueba',
-		description: 'Este es un grupo de prueba',
-		owner_id: 0
-	};
+	const group: Group = await get(`group/${id}`, getAuthHeader(cookies));
 	// TODO: load real spendings
 	const spendings: Spending[] = [
 		{
