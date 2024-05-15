@@ -18,10 +18,6 @@ export const actions: Actions = {
 			password: password
 		});
 
-		if (body.errors) {
-			throw fail(400, body);
-		}
-
 		// save JWT in cookie
 		const value = body.token;
 		cookies.set('jwt', value, { path: '/' });
