@@ -1,3 +1,4 @@
+import { env } from '$env/dynamic/private';
 import { error } from '@sveltejs/kit';
 
 type Method = 'GET' | 'POST' | 'DELETE' | 'PUT';
@@ -13,7 +14,7 @@ type Opts = {
 	body?: string;
 };
 
-const base = import.meta.env.VITE_API_URL;
+const base = env.VITE_API_URL;
 
 async function send(method: Method, { path, data, headers = {} }: Request) {
 	const opts: Opts = { method, headers };
