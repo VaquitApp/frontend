@@ -2,6 +2,7 @@ import { error, fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { post } from '$lib/api';
 import type { PageServerLoad } from './$types';
+import { getAuthHeader } from '$lib/auth';
 
 export const load: PageServerLoad = async ({ params }) => {
 	let category: Category = { id: 0, name: '' };
@@ -21,13 +22,9 @@ export const actions: Actions = {
 			throw error(400, 'Name is required');
 		}
 
-		const token = cookies.get('jwt')!;
+		const headers = getAuthHeader(cookies);
 		const path = ''; // TODO: replace with real path
-		const body = await post(path, { name }, { 'x-user': token });
-
-		if (body.errors) {
-			throw fail(400, body);
-		}
+		const body = await post(path, { name }, headers);
 
 		const value = body.id;
 

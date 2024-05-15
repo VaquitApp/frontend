@@ -2,6 +2,7 @@ import { error, fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { post } from '$lib/api';
 import type { PageServerLoad } from './$types';
+import { getAuthHeader } from '$lib/auth';
 
 export const load: PageServerLoad = async ({ params }) => {
 	let group: Group = { name: '', description: '', id: 0, owner_id: 0 };
@@ -25,12 +26,8 @@ export const actions: Actions = {
 			throw error(400, 'Description is required');
 		}
 
-		const token = cookies.get('jwt')!;
-		const body = await post('group', { name, description }, { 'x-user': token });
-
-		if (body.errors) {
-			throw fail(400, body);
-		}
+		const headers = getAuthHeader(cookies);
+		const body = await post('group', { name, description }, headers);
 
 		const value = body.id;
 
