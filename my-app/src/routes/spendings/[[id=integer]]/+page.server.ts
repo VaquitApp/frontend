@@ -28,8 +28,9 @@ export const actions: Actions = {
 		}
 
 		const headers = getAuthHeader(cookies);
-		const path = ''; // TODO: replace with real path
-		const body = await post(path, { description, amount }, headers);
+		// TODO: include real group ID
+		const group_id = 1;
+		const body = await post('spending', { description, amount, group_id }, headers);
 
 		const value = body.id;
 
