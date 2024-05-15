@@ -1,13 +1,13 @@
 [x] setup
 account:
-[ ] register
-[ ] login
+[x] register
+[x] login
 [ ] recover
 groups:
-[ ] list
-[ ] create
+[x] list
+[x] create
 [ ] details
-expenses:
+spendings:
 [ ] list
 [ ] details
 budget:

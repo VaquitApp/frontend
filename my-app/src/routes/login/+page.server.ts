@@ -1,4 +1,4 @@
-import { error, fail } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { post } from '$lib/api';
 
@@ -23,9 +23,9 @@ export const actions: Actions = {
 		}
 
 		// save JWT in cookie
-		const value = body.id;
+		const value = body.token;
 		cookies.set('jwt', value, { path: '/' });
 
-		return { success: true };
+		return redirect(302, '/groups');
 	}
 };
