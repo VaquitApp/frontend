@@ -1,23 +1,25 @@
 declare global {
+	type Id = number;
 	type Group = {
-		id: number;
-		owner_id: number;
-		name: String;
-		description: String;
+		id: Id;
+		owner_id: Id;
+		name: string;
+		description: string;
 	};
 	type Category = {
-		id: number;
-		name: String;
+		id: Id;
+		name: string;
 	};
 	type Budget = {
-		id: number;
+		id: Id;
 		amount: number;
 	};
 	type Spending = {
-		id: number;
-		description: String;
+		id: Id;
+		group_id: Id;
+		description: string;
 		amount: number;
-		date: Date;
+		date: string;
 	};
 }
 

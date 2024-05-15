@@ -1,4 +1,4 @@
-import { error, fail } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { post } from '$lib/api';
 import type { PageServerLoad } from './$types';
@@ -29,8 +29,7 @@ export const actions: Actions = {
 		const headers = getAuthHeader(cookies);
 		const body = await post('group', { name, description }, headers);
 
-		const value = body.id;
-
-		return { success: true };
+		const id = body.id;
+		redirect(302, `/groups/movements/${id}`);
 	}
 };

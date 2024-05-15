@@ -1,23 +1,32 @@
-import { error, fail } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { post } from '$lib/api';
+import { get, post } from '$lib/api';
 import type { PageServerLoad } from './$types';
 import { getAuthHeader } from '$lib/auth';
 
-export const load: PageServerLoad = async ({ params }) => {
-	let spending: Spending = { id: 0, description: '', amount: 0 };
+export const load: PageServerLoad = async ({ params, url, cookies }) => {
+	const group_id = Number(url.searchParams.get('group_id'));
+	const spending: Spending = {
+		id: 0,
+		description: '',
+		amount: 0,
+		date: new Date().toJSON(),
+		group_id
+	};
 	const id = params.id;
 	if (id) {
 		// TODO: load real spending
 	}
-	return { spending };
+	const groups: Group[] = await get('group', getAuthHeader(cookies));
+	return { spending, groups };
 };
 
 export const actions: Actions = {
-	default: async ({ cookies, request, params }) => {
+	default: async ({ cookies, request }) => {
 		const data = await request.formData();
 		const description = data.get('description');
 		const amount = data.get('amount');
+		const group_id = data.get('group_id');
 
 		if (!description) {
 			throw error(400, 'Description is required');
@@ -28,12 +37,12 @@ export const actions: Actions = {
 		}
 
 		const headers = getAuthHeader(cookies);
-		// TODO: include real group ID
-		const group_id = 1;
-		const body = await post('spending', { description, amount, group_id }, headers);
+		try {
+			await post('spending', { description, amount, group_id }, headers);
+		} catch {
+			return { success: false };
+		}
 
-		const value = body.id;
-
-		return { success: true };
+		redirect(302, `/groups/movements/${group_id}`);
 	}
 };

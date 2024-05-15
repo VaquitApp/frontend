@@ -11,10 +11,10 @@
 
 <header class="row">
 	<h2>Grupos</h2>
-	<!-- <div>
+	<div>
 		<a href="/groups/details" role="button">Nuevo grupo</a>
 		<a href="/spendings" class="outline" role="button">Nuevo gasto</a>
-	</div> -->
+	</div>
 </header>
 <main>
 	{#if !data.groups.length}
