@@ -7,10 +7,15 @@ type UserCredentials = {
 };
 
 export function saveUserCredentials(cookies: Cookies, userCredentials: UserCredentials) {
-	// TODO: save user info in another cookie
 	cookies.set('jwt', userCredentials.jwt, { httpOnly: true, secure: true, path: '/' });
 	cookies.set('userId', userCredentials.id.toFixed(0), { path: '/' });
 	cookies.set('userEmail', userCredentials.email, { path: '/' });
+}
+
+export function clearUserCredentials(cookies: Cookies) {
+	cookies.delete('jwt', { path: '/' });
+	cookies.delete('userId', { path: '/' });
+	cookies.delete('userEmail', { path: '/' });
 }
 
 export function getAuthHeader(cookies: Cookies) {
