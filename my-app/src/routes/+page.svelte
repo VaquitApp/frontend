@@ -5,12 +5,13 @@
 </script>
 
 <header>
-	<h2>Gestionar tus finanzas</h2>
-	<h3>ahora es <em>mooocho</em> más fácil</h3>
 	{#if data.user}
-		<a role="button" href="/groups">Ir a Grupos</a>
+		<h3>Bienvenido, {data.user}</h3>
+		<a role="button" href="/groups">Ver Grupos</a>
 		<a role="button" class="outline" href="/logout">Salir</a>
 	{:else}
+		<h2>Gestionar tus finanzas</h2>
+		<h3>ahora es <em>mooocho</em> más fácil</h3>
 		<a role="button" href="/login">Ingresar</a>
 		<a role="button" class="outline" href="/register">Registrarme</a>
 	{/if}

@@ -23,7 +23,7 @@ export const actions: Actions = {
 			password: password
 		});
 
-		saveUserCredentials(cookies, body.id);
+		saveUserCredentials(cookies, body);
 		return redirect(302, '/groups');
 	}
 };
