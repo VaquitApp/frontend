@@ -1,4 +1,4 @@
-import { error, fail } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { post } from '$lib/api';
 
@@ -26,6 +26,6 @@ export const actions: Actions = {
 		const value = body.id;
 		cookies.set('jwt', value, { path: '/' });
 
-		return { success: true };
+		return redirect(302, '/groups');
 	}
 };
