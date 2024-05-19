@@ -3,25 +3,35 @@
 	import type { ActionData, PageData } from './$types';
 
 	export let data: PageData;
-	export let form: ActionData;
 </script>
 
 <svelte:head>
 	<title>{title} - Nuevo Presupuesto</title>
 </svelte:head>
 
-<h2>Nuevo Presupuesto</h2>
+<h2>
+	{#if data?.editing}Editando{:else}Creando{/if} Presupuesto
+</h2>
 <form method="POST">
 	<fieldset>
 		<label>
-			Ingrese una descripción para el presupuesto
-			<input type="text" name="description" placeholder="Descripción" required />
+			Ingrese una descripción
+			<input
+				type="text"
+				name="description"
+				placeholder="Descripción"
+				value={data?.budget.description || ''}
+			/>
 		</label>
 		<label>
-			Ingrese un monto para el presupuesto
-			<input type="number" name="amount" placeholder="Monto" required />
+			Ingrese un monto
+			<input type="number" name="amount" placeholder="Monto" value={data?.budget.amount} required />
 		</label>
-		<button>Crear</button>
+		{#if data?.editing}
+			<button>Editar</button>
+		{:else}
+			<button>Crear</button>
+		{/if}
 		<button type="button" class="outline" on:click={() => history.back()}>Cancelar</button>
 	</fieldset>
 </form>
