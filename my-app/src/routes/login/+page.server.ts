@@ -1,6 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { post } from '$lib/api';
+import { saveUserCredentials } from '$lib/auth';
 
 export const actions: Actions = {
 	default: async ({ cookies, request }) => {
@@ -18,10 +19,7 @@ export const actions: Actions = {
 			password: password
 		});
 
-		// save JWT in cookie
-		const value = body.token;
-		cookies.set('jwt', value, { path: '/' });
-
+		saveUserCredentials(cookies, body);
 		return redirect(302, '/groups');
 	}
 };
