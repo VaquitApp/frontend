@@ -14,7 +14,7 @@
 	<fieldset>
 		<label>
 			Ingrese una descripción para el gasto
-			<input type="text" name="description" placeholder="Descripcion" required />
+			<input type="text" name="description" placeholder="Descripción" required />
 		</label>
 		<label>
 			Ingrese un monto para el gasto
