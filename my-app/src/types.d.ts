@@ -12,7 +12,12 @@ declare global {
 	};
 	type Budget = {
 		id: Id;
+		group_id: Id;
+		category_id: Id;
 		amount: number;
+		description: string;
+		start_date: string; // Date
+		end_date: string; // Date
 	};
 	type Spending = {
 		id: Id;

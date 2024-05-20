@@ -22,7 +22,7 @@
 				type="text"
 				name="description"
 				value={data.group.description}
-				placeholder="Descripcion"
+				placeholder="Descripción"
 				required
 			/>
 		</label>
