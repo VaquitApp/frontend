@@ -31,7 +31,7 @@
 		<a href="/budgets?group_id={data.group.id}" role="button">Nuevo presupuesto</a>
 	</div>
 </header>
-{#each data.budgets as budget}
+{#each data?.budgets as budget}
 	<article>
 		<header class="row">
 			<b>{budget.description}</b>

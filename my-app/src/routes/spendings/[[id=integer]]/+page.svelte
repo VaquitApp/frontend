@@ -22,8 +22,8 @@
 		</label>
 		<label>
 			Ingrese el grupo al que pertenece el gasto
-			<select name="group_id" required value={data.spending.group_id}>
-				{#each data.groups as group}
+			<select name="group_id" required value={data?.spending.group_id}>
+				{#each data?.groups as group}
 					<option value={group.id}>{group.name}</option>
 				{/each}
 			</select>
