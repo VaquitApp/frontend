@@ -59,7 +59,7 @@ export const groupService = {
 		data.id > 0
 			? put(`group/${data.id}`, data, getAuthHeader(cookies))
 			: post('group', data, getAuthHeader(cookies)),
-	list: (cookies: Cookies) => get('/group', getAuthHeader(cookies)),
+	list: (cookies: Cookies) => get('group', getAuthHeader(cookies)),
 	get: (id: Id, cookies: Cookies) => get(`group/${id}`, getAuthHeader(cookies))
 };
 export const spendingService = {
@@ -67,7 +67,7 @@ export const spendingService = {
 		data.id > 0
 			? put(`spending/${data.id}`, data, getAuthHeader(cookies))
 			: post('spending', data, getAuthHeader(cookies)),
-	list: (groupId: Id, cookies: Cookies) => get(`/group/${groupId}/spending`, getAuthHeader(cookies))
+	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/spending`, getAuthHeader(cookies))
 };
 export const budgetService = {
 	save: (data: Budget, cookies: Cookies) =>
@@ -75,7 +75,7 @@ export const budgetService = {
 			? put(`budget/${data.id}`, data, getAuthHeader(cookies))
 			: post('budget', data, getAuthHeader(cookies)),
 	get: (id: Id, cookies: Cookies) => get(`budget/${id}`, getAuthHeader(cookies)),
-	list: (groupId: Id, cookies: Cookies) => get(`/group/${groupId}/budget`, getAuthHeader(cookies))
+	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/budget`, getAuthHeader(cookies))
 };
 export const categoryService = {
 	save: (data: Category, cookies: Cookies) =>
@@ -83,5 +83,5 @@ export const categoryService = {
 			? put(`category/${data.id}`, data, getAuthHeader(cookies))
 			: post('category', data, getAuthHeader(cookies)),
 	get: (id: Id, cookies: Cookies) => get(`category/${id}`, getAuthHeader(cookies)),
-	list: (groupId: Id, cookies: Cookies) => get(`/group/${groupId}/category`, getAuthHeader(cookies))
+	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/category`, getAuthHeader(cookies))
 };
