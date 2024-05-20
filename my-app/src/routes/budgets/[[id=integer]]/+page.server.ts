@@ -1,11 +1,10 @@
-import { error, fail } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { post } from '$lib/api';
+import { budgetService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
-import { getAuthHeader } from '$lib/auth';
 
 export const load: PageServerLoad = async ({ params }) => {
-	let budget: Budget = { id: 0, amount: 0 };
+	const budget: Budget = { id: 0, amount: 0 };
 	const id = params.id;
 	if (id) {
 		// TODO: load real budget
@@ -15,19 +14,16 @@ export const load: PageServerLoad = async ({ params }) => {
 
 export const actions: Actions = {
 	default: async ({ cookies, request, params }) => {
+		const id = Number(params.id) || 0;
 		const data = await request.formData();
-		const amount = data.get('amount');
+		const amount = Number(data.get('amount'));
 
-		if (!amount) {
+		if (!Number.isNaN(amount)) {
 			throw error(400, 'Amount is required');
 		}
 
-		const headers = getAuthHeader(cookies);
-		const path = ''; // TODO: Replace with real path
-		const body = await post(path, { amount }, headers);
-
-		const value = body.id;
-
+		const budget: Budget = { id, amount };
+		await budgetService.save(budget, cookies);
 		return { success: true };
 	}
 };

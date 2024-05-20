@@ -1,11 +1,10 @@
-import { error, fail, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { post } from '$lib/api';
+import { groupService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
-import { getAuthHeader } from '$lib/auth';
 
 export const load: PageServerLoad = async ({ params }) => {
-	let group: Group = { name: '', description: '', id: 0, owner_id: 0 };
+	const group: Group = { name: '', description: '', id: 0, owner_id: 0 };
 	const id = params.id;
 	if (id) {
 		// TODO: load real group
@@ -15,9 +14,10 @@ export const load: PageServerLoad = async ({ params }) => {
 
 export const actions: Actions = {
 	default: async ({ cookies, request, params }) => {
+		let id = Number(params.id) || 0;
 		const data = await request.formData();
-		const name = data.get('name');
-		const description = data.get('description');
+		const name = data.get('name')?.toString();
+		const description = data.get('description')?.toString();
 
 		if (!name) {
 			throw error(400, 'Name is required');
@@ -26,10 +26,9 @@ export const actions: Actions = {
 			throw error(400, 'Description is required');
 		}
 
-		const headers = getAuthHeader(cookies);
-		const body = await post('group', { name, description }, headers);
-
-		const id = body.id;
+		const group: Group = { id, name, description, owner_id: 0 };
+		const body = await groupService.save(group, cookies);
+		id = body.id;
 		redirect(302, `/groups/movements/${id}`);
 	}
 };
