@@ -14,7 +14,7 @@
 	<fieldset>
 		<label>
 			Ingrese una descripción para el gasto
-			<input type="text" name="description" placeholder="Descripcion" required />
+			<input type="text" name="description" placeholder="Descripción" required />
 		</label>
 		<label>
 			Ingrese un monto para el gasto
@@ -22,8 +22,8 @@
 		</label>
 		<label>
 			Ingrese el grupo al que pertenece el gasto
-			<select name="group_id" required value={data.spending.group_id}>
-				{#each data.groups as group}
+			<select name="group_id" required value={data?.spending.group_id}>
+				{#each data?.groups as group}
 					<option value={group.id}>{group.name}</option>
 				{/each}
 			</select>

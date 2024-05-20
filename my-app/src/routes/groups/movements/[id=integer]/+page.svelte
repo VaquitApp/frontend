@@ -28,7 +28,7 @@
 		<a href="/spendings?group_id={data.group.id}" role="button">Nuevo gasto</a>
 	</div>
 </header>
-{#each data.spendings as spending}
+{#each data?.spendings as spending}
 	<article class="grid">
 		<p>{formatDateString(spending.date)}</p>
 		<p>{spending.description}</p>
