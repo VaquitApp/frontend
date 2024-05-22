@@ -42,7 +42,7 @@ function del(path: string, headers?: Headers) {
 	return send('DELETE', { path, headers });
 }
 
-export function post(path: string, data: object, headers?: Headers) {
+function post(path: string, data: object, headers?: Headers) {
 	return send('POST', { path, data, headers });
 }
 
