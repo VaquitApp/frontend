@@ -19,7 +19,7 @@
 		<p>{data.group.description}</p>
 	</div>
 	<div>
-		<a href="/budgets?group_id={data.group.id}" role="button">Nuevo presupuesto</a>
+		<a href="/budgets/details?group_id={data.group.id}" role="button">Nuevo presupuesto</a>
 	</div>
 </header>
 {#each data?.budgets as budget}
@@ -34,7 +34,8 @@
 				<p class="text-right" style="margin-left: auto; padding-right:5%">
 					{formatMoney(budget.amount)}
 				</p>
-				<a class="secondary" href="/budgets/{budget.id}" role="button">{@html PENCIL_SVG}</a>
+				<a class="secondary" href="/budgets/details/{budget.id}" role="button">{@html PENCIL_SVG}</a
+				>
 			</div>
 		</div>
 	</article>
