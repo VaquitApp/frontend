@@ -22,6 +22,14 @@
 		<a href="/budgets/details?group_id={data.group.id}" role="button">Nuevo presupuesto</a>
 	</div>
 </header>
+
+<article>
+	Categorias:
+	{#each data.categories as category}
+		<button class="btn-sm outline"> {category.name} </button>
+	{/each}
+</article>
+
 {#each data?.budgets as budget}
 	<article>
 		<header class="row">
@@ -50,5 +58,11 @@
 
 	.text-right {
 		text-align: right;
+	}
+
+	.btn-sm {
+		font-size: small;
+		padding: 0.5em;
+		margin: 0.3em;
 	}
 </style>

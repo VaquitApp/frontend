@@ -29,21 +29,29 @@
 	</details>
 </header>
 
-<article class="grid">
-	<article>
-		<header>
-			<a href="/groups/budgets/{data.group.id}">Presupuestos</a>
-		</header>
-		<h3>{formatMoney(totalBudgets)}</h3>
-	</article>
-	<article>
-		<header>Gastos</header>
-		<h3>{formatMoney(totalSpendings)}</h3>
-	</article>
-	<article>
-		<header>Balance</header>
-		<h3>{formatMoney(balance)}</h3>
-	</article>
+<article>
+	<div class="grid">
+		<article>
+			<header>
+				<a href="/groups/budgets/{data.group.id}">Presupuestos</a>
+			</header>
+			<h3>{formatMoney(totalBudgets)}</h3>
+		</article>
+		<article>
+			<header>Gastos</header>
+			<h3>{formatMoney(totalSpendings)}</h3>
+		</article>
+		<article>
+			<header>Balance</header>
+			<h3>{formatMoney(balance)}</h3>
+		</article>
+	</div>
+	<div>
+		Categorias:
+		{#each data.categories as category}
+			<button class="btn-sm outline"> {category.name} </button>
+		{/each}
+	</div>
 </article>
 
 {#each data.spendings as spending}
@@ -63,5 +71,11 @@
 
 	.text-right {
 		text-align: right;
+	}
+
+	.btn-sm {
+		font-size: small;
+		padding: 0.5em;
+		margin: 0.3em;
 	}
 </style>

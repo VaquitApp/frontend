@@ -2,12 +2,17 @@
 	import { title } from '$lib';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import { formatMoney } from '$lib/formatter';
+	import { formatDateInput, formatMoney } from '$lib/formatter';
 
 	export let data: PageData;
 	const edit = data.budget.id !== 0;
 	let timezoneOffset = 0;
 	let suggestions: Map<string, Budget> = new Map();
+	let categories: Category[] = [];
+
+	async function onGroupUpdate(groupId: number) {
+		await Promise.all([updateSuggestions(groupId), updateCategories(groupId)]);
+	}
 
 	async function updateSuggestions(groupId: number) {
 		const newSuggestions: Map<string, Budget> = new Map();
@@ -23,6 +28,17 @@
 		suggestions = newSuggestions;
 	}
 
+	async function updateCategories(groupId: number) {
+		if (groupId != 0) {
+			try {
+				const response = await fetch(`/api/categories?groupId=${groupId}`);
+				categories = await response.json();
+				return;
+			} catch {}
+		}
+		categories = [];
+	}
+
 	function formatSuggestion({ description, amount }: Budget) {
 		return `${description} (${formatMoney(amount)})`;
 	}
@@ -32,11 +48,12 @@
 		if (!budget) return;
 		data.budget.amount = budget.amount;
 		data.budget.description = budget.description;
+		data.budget.category_id = budget.category_id;
 	}
 
 	onMount(async () => {
 		timezoneOffset = new Date().getTimezoneOffset();
-		await updateSuggestions(data.budget.group_id);
+		await onGroupUpdate(data.budget.group_id);
 	});
 </script>
 
@@ -55,8 +72,9 @@
 			<select
 				name="groupId"
 				required
+				aria-readonly={edit}
 				bind:value={data.budget.group_id}
-				on:change={(e) => updateSuggestions(+e.currentTarget.value)}
+				on:change={(e) => onGroupUpdate(+e.currentTarget.value)}
 			>
 				{#each data.groups as group}
 					<option value={group.id}>{group.name}</option>
@@ -90,13 +108,21 @@
 			/>
 		</label>
 		<label>
+			Ingrese la categoría al que pertenece el presupuesto
+			<select name="categoryId" required bind:value={data.budget.category_id}>
+				{#each categories as category, i}
+					<option value={i + 1}>{category.name}</option>
+				{/each}
+			</select>
+		</label>
+		<label>
 			Ingrese la fecha de inicio del presupuesto
 			<input
 				type="date"
 				name="startDate"
 				placeholder="Fecha"
 				required
-				bind:value={data.budget.start_date}
+				value={formatDateInput(data.budget.start_date)}
 			/>
 		</label>
 		<label>
@@ -106,7 +132,7 @@
 				name="endDate"
 				placeholder="Fecha"
 				required
-				bind:value={data.budget.end_date}
+				value={formatDateInput(data.budget.end_date)}
 			/>
 		</label>
 		{#if edit}

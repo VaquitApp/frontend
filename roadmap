@@ -8,9 +8,9 @@ groups:
 [x] create
 [ ] details
 spendings:
-[ ] list
-[ ] details
+[x] list
+[x] details
 budget:
-[ ] create
+[x] create
 categories:
-[ ] category
+[x] create

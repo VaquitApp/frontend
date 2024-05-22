@@ -8,7 +8,10 @@ declare global {
 	};
 	type Category = {
 		id: Id;
+		group_id: string; // ?
 		name: string;
+		description: string;
+		strategy: string;
 	};
 	type Budget = {
 		id: Id;
