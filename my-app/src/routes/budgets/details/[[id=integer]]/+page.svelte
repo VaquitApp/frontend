@@ -2,13 +2,41 @@
 	import { title } from '$lib';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+	import { formatMoney } from '$lib/formatter';
 
 	export let data: PageData;
 	const edit = data.budget.id !== 0;
 	let timezoneOffset = 0;
+	let suggestions: Map<string, Budget> = new Map();
 
-	onMount(() => {
+	async function updateSuggestions(groupId: number) {
+		const newSuggestions: Map<string, Budget> = new Map();
+		if (groupId != 0) {
+			try {
+				const response = await fetch(`/api/budgets?groupId=${groupId}`);
+				const body: Budget[] = await response.json();
+				body.forEach((budget) => {
+					newSuggestions.set(formatSuggestion(budget), budget);
+				});
+			} catch {}
+		}
+		suggestions = newSuggestions;
+	}
+
+	function formatSuggestion({ description, amount }: Budget) {
+		return `${description} (${formatMoney(amount)})`;
+	}
+
+	function autocomplete(value: string) {
+		const budget = suggestions.get(value);
+		if (!budget) return;
+		data.budget.amount = budget.amount;
+		data.budget.description = budget.description;
+	}
+
+	onMount(async () => {
 		timezoneOffset = new Date().getTimezoneOffset();
+		await updateSuggestions(data.budget.group_id);
 	});
 </script>
 
@@ -19,12 +47,17 @@
 <h2>
 	{#if edit}Editando{:else}Creando{/if} Presupuesto
 </h2>
-<form method="POST">
+<form method="POST" autocomplete="off">
 	<fieldset>
 		<input type="hidden" name="timezoneOffset" bind:value={timezoneOffset} required />
 		<label>
 			Ingrese el grupo al que pertenece el presupuesto
-			<select name="groupId" required value={data.budget.group_id}>
+			<select
+				name="groupId"
+				required
+				bind:value={data.budget.group_id}
+				on:change={(e) => updateSuggestions(+e.currentTarget.value)}
+			>
 				{#each data.groups as group}
 					<option value={group.id}>{group.name}</option>
 				{/each}
@@ -36,30 +69,44 @@
 				type="text"
 				name="description"
 				placeholder="Descripción"
-				value={data.budget.description || ''}
+				list="description-list"
+				bind:value={data.budget.description}
+				on:change={(e) => autocomplete(e.currentTarget.value)}
 			/>
+			<datalist id="description-list">
+				{#each suggestions.keys() as suggestion}
+					<option>{suggestion}</option>
+				{/each}
+			</datalist>
 		</label>
 		<label>
 			Ingrese un monto
-			<input type="number" name="amount" placeholder="Monto" value={data.budget.amount} required />
+			<input
+				type="number"
+				name="amount"
+				placeholder="Monto"
+				required
+				bind:value={data.budget.amount}
+			/>
 		</label>
 		<label>
 			Ingrese la fecha de inicio del presupuesto
 			<input
-				type="datetime-local"
+				type="date"
 				name="startDate"
 				placeholder="Fecha"
-				value={data.budget.start_date}
 				required
+				bind:value={data.budget.start_date}
 			/>
 		</label>
 		<label>
 			Ingrese la fecha de fin del presupuesto
 			<input
-				type="datetime-local"
+				type="date"
 				name="endDate"
 				placeholder="Fecha"
-				value={data.budget.end_date}
+				required
+				bind:value={data.budget.end_date}
 			/>
 		</label>
 		{#if edit}

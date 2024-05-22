@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { title } from '$lib';
-	import { formatDateString, formatMoney } from '$lib/formatter';
+	import { formatDateTimeString, formatMoney } from '$lib/formatter';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -46,9 +46,9 @@
 	</article>
 </article>
 
-{#each data?.spendings as spending}
+{#each data.spendings as spending}
 	<article class="grid">
-		<p>{formatDateString(spending.date)}</p>
+		<p>{formatDateTimeString(spending.date)}</p>
 		<p>{spending.description}</p>
 		<p class="text-right">{formatMoney(spending.amount)}</p>
 	</article>
