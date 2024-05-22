@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { title } from '$lib';
-	import { formatDateString, formatMoney } from '$lib/formatter';
+	import { formatDateTimeString, formatMoney } from '$lib/formatter';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -22,9 +22,9 @@
 		<!-- svelte-ignore a11y-no-redundant-roles -->
 		<summary role="button">Opciones</summary>
 		<ul>
-			<li><a href="/spendings?group_id={data.group.id}">Añadir gasto</a></li>
-			<li><a href="/budgets?group_id={data.group.id}">Añadir presupuesto</a></li>
-			<li><a href="/categories?group_id={data.group.id}">Añadir categoría</a></li>
+			<li><a href="/spendings/details?group_id={data.group.id}">Añadir gasto</a></li>
+			<li><a href="/budgets/details?group_id={data.group.id}">Añadir presupuesto</a></li>
+			<li><a href="/categories/details?group_id={data.group.id}">Añadir categoría</a></li>
 		</ul>
 	</details>
 </header>
@@ -46,9 +46,9 @@
 	</article>
 </article>
 
-{#each data?.spendings as spending}
+{#each data.spendings as spending}
 	<article class="grid">
-		<p>{formatDateString(spending.date)}</p>
+		<p>{formatDateTimeString(spending.date)}</p>
 		<p>{spending.description}</p>
 		<p class="text-right">{formatMoney(spending.amount)}</p>
 	</article>

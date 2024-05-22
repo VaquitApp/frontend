@@ -13,7 +13,7 @@
 	<h2>Grupos</h2>
 	<div>
 		<a href="/groups/details" role="button">Nuevo grupo</a>
-		<a href="/spendings" class="outline" role="button">Nuevo gasto</a>
+		<a href="/spendings/details" class="outline" role="button">Nuevo gasto</a>
 	</div>
 </header>
 <main>
