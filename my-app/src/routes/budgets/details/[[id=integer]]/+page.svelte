@@ -108,7 +108,7 @@
 			/>
 		</label>
 		<label>
-			Ingrese la categoría al que pertenece el presupuesto
+			Ingrese la categoría a la que pertenece el presupuesto
 			<select name="categoryId" required bind:value={data.budget.category_id}>
 				{#each categories as category, i}
 					<option value={i + 1}>{category.name}</option>

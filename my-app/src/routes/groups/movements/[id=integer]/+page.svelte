@@ -47,7 +47,7 @@
 		</article>
 	</div>
 	<div>
-		Categorias:
+		Categorías:
 		{#each data.categories as category}
 			<button class="btn-sm outline"> {category.name} </button>
 		{/each}
