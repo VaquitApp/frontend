@@ -17,6 +17,9 @@ test: install
 format: install
 	$(NPM) run format
 
+lint: format
+	$(NPM) run lint
+
 image:
 	docker build -t $(NAME) $(DIR)
 

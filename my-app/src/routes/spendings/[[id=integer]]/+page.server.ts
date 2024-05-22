@@ -1,8 +1,8 @@
-import { error, fail, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { get, post } from '$lib/api';
+import { groupService, spendingService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
-import { getAuthHeader } from '$lib/auth';
+import { fixDateString } from '$lib/formatter';
 
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const group_id = Number(url.searchParams.get('group_id'));
@@ -17,28 +17,34 @@ export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	if (id) {
 		// TODO: load real spending
 	}
-	const groups: Group[] = await get('group', getAuthHeader(cookies));
+	const groups: Group[] = await groupService.list(cookies);
 	return { spending, groups };
 };
 
 export const actions: Actions = {
-	default: async ({ cookies, request }) => {
+	default: async ({ cookies, request, params }) => {
+		const id = Number(params.id) || 0;
 		const data = await request.formData();
-		const description = data.get('description');
-		const amount = data.get('amount');
-		const group_id = data.get('group_id');
+		const description = data.get('description')?.toString();
+		const amount = Number(data.get('amount'));
+		const dateString = data.get('date')?.toString();
+		const group_id = Number(data.get('groupId'));
 
 		if (!description) {
 			throw error(400, 'Description is required');
 		}
-
-		if (!amount) {
+		if (Number.isNaN(amount)) {
 			throw error(400, 'Amount is required');
 		}
+		if (!dateString) {
+			throw error(400, 'Date is required');
+		}
 
-		const headers = getAuthHeader(cookies);
+		const timezoneOffset = Number(data.get('timezoneOffset')) || 0;
+		const date = fixDateString(dateString, timezoneOffset);
+		const spending: Spending = { id, amount, description, date, group_id };
 		try {
-			await post('spending', { description, amount, group_id }, headers);
+			await spendingService.save(spending, cookies);
 		} catch {
 			return { success: false };
 		}

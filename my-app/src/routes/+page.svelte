@@ -7,7 +7,7 @@
 <header>
 	{#if data.user}
 		<h3>Bienvenido, {data.user}</h3>
-		<a role="button" href="/groups">Ver Grupos</a>
+		<a role="button" href="/groups">Ver mis grupos</a>
 		<a role="button" class="outline" href="/logout">Salir</a>
 	{:else}
 		<h2>Gestionar tus finanzas</h2>
