@@ -28,7 +28,7 @@
 		<article>
 			<header class="row">
 				<b style="padding: 15px">{group.name}</b>
-				<a class="secondary" href="/budgets/details/{group.id}" role="button">{@html PENCIL_SVG}</a>
+				<a class="secondary" href="/groups/details/{group.id}" role="button">{@html PENCIL_SVG}</a>
 			</header>
 			<p>{group.description}</p>
 			<!-- <a href="/groups/details/{group.id}" role="button" class="">Editar</a> -->
