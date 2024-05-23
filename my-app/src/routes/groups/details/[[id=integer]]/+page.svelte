@@ -9,6 +9,13 @@
 	<title>{title} - Nuevo Grupo</title>
 </svelte:head>
 
+<nav aria-label="breadcrumb">
+	<ul>
+		<li><a href="/groups">Grupos</a></li>
+		<li>Detalles</li>
+	</ul>
+</nav>
+
 <h2>Nuevo Grupo</h2>
 <form method="POST">
 	<fieldset>

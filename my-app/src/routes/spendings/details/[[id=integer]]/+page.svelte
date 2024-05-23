@@ -43,6 +43,13 @@
 	<title>{title} - Nuevo Gasto</title>
 </svelte:head>
 
+<nav aria-label="breadcrumb">
+	<ul>
+		<li><a href="/groups">Grupos</a></li>
+		<li>Gastos</li>
+	</ul>
+</nav>
+
 <h2>Nuevo Gasto</h2>
 <form method="POST" autocomplete="off">
 	<fieldset>

@@ -13,9 +13,16 @@
 	<title>{title} - {data.group.name}</title>
 </svelte:head>
 
+<nav aria-label="breadcrumb">
+	<ul>
+		<li><a href="/groups">Grupos</a></li>
+		<li>{data.group.name}</li>
+	</ul>
+</nav>
+
 <header class="row">
 	<div>
-		<h2>{data.group.name}</h2>
+		<h2>Moovimietos</h2>
 		<p>{data.group.description}</p>
 	</div>
 	<details class="dropdown">

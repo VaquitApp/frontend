@@ -61,6 +61,13 @@
 	<title>{title} - Nuevo Presupuesto</title>
 </svelte:head>
 
+<nav aria-label="breadcrumb">
+	<ul>
+		<li><a href="/groups">Grupos</a></li>
+		<li>Presupuestos</li>
+	</ul>
+</nav>
+
 <h2>
 	{#if edit}Editando{:else}Creando{/if} Presupuesto
 </h2>

@@ -9,6 +9,13 @@
 	<title>{title} - Nueva Categoría</title>
 </svelte:head>
 
+<nav aria-label="breadcrumb">
+	<ul>
+		<li><a href="/groups">Grupos</a></li>
+		<li>Categorías</li>
+	</ul>
+</nav>
+
 <h2>Nueva Categoría</h2>
 <form method="POST">
 	<fieldset>
