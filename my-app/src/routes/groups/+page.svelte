@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { title } from '$lib';
+	import { PENCIL_SVG } from '$lib/svgs';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -25,7 +26,10 @@
 	{/if}
 	{#each data?.groups as group}
 		<article>
-			<header>{group.name}</header>
+			<header class="row">
+				<b style="padding: 15px">{group.name}</b>
+				<a class="secondary" href="/budgets/details/{group.id}" role="button">{@html PENCIL_SVG}</a>
+			</header>
 			<p>{group.description}</p>
 			<!-- <a href="/groups/details/{group.id}" role="button" class="">Editar</a> -->
 			<a href="/groups/movements/{group.id}" role="button" class="outline">Moovimientos</a>

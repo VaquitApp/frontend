@@ -1,4 +1,4 @@
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { categoryService, groupService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
@@ -35,6 +35,6 @@ export const actions: Actions = {
 
 		const category: Category = { id, group_id, name, description, strategy };
 		await categoryService.save(category, cookies);
-		return { success: true };
+		redirect(302, `/groups/movements/${group_id}`);
 	}
 };
