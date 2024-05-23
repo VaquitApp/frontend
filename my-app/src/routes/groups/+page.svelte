@@ -31,7 +31,6 @@
 				<a class="secondary" href="/groups/details/{group.id}" role="button">{@html PENCIL_SVG}</a>
 			</header>
 			<p>{group.description}</p>
-			<!-- <a href="/groups/details/{group.id}" role="button" class="">Editar</a> -->
 			<a href="/groups/movements/{group.id}" role="button" class="outline">Moovimientos</a>
 			<a href="/groups/budgets/{group.id}" role="button" class="outline">Presupuestos</a>
 		</article>

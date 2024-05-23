@@ -4,9 +4,10 @@ import { groupService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
-	const id = Number(params.id);
+	const id = Number(params.id) || 0;
 	let group: Group = { name: '', description: '', id: 0, owner_id: 0 };
-	if (id !== undefined) {
+	if (id !== 0) {
+		console.log(id);
 		group = await groupService.get(id, cookies)
 	}
 	return { group };
