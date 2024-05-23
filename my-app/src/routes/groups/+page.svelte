@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { title } from '$lib';
 	import { confirmArchiveGroup } from '$lib/client/alerts';
+	import { PENCIL_SVG } from '$lib/svgs';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -39,7 +40,10 @@
 	{/if}
 	{#each activeGroups as group}
 		<article>
-			<header>{group.name}</header>
+			<header class="row">
+				<b style="padding: 15px">{group.name}</b>
+				<a class="secondary" href="/groups/details/{group.id}" role="button">{@html PENCIL_SVG}</a>
+			</header>
 			<p>{group.description}</p>
 			<footer class="grid">
 				<a href="/groups/movements/{group.id}" role="button" class="outline">Ver moovimientos</a>

@@ -6,7 +6,7 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const group_id = url.searchParams.get('groupId') || '';
 	const id = Number(params.id) || 0;
-	let category: Category = id
+	const category: Category = id
 		? await categoryService.get(id, cookies)
 		: { id: 0, group_id, name: '', description: '', strategy: '' };
 	const groups: Group[] = await groupService.list(cookies);

@@ -1,7 +1,7 @@
 import { groupService } from '$lib/server/api';
 import type { RequestHandler } from './$types';
 
-export const PUT: RequestHandler = async ({ url, cookies, request }) => {
+export const PUT: RequestHandler = async ({ url, cookies }) => {
 	const groupId = Number(url.searchParams.get('groupId'));
 	const archive = url.searchParams.get('archive') === 'true';
 	const body = archive
