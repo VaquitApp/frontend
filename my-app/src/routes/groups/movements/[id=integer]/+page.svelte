@@ -29,9 +29,9 @@
 		<!-- svelte-ignore a11y-no-redundant-roles -->
 		<summary role="button">Opciones</summary>
 		<ul>
-			<li><a href="/spendings/details?group_id={data.group.id}">Añadir gasto</a></li>
-			<li><a href="/budgets/details?group_id={data.group.id}">Añadir presupuesto</a></li>
-			<li><a href="/categories/details?group_id={data.group.id}">Añadir categoría</a></li>
+			<li><a href="/spendings/details?groupId={data.group.id}">Añadir gasto</a></li>
+			<li><a href="/budgets/details?groupId={data.group.id}">Añadir presupuesto</a></li>
+			<li><a href="/categories/details?groupId={data.group.id}">Añadir categoría</a></li>
 		</ul>
 	</details>
 </header>

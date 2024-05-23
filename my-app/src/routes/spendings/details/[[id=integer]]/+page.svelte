@@ -53,13 +53,13 @@
 <h2>Nuevo Gasto</h2>
 <form method="POST" autocomplete="off">
 	<fieldset>
-		<input type="hidden" name="timezoneOffset" bind:value={timezoneOffset} required />
+		<input type="hidden" name="timezoneOffset" value={timezoneOffset} required />
 		<label>
 			Ingrese el grupo al que pertenece el gasto
 			<select
 				name="groupId"
 				required
-				bind:value={data.spending.group_id}
+				value={data.spending.group_id}
 				on:change={(e) => updateSuggestions(+e.currentTarget.value)}
 			>
 				{#each data.groups as group}
@@ -75,7 +75,7 @@
 				placeholder="Descripción"
 				list="description-list"
 				required
-				bind:value={data.spending.description}
+				value={data.spending.description}
 				on:change={(e) => autocomplete(e.currentTarget.value)}
 			/>
 			<datalist id="description-list">
@@ -86,13 +86,7 @@
 		</label>
 		<label>
 			Ingrese un monto para el gasto
-			<input
-				type="text"
-				name="amount"
-				placeholder="Monto"
-				required
-				bind:value={data.spending.amount}
-			/>
+			<input type="text" name="amount" placeholder="Monto" required value={data.spending.amount} />
 		</label>
 		<label>
 			Ingrese la fecha del gasto
@@ -101,7 +95,7 @@
 				name="date"
 				placeholder="Fecha"
 				required
-				bind:value={data.spending.date}
+				value={data.spending.date}
 			/>
 		</label>
 		<button>Crear</button>

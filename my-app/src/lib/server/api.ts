@@ -57,10 +57,16 @@ export const userService = {
 export const groupService = {
 	save: (data: Group, cookies: Cookies) =>
 		data.id > 0
-			? put(`group/${data.id}`, data, getAuthHeader(cookies))
+			? put('group', data, getAuthHeader(cookies))
 			: post('group', data, getAuthHeader(cookies)),
-	list: (cookies: Cookies) => get('group', getAuthHeader(cookies)),
-	get: (id: Id, cookies: Cookies) => get(`group/${id}`, getAuthHeader(cookies))
+	list: (cookies: Cookies) =>
+		groupService.listAll(cookies).then((data: Group[]) => data.filter((g) => !g.is_archived)),
+	listAll: (cookies: Cookies) => get('group', getAuthHeader(cookies)),
+	get: (id: Id, cookies: Cookies) => get(`group/${id}`, getAuthHeader(cookies)),
+	archive: (id: Id, cookies: Cookies) =>
+		put(`group/${id}/archive`, undefined!, getAuthHeader(cookies)),
+	unarchive: (id: Id, cookies: Cookies) =>
+		put(`group/${id}/unarchive`, undefined!, getAuthHeader(cookies))
 };
 export const spendingService = {
 	save: (data: Spending, cookies: Cookies) =>

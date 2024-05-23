@@ -3,12 +3,11 @@ import type { Actions } from './$types';
 import { groupService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
-	const group: Group = { name: '', description: '', id: 0, owner_id: 0 };
-	const id = params.id;
-	if (id) {
-		// TODO: load real group
-	}
+export const load: PageServerLoad = async ({ params, cookies, url }) => {
+	const id = Number(params.id) || 0;
+	const group: Group = id
+		? await groupService.get(id, cookies)
+		: { name: '', description: '', id: 0, owner_id: 0 };
 	return { group };
 };
 

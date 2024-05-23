@@ -27,7 +27,7 @@
 		<p>{data.group.description}</p>
 	</div>
 	<div>
-		<a href="/budgets/details?group_id={data.group.id}" role="button">Nuevo presupuesto</a>
+		<a href="/budgets/details?groupId={data.group.id}" role="button">Nuevo presupuesto</a>
 	</div>
 </header>
 
