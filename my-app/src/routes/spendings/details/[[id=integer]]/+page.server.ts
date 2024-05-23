@@ -5,18 +5,16 @@ import type { PageServerLoad } from './$types';
 import { fixDateString } from '$lib/formatter';
 
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
-	const group_id = Number(url.searchParams.get('group_id'));
+	const group_id = Number(url.searchParams.get('groupId'));
+	const id = Number(params.id);
+	// TODO: load real spending
 	const spending: Spending = {
-		id: 0,
+		id,
 		description: '',
 		amount: 0,
-		date: new Date().toJSON(),
+		date: new Date().toJSON().slice(0, 16),
 		group_id
 	};
-	const id = params.id;
-	if (id) {
-		// TODO: load real spending
-	}
 	const groups: Group[] = await groupService.list(cookies);
 	return { spending, groups };
 };

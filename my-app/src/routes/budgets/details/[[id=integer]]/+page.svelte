@@ -61,19 +61,26 @@
 	<title>{title} - Nuevo Presupuesto</title>
 </svelte:head>
 
+<nav aria-label="breadcrumb">
+	<ul>
+		<li><a href="/groups">Grupos</a></li>
+		<li>Presupuestos</li>
+	</ul>
+</nav>
+
 <h2>
 	{#if edit}Editando{:else}Creando{/if} Presupuesto
 </h2>
 <form method="POST" autocomplete="off">
 	<fieldset>
-		<input type="hidden" name="timezoneOffset" bind:value={timezoneOffset} required />
+		<input type="hidden" name="timezoneOffset" value={timezoneOffset} required />
 		<label>
 			Ingrese el grupo al que pertenece el presupuesto
 			<select
 				name="groupId"
 				required
 				aria-readonly={edit}
-				bind:value={data.budget.group_id}
+				value={data.budget.group_id}
 				on:change={(e) => onGroupUpdate(+e.currentTarget.value)}
 			>
 				{#each data.groups as group}
@@ -88,7 +95,7 @@
 				name="description"
 				placeholder="Descripción"
 				list="description-list"
-				bind:value={data.budget.description}
+				value={data.budget.description}
 				on:change={(e) => autocomplete(e.currentTarget.value)}
 			/>
 			<datalist id="description-list">
@@ -99,17 +106,11 @@
 		</label>
 		<label>
 			Ingrese un monto
-			<input
-				type="number"
-				name="amount"
-				placeholder="Monto"
-				required
-				bind:value={data.budget.amount}
-			/>
+			<input type="number" name="amount" placeholder="Monto" required value={data.budget.amount} />
 		</label>
 		<label>
 			Ingrese la categoría a la que pertenece el presupuesto
-			<select name="categoryId" required bind:value={data.budget.category_id}>
+			<select name="categoryId" required value={data.budget.category_id}>
 				{#each categories as category, i}
 					<option value={i + 1}>{category.name}</option>
 				{/each}

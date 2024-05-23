@@ -13,18 +13,25 @@
 	<title>{title} - {data.group.name}</title>
 </svelte:head>
 
+<nav aria-label="breadcrumb">
+	<ul>
+		<li><a href="/groups">Grupos</a></li>
+		<li>{data.group.name}</li>
+	</ul>
+</nav>
+
 <header class="row">
 	<div>
-		<h2>{data.group.name}</h2>
+		<h2>Moovimietos</h2>
 		<p>{data.group.description}</p>
 	</div>
 	<details class="dropdown">
 		<!-- svelte-ignore a11y-no-redundant-roles -->
 		<summary role="button">Opciones</summary>
 		<ul>
-			<li><a href="/spendings/details?group_id={data.group.id}">Añadir gasto</a></li>
-			<li><a href="/budgets/details?group_id={data.group.id}">Añadir presupuesto</a></li>
-			<li><a href="/categories/details?group_id={data.group.id}">Añadir categoría</a></li>
+			<li><a href="/spendings/details?groupId={data.group.id}">Añadir gasto</a></li>
+			<li><a href="/budgets/details?groupId={data.group.id}">Añadir presupuesto</a></li>
+			<li><a href="/categories/details?groupId={data.group.id}">Añadir categoría</a></li>
 		</ul>
 	</details>
 </header>

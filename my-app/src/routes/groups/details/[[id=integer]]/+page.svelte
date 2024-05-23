@@ -1,32 +1,48 @@
 <script lang="ts">
 	import { title } from '$lib';
+	import { confirmArchiveGroup } from '$lib/client/alerts';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	const edit = data.group.id !== 0;
+
+	const pageTitle = `${edit ? 'Editando' : 'Creando'} Grupo`;
 </script>
 
 <svelte:head>
-	<title>{title} - Nuevo Grupo</title>
+	<title>{title} - {pageTitle}</title>
 </svelte:head>
 
-<h2>Nuevo Grupo</h2>
+<nav aria-label="breadcrumb">
+	<ul>
+		<li><a href="/groups">Grupos</a></li>
+		<li>Detalles</li>
+	</ul>
+</nav>
+
+<h2>{pageTitle}</h2>
 <form method="POST">
 	<fieldset>
 		<label>
 			Ingrese un nombre para el grupo
-			<input type="text" name="name" value={data.group.name} placeholder="Nombre" required />
+			<input type="text" name="name" placeholder="Nombre" required value={data.group.name} />
 		</label>
 		<label>
 			Ingrese una descripción para el grupo
 			<input
 				type="text"
 				name="description"
-				value={data.group.description}
 				placeholder="Descripción"
 				required
+				value={data.group.description}
 			/>
 		</label>
-		<button>Crear</button>
+		<button>Guardar</button>
+		{#if edit}
+			<button type="button" class="contrast" on:click={() => confirmArchiveGroup(data.group)}>
+				Archivar
+			</button>
+		{/if}
 		<button type="button" class="outline" on:click={() => history.back()}>Cancelar</button>
 	</fieldset>
 </form>

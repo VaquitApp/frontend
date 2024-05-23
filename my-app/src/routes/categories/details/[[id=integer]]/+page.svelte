@@ -9,12 +9,19 @@
 	<title>{title} - Nueva Categoría</title>
 </svelte:head>
 
+<nav aria-label="breadcrumb">
+	<ul>
+		<li><a href="/groups">Grupos</a></li>
+		<li>Categorías</li>
+	</ul>
+</nav>
+
 <h2>Nueva Categoría</h2>
 <form method="POST">
 	<fieldset>
 		<label>
 			Ingrese un grupo para la categoría
-			<select name="groupId" required bind:value={data.category.group_id}>
+			<select name="groupId" required value={data.category.group_id}>
 				{#each data.groups as group}
 					<option value={String(group.id)}>{group.name}</option>
 				{/each}

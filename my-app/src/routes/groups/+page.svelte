@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { title } from '$lib';
+	import { confirmArchiveGroup } from '$lib/client/alerts';
+	import { PENCIL_SVG } from '$lib/svgs';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	const activeGroups = data.groups.filter((g) => !g.is_archived);
+	const archivedGroups = data.groups.filter((g) => g.is_archived);
 </script>
 
 <svelte:head>
@@ -10,28 +14,61 @@
 </svelte:head>
 
 <header class="row">
-	<h2>Grupos</h2>
 	<div>
-		<a href="/groups/details" role="button">Nuevo grupo</a>
-		<a href="/spendings/details" class="outline" role="button">Nuevo gasto</a>
+		<h2>Grupos</h2>
+		<p>Ingrese a un grupo para poder ver sus movimientos y agregar nuevos</p>
+	</div>
+	<div>
+		<details class="dropdown">
+			<!-- svelte-ignore a11y-no-redundant-roles -->
+			<summary role="button">Opciones</summary>
+			<ul>
+				<li><a href="/groups/details">Añadir grupo</a></li>
+				<li><a href="/spendings/details">Añadir gasto</a></li>
+				<li><a href="/budgets/details">Añadir presupuesto</a></li>
+				<li><a href="/categories/details">Añadir categoría</a></li>
+			</ul>
+		</details>
 	</div>
 </header>
 <main>
-	{#if !data?.groups.length}
+	{#if !data.groups.length}
 		<article class="centered">
 			<p>Todavía no pertenece a ningún grupo. ¿Por qué no crea uno?</p>
 			<a href="/groups/details">Crear un nuevo grupo</a>
 		</article>
 	{/if}
-	{#each data?.groups as group}
+	{#each activeGroups as group}
 		<article>
-			<header>{group.name}</header>
+			<header class="row">
+				<b style="padding: 15px">{group.name}</b>
+				<a class="secondary" href="/groups/details/{group.id}" role="button">{@html PENCIL_SVG}</a>
+			</header>
 			<p>{group.description}</p>
-			<!-- <a href="/groups/details/{group.id}" role="button" class="">Editar</a> -->
-			<a href="/groups/movements/{group.id}" role="button" class="outline">Moovimientos</a>
-			<a href="/groups/budgets/{group.id}" role="button" class="outline">Presupuestos</a>
+			<footer class="grid">
+				<a href="/groups/movements/{group.id}" role="button" class="outline">Ver moovimientos</a>
+				<a href="/groups/details/{group.id}" role="button" class="outline secondary">
+					Editar grupo
+				</a>
+				<button class="outline contrast" on:click={() => confirmArchiveGroup(group)}>
+					Archivar
+				</button>
+			</footer>
 		</article>
 	{/each}
+
+	{#if archivedGroups.length}
+		<article>
+			<details>
+				<summary> Archivados </summary>
+				{#each archivedGroups as group}
+					<button class="outline contrast" on:click={() => confirmArchiveGroup(group)}>
+						Desarchivar {group.name}
+					</button>
+				{/each}
+			</details>
+		</article>
+	{/if}
 </main>
 
 <style>

@@ -7,18 +7,18 @@ import { fixDateString } from '$lib/formatter';
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const group_id = Number(url.searchParams.get('group_id'));
 	const id = Number(params.id) || 0;
-	let budget: Budget = {
-		id,
-		amount: 0,
-		description: '',
-		start_date: '',
-		end_date: '',
-		category_id: 0,
-		group_id
-	};
-	if (id) {
-		budget = await budgetService.get(id, cookies);
-	}
+	const now = new Date();
+	const budget: Budget = id
+		? await await budgetService.get(id, cookies)
+		: {
+				id,
+				amount: 0,
+				description: '',
+				start_date: now.toJSON(),
+				end_date: now.toJSON(),
+				category_id: 0,
+				group_id
+			};
 	const groups: Group[] = await groupService.list(cookies);
 	return { budget, groups };
 };

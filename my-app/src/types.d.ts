@@ -5,6 +5,7 @@ declare global {
 		owner_id: Id;
 		name: string;
 		description: string;
+		is_archived: boolean;
 	};
 	type Category = {
 		id: Id;
