@@ -3,8 +3,6 @@ name: Historia de Usuario
 about: Template para las nuevas historias de usuario.
 title: Nueva Historia de Usuario [STORY_POINTS]
 labels: enhancement
-assignees: ''
-
 ---
 
 **Descripción**
