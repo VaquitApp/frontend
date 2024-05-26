@@ -12,9 +12,9 @@ declare global {
 		is_archived: boolean;
 	};
 	type Category = {
-		id: Id;
-		group_id: string; // ?
+		// NOTE: [name, group_id] is primary key
 		name: string;
+		group_id: string;
 		description: string;
 		strategy: string;
 	};
