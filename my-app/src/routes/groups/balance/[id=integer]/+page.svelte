@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { title } from '$lib';
 	import { formatMoney } from '$lib/formatter';
+	import { INFO_SVG } from '$lib/svgs';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -8,6 +9,16 @@
 	// Green for positive, red for negative, default for zero
 	export function balanceColor(balance: number) {
 		return balance > 0 ? '#056517' : balance < 0 ? '#bf1029' : null;
+	}
+	export const personalBalanceTooltip =
+		data?.userBalance < 0
+			? 'You owe money'
+			: data?.userBalance > 0
+				? 'You are owed money'
+				: 'You are even';
+
+	export function balanceTooltip(balance: number) {
+		return balance > 0 ? 'You owe them' : balance < 0 ? 'They owe you' : 'You are even';
 	}
 </script>
 
@@ -29,10 +40,22 @@
 	</div>
 </header>
 
-{#each data?.memberBalances as { email, balance }}
+<article class="grid">
+	<p>Your balance</p>
+	<p class="text-right">
+		<span style="color: {balanceColor(data?.userBalance)}">{formatMoney(data?.userBalance)}</span>
+		<span data-tooltip={personalBalanceTooltip} style="border-bottom: 0px">{@html INFO_SVG}</span>
+	</p>
+</article>
+
+{#each data?.balances as { email, balance }}
 	<article class="grid">
 		<p>{email}</p>
-		<p class="text-right" style="color: {balanceColor(balance)}">{formatMoney(balance)}</p>
+		<p class="text-right">
+			<span style="color: {balanceColor(balance)}">{formatMoney(balance)}</span>
+			<span data-tooltip={balanceTooltip(balance)} style="border-bottom: 0px">{@html INFO_SVG}</span
+			>
+		</p>
 	</article>
 {/each}
 

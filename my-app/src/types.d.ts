@@ -1,5 +1,9 @@
 declare global {
 	type Id = number;
+	type User = {
+		id: Id;
+		email: string;
+	};
 	type Group = {
 		id: Id;
 		owner_id: Id;
