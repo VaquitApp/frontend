@@ -26,6 +26,7 @@ declare global {
 	type Spending = {
 		id: Id;
 		group_id: Id;
+		owner_id: int;
 		description: string;
 		amount: number;
 		date: string;

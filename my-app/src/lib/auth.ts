@@ -23,6 +23,10 @@ export function getAuthHeader(cookies: Cookies) {
 	return { 'x-user': token };
 }
 
+export function getUserId(cookies: Cookies) {
+	return cookies.get('userId');
+}
+
 export function getUserEmail(cookies: Cookies) {
 	return cookies.get('userEmail');
 }

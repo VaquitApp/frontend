@@ -25,15 +25,24 @@
 		<h2>Moovimietos</h2>
 		<p>{data.group.description}</p>
 	</div>
-	<details class="dropdown">
-		<!-- svelte-ignore a11y-no-redundant-roles -->
-		<summary role="button">Opciones</summary>
-		<ul>
-			<li><a href="/spendings/details?groupId={data.group.id}">Añadir gasto</a></li>
-			<li><a href="/budgets/details?groupId={data.group.id}">Añadir presupuesto</a></li>
-			<li><a href="/categories/details?groupId={data.group.id}">Añadir categoría</a></li>
-		</ul>
-	</details>
+	<div class="row">
+		<details class="dropdown">
+			<!-- svelte-ignore a11y-no-redundant-roles -->
+			<summary role="button" class="outline">Resumenes</summary>
+			<ul>
+				<li><a href="/groups/balance/{data.group.id}">Estado de cuenta grupal</a></li>
+			</ul>
+		</details>
+		<details class="dropdown" style="margin-left: 10px">
+			<!-- svelte-ignore a11y-no-redundant-roles -->
+			<summary role="button">Añadir</summary>
+			<ul>
+				<li><a href="/spendings/details?groupId={data.group.id}">Añadir gasto</a></li>
+				<li><a href="/budgets/details?groupId={data.group.id}">Añadir presupuesto</a></li>
+				<li><a href="/categories/details?groupId={data.group.id}">Añadir categoría</a></li>
+			</ul>
+		</details>
+	</div>
 </header>
 
 <article>
