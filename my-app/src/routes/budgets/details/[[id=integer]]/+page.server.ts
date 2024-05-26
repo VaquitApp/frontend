@@ -8,6 +8,8 @@ export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const group_id = Number(url.searchParams.get('group_id'));
 	const id = Number(params.id) || 0;
 	const now = new Date();
+	const next_month = new Date();
+	next_month.setMonth(next_month.getMonth() + 1);
 	const budget: Budget = id
 		? await await budgetService.get(id, cookies)
 		: {
@@ -15,7 +17,7 @@ export const load: PageServerLoad = async ({ params, url, cookies }) => {
 				amount: 0,
 				description: '',
 				start_date: now.toJSON(),
-				end_date: now.toJSON(),
+				end_date: next_month.toJSON(),
 				category_id: 0,
 				group_id
 			};
