@@ -21,7 +21,7 @@
 				const response = await fetch(`/api/budgets?groupId=${groupId}`);
 				const body: Budget[] = await response.json();
 				body.forEach((budget) => {
-					newSuggestions.set(formatSuggestion(budget), budget);
+					newSuggestions.set(budget.description, budget);
 				});
 			} catch {}
 		}
@@ -37,10 +37,6 @@
 			} catch {}
 		}
 		categories = [];
-	}
-
-	function formatSuggestion({ description, amount }: Budget) {
-		return `${description} (${formatMoney(amount)})`;
 	}
 
 	function autocomplete(value: string) {
@@ -80,7 +76,7 @@
 				name="groupId"
 				required
 				aria-readonly={edit}
-				value={data.budget.group_id}
+				bind:value={data.budget.group_id}
 				on:change={(e) => onGroupUpdate(+e.currentTarget.value)}
 			>
 				{#each data.groups as group}
@@ -95,12 +91,12 @@
 				name="description"
 				placeholder="Descripción"
 				list="description-list"
-				value={data.budget.description}
+				bind:value={data.budget.description}
 				on:change={(e) => autocomplete(e.currentTarget.value)}
 			/>
 			<datalist id="description-list">
-				{#each suggestions.keys() as suggestion}
-					<option>{suggestion}</option>
+				{#each suggestions.values() as budget}
+					<option value={budget.description}>{formatMoney(budget.amount)}</option>
 				{/each}
 			</datalist>
 		</label>
