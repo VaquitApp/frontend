@@ -7,14 +7,15 @@
 	export let data: PageData;
 	const edit = data.budget.id !== 0;
 	let timezoneOffset = 0;
-	let suggestions: Map<string, Budget> = new Map();
+	let budgetSuggestions: Map<string, Budget> = new Map();
+	let categorySuggestions: Map<string, Category> = new Map();
 	let categories: Category[] = [];
 
 	async function onGroupUpdate(groupId: number) {
-		await Promise.all([updateSuggestions(groupId), updateCategories(groupId)]);
+		await Promise.all([updateBudgetSuggestions(groupId), updateCategories(groupId)]);
 	}
 
-	async function updateSuggestions(groupId: number) {
+	async function updateBudgetSuggestions(groupId: number) {
 		const newSuggestions: Map<string, Budget> = new Map();
 		if (groupId != 0) {
 			try {
@@ -25,7 +26,17 @@
 				});
 			} catch {}
 		}
-		suggestions = newSuggestions;
+		budgetSuggestions = newSuggestions;
+	}
+
+	async function updateCategorySuggestions(groupId: number, categories: Category[]) {
+		const newSuggestions: Map<string, Category> = new Map();
+		if (groupId != 0) {
+			categories.forEach((category) => {
+				newSuggestions.set(category.name, category);
+			});
+		}
+		categorySuggestions = newSuggestions;
 	}
 
 	async function updateCategories(groupId: number) {
@@ -33,6 +44,7 @@
 			try {
 				const response = await fetch(`/api/categories?groupId=${groupId}`);
 				categories = await response.json();
+				await updateCategorySuggestions(groupId, categories);
 				return;
 			} catch {}
 		}
@@ -40,7 +52,7 @@
 	}
 
 	function autocomplete(value: string) {
-		const budget = suggestions.get(value);
+		const budget = budgetSuggestions.get(value);
 		if (!budget) return;
 		data.budget.amount = budget.amount;
 		data.budget.description = budget.description;
@@ -95,7 +107,7 @@
 				on:change={(e) => autocomplete(e.currentTarget.value)}
 			/>
 			<datalist id="description-list">
-				{#each suggestions.values() as budget}
+				{#each budgetSuggestions.values() as budget}
 					<option value={budget.description}>{formatMoney(budget.amount)}</option>
 				{/each}
 			</datalist>
