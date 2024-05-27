@@ -15,15 +15,11 @@
 				const response = await fetch(`/api/spendings?groupId=${groupId}`);
 				const body: Spending[] = await response.json();
 				body.forEach((spending) => {
-					newSuggestions.set(formatSuggestion(spending), spending);
+					newSuggestions.set(spending.description, spending);
 				});
 			} catch {}
 		}
 		suggestions = newSuggestions;
-	}
-
-	function formatSuggestion({ description, amount }: Spending) {
-		return `${description} (${formatMoney(amount)})`;
 	}
 
 	function autocomplete(value: string) {
@@ -79,8 +75,8 @@
 				on:change={(e) => autocomplete(e.currentTarget.value)}
 			/>
 			<datalist id="description-list">
-				{#each suggestions.keys() as suggestion}
-					<option>{suggestion}</option>
+				{#each suggestions.values() as spending}
+					<option value={spending.description}>{formatMoney(spending.amount)}</option>
 				{/each}
 			</datalist>
 		</label>
