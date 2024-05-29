@@ -31,7 +31,7 @@ async function send(method: Method, { path, data, headers = {} }: Request) {
 		return text ? JSON.parse(text) : {};
 	}
 
-	throw error(res.status);
+	throw error(res.status, await res.text());
 }
 
 function get(path: string, headers?: Headers) {
@@ -91,4 +91,10 @@ export const categoryService = {
 			: post('category', data, getAuthHeader(cookies)),
 	get: (id: Id, cookies: Cookies) => get(`category/${id}`, getAuthHeader(cookies)),
 	list: (groupId: Id, cookies: Cookies) => get(`category/${groupId}`, getAuthHeader(cookies))
+};
+export const inviteService = {
+	get: (token: string, cookies: Cookies) => get(`invite/${token}`, getAuthHeader(cookies)),
+	send: (data: SendInvite, cookies: Cookies) => post(`invite`, data, getAuthHeader(cookies)),
+	accept: (data: AcceptInvite, cookies: Cookies) =>
+		post(`invite/join/${data.token}`, undefined!, getAuthHeader(cookies))
 };

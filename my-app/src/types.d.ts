@@ -35,6 +35,23 @@ declare global {
 		amount: number;
 		date: string;
 	};
+	type Invite = {
+		id: Id;
+		sender_id: Id;
+		receiver_id: Id;
+		group_id: Id;
+		token: string;
+		status: string;
+		creation_date: string;
+	};
+	type SendInvite = {
+		sender_id: Id;
+		receiver_email: string;
+		group_id: Id;
+	};
+	type AcceptInvite = {
+		token: string;
+	};
 }
 
 export {};
