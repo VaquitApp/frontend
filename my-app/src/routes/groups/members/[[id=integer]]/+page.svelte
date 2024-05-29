@@ -19,16 +19,12 @@
 
 <header class="row">
 	<h2 style="padding: 15px">Miembros de {data.group.name}</h2>
-	<!-- TODO: On Click should redirect to invite page -->
-	<button type="button" class="secondary" on:click={() => history.back()}> 
-		{@html ADD_USER_SVG}
-	</button>
+	<a class="secondary" href="/invites/send/{data.group.id}" role="button">{@html ADD_USER_SVG}</a>
 </header>
 
 {#each data.members as user}
-	<p style="padding: 15px" class="row"> {user.email} </p>
+	<p style="padding: 15px" class="row">{user.email}</p>
 {/each}
-
 
 <style>
 	.row {
@@ -37,4 +33,3 @@
 		justify-content: space-between;
 	}
 </style>
-
