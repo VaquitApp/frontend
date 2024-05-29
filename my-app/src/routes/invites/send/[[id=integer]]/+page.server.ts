@@ -5,7 +5,7 @@ import { getUserId } from '$lib/auth';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
 	const id = Number(params.id) || 0;
-	const group: Group = await groupService.get(id, cookies)
+	const group: Group = await groupService.get(id, cookies);
 	return { group };
 };
 
@@ -19,7 +19,11 @@ export const actions: Actions = {
 			throw error(400, 'Receiver Email is required');
 		}
 
-		const invite: SendInvite = {sender_id: getUserId(cookies) , receiver_email: email , group_id: id };
+		const invite: SendInvite = {
+			sender_id: getUserId(cookies),
+			receiver_email: email,
+			group_id: id
+		};
 		await inviteService.send(invite, cookies);
 		redirect(302, `/groups/members/${id}`);
 	}

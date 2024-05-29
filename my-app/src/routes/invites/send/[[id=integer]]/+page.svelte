@@ -27,4 +27,3 @@
 		<button type="button" class="outline" on:click={() => history.back()}>Cancelar</button>
 	</fieldset>
 </form>
-

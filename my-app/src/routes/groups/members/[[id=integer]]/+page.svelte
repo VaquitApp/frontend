@@ -23,9 +23,8 @@
 </header>
 
 {#each data.members as user}
-	<p style="padding: 15px" class="row"> {user.email} </p>
+	<p style="padding: 15px" class="row">{user.email}</p>
 {/each}
-
 
 <style>
 	.row {
@@ -34,4 +33,3 @@
 		justify-content: space-between;
 	}
 </style>
-

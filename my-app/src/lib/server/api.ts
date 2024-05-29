@@ -94,4 +94,4 @@ export const categoryService = {
 };
 export const inviteService = {
 	send: (data: SendInvite, cookies: Cookies) => post(`invite`, data, getAuthHeader(cookies))
-}
+};
