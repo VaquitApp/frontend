@@ -50,6 +50,9 @@
 				<a href="/groups/details/{group.id}" role="button" class="outline secondary">
 					Editar grupo
 				</a>
+				<a href="/groups/details/{group.id}/members" role="button" class="outline secondary">
+					Miembros
+				</a>
 				<button class="outline contrast" on:click={() => confirmArchiveGroup(group)}>
 					Archivar
 				</button>
