@@ -13,6 +13,7 @@
 	<ul>
 		<li><a href="/groups">Grupos</a></li>
 		<li>Invitaciones</li>
+		<li>Enviar</li>
 	</ul>
 </nav>
 

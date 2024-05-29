@@ -93,5 +93,8 @@ export const categoryService = {
 	list: (groupId: Id, cookies: Cookies) => get(`category/${groupId}`, getAuthHeader(cookies))
 };
 export const inviteService = {
-	send: (data: SendInvite, cookies: Cookies) => post(`invite`, data, getAuthHeader(cookies))
+	get: (token: string, cookies: Cookies) => get(`invite/${token}`, getAuthHeader(cookies)),
+	send: (data: SendInvite, cookies: Cookies) => post(`invite`, data, getAuthHeader(cookies)),
+	accept: (data: AcceptInvite, cookies: Cookies) =>
+		post(`invite/join/${data.token}`, undefined!, getAuthHeader(cookies))
 };
