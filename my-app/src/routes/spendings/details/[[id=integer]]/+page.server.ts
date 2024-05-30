@@ -12,7 +12,9 @@ export const load: PageServerLoad = async ({ params, url, cookies }) => {
 		id,
 		description: '',
 		amount: 0,
+		owner_id: 0,
 		date: new Date().toJSON().slice(0, 16),
+		category_name: '',
 		group_id
 	};
 	const groups: Group[] = await groupService.list(cookies);
