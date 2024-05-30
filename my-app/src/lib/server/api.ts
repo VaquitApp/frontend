@@ -89,7 +89,6 @@ export const categoryService = {
 		data.id > 0
 			? put(`category/${data.id}`, data, getAuthHeader(cookies))
 			: post('category', data, getAuthHeader(cookies)),
-	get: (id: Id, cookies: Cookies) => get(`category/${id}`, getAuthHeader(cookies)),
 	list: (groupId: Id, cookies: Cookies) => get(`category/${groupId}`, getAuthHeader(cookies))
 };
 export const inviteService = {
