@@ -12,9 +12,9 @@ declare global {
 		is_archived: boolean;
 	};
 	type Category = {
-		id: Id;
-		group_id: string; // ?
+		// NOTE: [name, group_id] is primary key
 		name: string;
+		group_id: string;
 		description: string;
 		strategy: string;
 	};
@@ -35,6 +35,23 @@ declare global {
 		description: string;
 		amount: number;
 		date: string;
+	};
+	type Invite = {
+		id: Id;
+		sender_id: Id;
+		receiver_id: Id;
+		group_id: Id;
+		token: string;
+		status: string;
+		creation_date: string;
+	};
+	type SendInvite = {
+		sender_id: Id;
+		receiver_email: string;
+		group_id: Id;
+	};
+	type AcceptInvite = {
+		token: string;
 	};
 }
 
