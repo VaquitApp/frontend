@@ -7,25 +7,25 @@
 	export let data: PageData;
 	const edit = data.budget.id !== 0;
 	let timezoneOffset = 0;
-	let suggestions: Map<string, Budget> = new Map();
+	let budgetSuggestions: Map<string, Budget> = new Map();
 	let categories: Category[] = [];
 
 	async function onGroupUpdate(groupId: number) {
-		await Promise.all([updateSuggestions(groupId), updateCategories(groupId)]);
+		await Promise.all([updateBudgetSuggestions(groupId), updateCategories(groupId)]);
 	}
 
-	async function updateSuggestions(groupId: number) {
+	async function updateBudgetSuggestions(groupId: number) {
 		const newSuggestions: Map<string, Budget> = new Map();
 		if (groupId != 0) {
 			try {
 				const response = await fetch(`/api/budgets?groupId=${groupId}`);
 				const body: Budget[] = await response.json();
 				body.forEach((budget) => {
-					newSuggestions.set(formatSuggestion(budget), budget);
+					newSuggestions.set(budget.description, budget);
 				});
 			} catch {}
 		}
-		suggestions = newSuggestions;
+		budgetSuggestions = newSuggestions;
 	}
 
 	async function updateCategories(groupId: number) {
@@ -39,12 +39,8 @@
 		categories = [];
 	}
 
-	function formatSuggestion({ description, amount }: Budget) {
-		return `${description} (${formatMoney(amount)})`;
-	}
-
 	function autocomplete(value: string) {
-		const budget = suggestions.get(value);
+		const budget = budgetSuggestions.get(value);
 		if (!budget) return;
 		data.budget.amount = budget.amount;
 		data.budget.description = budget.description;
@@ -80,7 +76,7 @@
 				name="groupId"
 				required
 				aria-readonly={edit}
-				value={data.budget.group_id}
+				bind:value={data.budget.group_id}
 				on:change={(e) => onGroupUpdate(+e.currentTarget.value)}
 			>
 				{#each data.groups as group}
@@ -95,12 +91,12 @@
 				name="description"
 				placeholder="Descripción"
 				list="description-list"
-				value={data.budget.description}
+				bind:value={data.budget.description}
 				on:change={(e) => autocomplete(e.currentTarget.value)}
 			/>
 			<datalist id="description-list">
-				{#each suggestions.keys() as suggestion}
-					<option>{suggestion}</option>
+				{#each budgetSuggestions.values() as budget}
+					<option value={budget.description}>{formatMoney(budget.amount)}</option>
 				{/each}
 			</datalist>
 		</label>

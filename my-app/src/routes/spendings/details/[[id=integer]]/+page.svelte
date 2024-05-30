@@ -7,6 +7,11 @@
 	export let data: PageServerData;
 	let timezoneOffset = 0;
 	let suggestions: Map<string, Spending> = new Map();
+	let categories: Category[] = [];
+
+	async function onGroupUpdate(groupId: number) {
+		await Promise.all([updateSuggestions(groupId), updateCategories(groupId)]);
+	}
 
 	async function updateSuggestions(groupId: number) {
 		const newSuggestions: Map<string, Spending> = new Map();
@@ -15,15 +20,11 @@
 				const response = await fetch(`/api/spendings?groupId=${groupId}`);
 				const body: Spending[] = await response.json();
 				body.forEach((spending) => {
-					newSuggestions.set(formatSuggestion(spending), spending);
+					newSuggestions.set(spending.description, spending);
 				});
 			} catch {}
 		}
 		suggestions = newSuggestions;
-	}
-
-	function formatSuggestion({ description, amount }: Spending) {
-		return `${description} (${formatMoney(amount)})`;
 	}
 
 	function autocomplete(value: string) {
@@ -31,11 +32,23 @@
 		if (!spending) return;
 		data.spending.amount = spending.amount;
 		data.spending.description = spending.description;
+		data.spending.category_name = spending.category_name;
+	}
+
+	async function updateCategories(groupId: number) {
+		if (groupId != 0) {
+			try {
+				const response = await fetch(`/api/categories?groupId=${groupId}`);
+				categories = await response.json();
+				return;
+			} catch {}
+		}
+		categories = [];
 	}
 
 	onMount(async () => {
 		timezoneOffset = new Date().getTimezoneOffset();
-		await updateSuggestions(data.spending.group_id);
+		await onGroupUpdate(data.spending.group_id);
 	});
 </script>
 
@@ -59,11 +72,19 @@
 			<select
 				name="groupId"
 				required
-				value={data.spending.group_id}
-				on:change={(e) => updateSuggestions(+e.currentTarget.value)}
+				bind:value={data.spending.group_id}
+				on:change={(e) => onGroupUpdate(+e.currentTarget.value)}
 			>
 				{#each data.groups as group}
 					<option value={group.id}>{group.name}</option>
+				{/each}
+			</select>
+		</label>
+		<label>
+			Ingrese la categoría a la que pertenece el gasto
+			<select name="categoryId" required value={data.spending.category_name}>
+				{#each categories as category}
+					<option value={category.name}>{category.name}</option>
 				{/each}
 			</select>
 		</label>
@@ -75,18 +96,24 @@
 				placeholder="Descripción"
 				list="description-list"
 				required
-				value={data.spending.description}
+				bind:value={data.spending.description}
 				on:change={(e) => autocomplete(e.currentTarget.value)}
 			/>
 			<datalist id="description-list">
-				{#each suggestions.keys() as suggestion}
-					<option>{suggestion}</option>
+				{#each suggestions.values() as spending}
+					<option value={spending.description}>{formatMoney(spending.amount)}</option>
 				{/each}
 			</datalist>
 		</label>
 		<label>
 			Ingrese un monto para el gasto
-			<input type="text" name="amount" placeholder="Monto" required value={data.spending.amount} />
+			<input
+				type="text"
+				name="amount"
+				placeholder="Monto"
+				required
+				bind:value={data.spending.amount}
+			/>
 		</label>
 		<label>
 			Ingrese la fecha del gasto
@@ -95,7 +122,7 @@
 				name="date"
 				placeholder="Fecha"
 				required
-				value={data.spending.date}
+				bind:value={data.spending.date}
 			/>
 		</label>
 		<button>Crear</button>

@@ -31,6 +31,7 @@ declare global {
 		id: Id;
 		group_id: Id;
 		owner_id: int;
+		category_name: string;
 		description: string;
 		amount: number;
 		date: string;

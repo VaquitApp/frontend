@@ -5,7 +5,7 @@ import { budgetService, groupService } from '$lib/server/api';
 import { fixDateString } from '$lib/formatter';
 
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
-	const group_id = Number(url.searchParams.get('group_id'));
+	const group_id = Number(url.searchParams.get('groupId'));
 	const id = Number(params.id) || 0;
 	const now = new Date();
 	const next_month = new Date();
