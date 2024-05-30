@@ -8,7 +8,6 @@
 	const edit = data.budget.id !== 0;
 	let timezoneOffset = 0;
 	let budgetSuggestions: Map<string, Budget> = new Map();
-	let categorySuggestions: Map<string, Category> = new Map();
 	let categories: Category[] = [];
 
 	async function onGroupUpdate(groupId: number) {
@@ -29,22 +28,11 @@
 		budgetSuggestions = newSuggestions;
 	}
 
-	async function updateCategorySuggestions(groupId: number, categories: Category[]) {
-		const newSuggestions: Map<string, Category> = new Map();
-		if (groupId != 0) {
-			categories.forEach((category) => {
-				newSuggestions.set(category.name, category);
-			});
-		}
-		categorySuggestions = newSuggestions;
-	}
-
 	async function updateCategories(groupId: number) {
 		if (groupId != 0) {
 			try {
 				const response = await fetch(`/api/categories?groupId=${groupId}`);
 				categories = await response.json();
-				await updateCategorySuggestions(groupId, categories);
 				return;
 			} catch {}
 		}

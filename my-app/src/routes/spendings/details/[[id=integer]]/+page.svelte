@@ -7,6 +7,11 @@
 	export let data: PageServerData;
 	let timezoneOffset = 0;
 	let suggestions: Map<string, Spending> = new Map();
+	let categories: Category[] = [];
+
+	async function onGroupUpdate(groupId: number) {
+		await Promise.all([updateSuggestions(groupId), updateCategories(groupId)]);
+	}
 
 	async function updateSuggestions(groupId: number) {
 		const newSuggestions: Map<string, Spending> = new Map();
@@ -27,11 +32,23 @@
 		if (!spending) return;
 		data.spending.amount = spending.amount;
 		data.spending.description = spending.description;
+		data.spending.category_name = spending.category_name;
+	}
+
+	async function updateCategories(groupId: number) {
+		if (groupId != 0) {
+			try {
+				const response = await fetch(`/api/categories?groupId=${groupId}`);
+				categories = await response.json();
+				return;
+			} catch {}
+		}
+		categories = [];
 	}
 
 	onMount(async () => {
 		timezoneOffset = new Date().getTimezoneOffset();
-		await updateSuggestions(data.spending.group_id);
+		await onGroupUpdate(data.spending.group_id);
 	});
 </script>
 
@@ -56,10 +73,18 @@
 				name="groupId"
 				required
 				bind:value={data.spending.group_id}
-				on:change={(e) => updateSuggestions(+e.currentTarget.value)}
+				on:change={(e) => onGroupUpdate(+e.currentTarget.value)}
 			>
 				{#each data.groups as group}
 					<option value={group.id}>{group.name}</option>
+				{/each}
+			</select>
+		</label>
+		<label>
+			Ingrese la categoría a la que pertenece el gasto
+			<select name="categoryId" required value={data.spending.category_name}>
+				{#each categories as category}
+					<option value={category.name}>{category.name}</option>
 				{/each}
 			</select>
 		</label>

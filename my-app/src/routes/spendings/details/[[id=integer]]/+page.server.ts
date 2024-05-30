@@ -27,6 +27,7 @@ export const actions: Actions = {
 		const amount = Number(data.get('amount'));
 		const dateString = data.get('date')?.toString();
 		const group_id = Number(data.get('groupId'));
+		const category_name = data.get('categoryId')?.toString();
 
 		if (!description) {
 			throw error(400, 'Description is required');
@@ -40,7 +41,7 @@ export const actions: Actions = {
 
 		const timezoneOffset = Number(data.get('timezoneOffset')) || 0;
 		const date = fixDateString(dateString, timezoneOffset);
-		const spending: Spending = { id, amount, description, date, group_id };
+		const spending: Spending = { id, amount, description, date, group_id, category_name };
 		try {
 			await spendingService.save(spending, cookies);
 		} catch {
