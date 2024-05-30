@@ -14,11 +14,9 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 
 function computePerCategorySpending(categories: Category[], spendings: Spending[]) {
 	const categoryMap = new Map<string, number>(categories.map((category) => [category.name, 0]));
-	spendings.forEach(({ amount }) => {
-		const randomChoice = Math.floor(Math.random() * categories.length);
-		const categoryName = categories[randomChoice].name;
-		const acc = categoryMap.get(categoryName)!;
-		categoryMap.set(categoryName, acc + amount);
+	spendings.forEach(({ amount, category_name }) => {
+		const acc = categoryMap.get(category_name)!;
+		categoryMap.set(category_name, acc + amount);
 	});
 	const labels = Array.from(categoryMap.keys());
 	const values = Array.from(categoryMap.values());
