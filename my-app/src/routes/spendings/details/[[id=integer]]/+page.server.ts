@@ -3,11 +3,11 @@ import type { Actions } from './$types';
 import { groupService, spendingService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
 import { fixDateString } from '$lib/formatter';
+import { getUserId } from '$lib/auth';
 
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const group_id = Number(url.searchParams.get('groupId'));
 	const id = Number(params.id);
-	// TODO: load real spending
 	const spending: Spending = {
 		id,
 		description: '',
@@ -30,6 +30,7 @@ export const actions: Actions = {
 		const dateString = data.get('date')?.toString();
 		const group_id = Number(data.get('groupId'));
 		const category_name = data.get('categoryId')?.toString();
+		const owner_id = getUserId(cookies);
 
 		if (!description) {
 			throw error(400, 'Description is required');
@@ -40,10 +41,13 @@ export const actions: Actions = {
 		if (!dateString) {
 			throw error(400, 'Date is required');
 		}
+		if (!category_name) {
+			throw error(400, 'Category is required');
+		}
 
 		const timezoneOffset = Number(data.get('timezoneOffset')) || 0;
 		const date = fixDateString(dateString, timezoneOffset);
-		const spending: Spending = { id, amount, description, date, group_id, category_name };
+		const spending: Spending = { id, amount, description, date, group_id, category_name, owner_id };
 		try {
 			await spendingService.save(spending, cookies);
 		} catch {
