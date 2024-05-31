@@ -14,7 +14,7 @@ declare global {
 	type Category = {
 		id: Id;
 		name: string;
-		group_id: string;
+		group_id: Id;
 		description: string;
 		strategy: string;
 	};

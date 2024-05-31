@@ -29,9 +29,11 @@
 	<fieldset>
 		<label>
 			Ingrese un grupo para la categoría
-			<select name="groupId" aria-readonly={edit} required value={data.category.group_id}>
+			<select name="groupId" required value={data.category.group_id}>
 				{#each data.groups as group}
-					<option value={String(group.id)}>{group.name}</option>
+					<option disabled={edit && group.id !== data.category.group_id} value={group.id}
+						>{group.name}</option
+					>
 				{/each}
 			</select>
 		</label>
