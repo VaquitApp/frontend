@@ -12,7 +12,7 @@ declare global {
 		is_archived: boolean;
 	};
 	type Category = {
-		// NOTE: [name, group_id] is primary key
+		id: Id;
 		name: string;
 		group_id: string;
 		description: string;
@@ -30,8 +30,8 @@ declare global {
 	type Spending = {
 		id: Id;
 		group_id: Id;
-		owner_id: int;
-		category_name: string;
+		owner_id: Id;
+		category_id: Id;
 		description: string;
 		amount: number;
 		date: string;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { title } from '$lib';
 	import { formatDateString, formatMoney } from '$lib/formatter';
-	import { PENCIL_SVG } from '$lib/svgs';
+	import { pencil_svg } from '$lib/svgs';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -48,7 +48,8 @@
 				<p class="text-right" style="margin-left: auto; padding-right:5%">
 					{formatMoney(budget.amount)}
 				</p>
-				<a class="secondary" href="/budgets/details/{budget.id}" role="button">{@html PENCIL_SVG}</a
+				<a class="secondary" href="/budgets/details/{budget.id}" role="button"
+					>{@html pencil_svg(25, 25)}</a
 				>
 			</div>
 		</div>

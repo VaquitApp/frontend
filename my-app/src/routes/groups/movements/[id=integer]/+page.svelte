@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { title } from '$lib';
 	import { formatDateTimeString, formatMoney } from '$lib/formatter';
+	import { pencil_svg } from '$lib/svgs';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -66,7 +67,12 @@
 	<div>
 		Categorías:
 		{#each data.categories as category}
-			<button class="btn-sm outline"> {category.name} </button>
+			<div style="width: auto" role="group">
+				<button class="btn-sm outline"> {category.name} </button>
+				<a class="btn-sm" href="/categories/details/{category.id}" role="button"
+					>{@html pencil_svg(12, 12)}</a
+				>
+			</div>
 		{/each}
 	</div>
 </article>

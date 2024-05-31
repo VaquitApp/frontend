@@ -54,7 +54,11 @@
 </script>
 
 <svelte:head>
-	<title>{title} - Nuevo Presupuesto</title>
+	{#if edit}
+		<title>{title} - Nuevo Presupuesto</title>
+	{:else}
+		<title>{title} - Editar Presupuesto</title>
+	{/if}
 </svelte:head>
 
 <nav aria-label="breadcrumb">

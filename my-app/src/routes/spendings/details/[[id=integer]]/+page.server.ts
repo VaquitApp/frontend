@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ params, url, cookies }) => {
 		amount: 0,
 		owner_id: 0,
 		date: new Date().toJSON().slice(0, 16),
-		category_name: '',
+		category_id: 0,
 		group_id
 	};
 	const groups: Group[] = await groupService.list(cookies);
@@ -29,7 +29,7 @@ export const actions: Actions = {
 		const amount = Number(data.get('amount'));
 		const dateString = data.get('date')?.toString();
 		const group_id = Number(data.get('groupId'));
-		const category_name = data.get('categoryId')?.toString();
+		const category_id = Number(data.get('categoryId'));
 		const owner_id = getUserId(cookies);
 
 		if (!description) {
@@ -41,13 +41,10 @@ export const actions: Actions = {
 		if (!dateString) {
 			throw error(400, 'Date is required');
 		}
-		if (!category_name) {
-			throw error(400, 'Category is required');
-		}
 
 		const timezoneOffset = Number(data.get('timezoneOffset')) || 0;
 		const date = fixDateString(dateString, timezoneOffset);
-		const spending: Spending = { id, amount, description, date, group_id, category_name, owner_id };
+		const spending: Spending = { id, amount, description, date, group_id, category_id, owner_id };
 		try {
 			await spendingService.save(spending, cookies);
 		} catch {

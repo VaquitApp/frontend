@@ -32,7 +32,7 @@
 		if (!spending) return;
 		data.spending.amount = spending.amount;
 		data.spending.description = spending.description;
-		data.spending.category_name = spending.category_name;
+		data.spending.category_id = spending.category_id;
 	}
 
 	async function updateCategories(groupId: number) {
@@ -82,9 +82,9 @@
 		</label>
 		<label>
 			Ingrese la categoría a la que pertenece el gasto
-			<select name="categoryId" required value={data.spending.category_name}>
+			<select name="categoryId" required value={data.spending.category_id}>
 				{#each categories as category}
-					<option value={category.name}>{category.name}</option>
+					<option value={category.id}>{category.name}</option>
 				{/each}
 			</select>
 		</label>
