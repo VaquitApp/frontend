@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { title } from '$lib';
 	import { confirmArchiveGroup } from '$lib/client/alerts';
-	import { PENCIL_SVG } from '$lib/svgs';
+	import { pencil_svg } from '$lib/svgs';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -42,7 +42,9 @@
 		<article>
 			<header class="row">
 				<b style="padding: 15px">{group.name}</b>
-				<a class="secondary" href="/groups/details/{group.id}" role="button">{@html PENCIL_SVG}</a>
+				<a class="secondary" href="/groups/details/{group.id}" role="button"
+					>{@html pencil_svg(25, 25)}</a
+				>
 			</header>
 			<p>{group.description}</p>
 			<footer class="grid">

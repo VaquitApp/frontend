@@ -13,12 +13,14 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 };
 
 function computePerCategorySpending(categories: Category[], spendings: Spending[]) {
-	const categoryMap = new Map<string, number>(categories.map((category) => [category.name, 0]));
-	spendings.forEach(({ amount, category_name }) => {
-		const acc = categoryMap.get(category_name)!;
-		categoryMap.set(category_name, acc + amount);
+	const categoryMap = new Map<number, number>(categories.map((category) => [category.id, 0]));
+	spendings.forEach(({ amount, category_id }) => {
+		const acc = categoryMap.get(category_id)!;
+		categoryMap.set(category_id, acc + amount);
 	});
-	const labels = Array.from(categoryMap.keys());
+	const labels = Array.from(categoryMap.keys()).map(
+		(id) => categories.find((c) => c.id === id)!.name
+	);
 	const values = Array.from(categoryMap.values());
 	return { labels, values };
 }
