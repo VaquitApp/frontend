@@ -15,7 +15,11 @@ type Opts = {
 	body?: string;
 };
 
-const base = env.VITE_API_URL;
+function stripTrailingSlash(url: string): string {
+	return url.endsWith('/') ? stripTrailingSlash(url.slice(0, -1)) : url;
+}
+
+const base = stripTrailingSlash(env.VITE_API_URL);
 
 async function send(method: Method, { path, data, headers = {} }: Request) {
 	const opts: Opts = { method, headers };
