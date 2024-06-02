@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { BUDGET_NEAR_LIMIT_THRESHOLD, title } from '$lib';
 	import { formatDateTimeString, formatMoney } from '$lib/formatter';
-	import { CAUTION_SVG, pencil_svg } from '$lib/svgs';
+	import { CAUTION_SVG, WARNING_SVG, pencil_svg } from '$lib/svgs';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -15,9 +15,27 @@
 	);
 	const isOverLimit = overspentCategories.length > 0;
 
-	const balanceColor = isOverLimit ? '#da3633' : null;
-	const messageList = overspentCategories.map(({ categoryName }) => `"${categoryName}"`).join(', ');
-	const tooltipInfo = `Presupuesto sobrepasado en categorías: ${messageList}`;
+	const nearlyOverspentCategories = data?.categoryBalances.filter(
+		({ budgets, spendings }) => spendings / budgets >= BUDGET_NEAR_LIMIT_THRESHOLD
+	);
+	const isNearLimit = nearlyOverspentCategories.length > 0;
+
+	let balanceColor = null;
+	let tooltipInfo = '';
+
+	if (isOverLimit) {
+		balanceColor = '#da3633';
+		const messageList = overspentCategories
+			.map(({ categoryName }) => `"${categoryName}"`)
+			.join(', ');
+		tooltipInfo = `Presupuesto sobrepasado en categorías: ${messageList}`;
+	} else if (isNearLimit) {
+		balanceColor = '#d29922';
+		const messageList = nearlyOverspentCategories
+			.map(({ categoryName }) => `"${categoryName}"`)
+			.join(', ');
+		tooltipInfo = `Presupuesto cercano al límite en categorías: ${messageList}`;
+	}
 </script>
 
 <svelte:head>
@@ -75,6 +93,11 @@
 				<span class="balance">{formatMoney(totalBalance)}</span>
 				<span hidden={!isOverLimit} class="balance no-underline" data-tooltip={tooltipInfo}
 					>{@html CAUTION_SVG}</span
+				>
+				<span
+					hidden={isOverLimit || !isNearLimit}
+					class="balance no-underline"
+					data-tooltip={tooltipInfo}>{@html WARNING_SVG}</span
 				>
 			</h3>
 		</article>
