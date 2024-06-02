@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { BUDGET_NEAR_LIMIT_THRESHOLD, title } from '$lib';
 	import { formatMoney } from '$lib/formatter';
-	import { CAUTION_SVG } from '$lib/svgs';
+	import { CAUTION_SVG, WARNING_SVG } from '$lib/svgs';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -29,7 +29,8 @@
 {#each data?.categoryBalances as balance}
 	{@const total = balance.budgets - balance.spendings}
 	{@const isOverLimit = total < 0}
-	{@const balanceColor = isOverLimit ? '#da3633' : null}
+	{@const isNearLimit = balance.spendings / balance.budgets >= BUDGET_NEAR_LIMIT_THRESHOLD}
+	{@const balanceColor = isOverLimit ? '#da3633' : isNearLimit ? '#d29922' : null}
 	<article>
 		<header class="row">
 			<p>
@@ -54,6 +55,11 @@
 						hidden={!isOverLimit}
 						class="balance no-underline"
 						data-tooltip="Presupuesto sobrepasado">{@html CAUTION_SVG}</span
+					>
+					<span
+						hidden={isOverLimit || !isNearLimit}
+						class="balance no-underline"
+						data-tooltip="Presupuesto cercano a su límite">{@html WARNING_SVG}</span
 					>
 				</h3>
 			</article>

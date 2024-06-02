@@ -20,21 +20,15 @@
 	);
 	const isNearLimit = nearlyOverspentCategories.length > 0;
 
-	let balanceColor = null;
-	let tooltipInfo = '';
+	const balanceColor = isOverLimit ? '#da3633' : isNearLimit ? '#d29922' : null;
+	const tooltipInfo = isOverLimit
+		? `Presupuesto sobrepasado en categorías: ${formatCategoryList(overspentCategories)}`
+		: isNearLimit
+			? `Presupuesto cercano al límite en categorías: ${formatCategoryList(nearlyOverspentCategories)}`
+			: '';
 
-	if (isOverLimit) {
-		balanceColor = '#da3633';
-		const messageList = overspentCategories
-			.map(({ categoryName }) => `"${categoryName}"`)
-			.join(', ');
-		tooltipInfo = `Presupuesto sobrepasado en categorías: ${messageList}`;
-	} else if (isNearLimit) {
-		balanceColor = '#d29922';
-		const messageList = nearlyOverspentCategories
-			.map(({ categoryName }) => `"${categoryName}"`)
-			.join(', ');
-		tooltipInfo = `Presupuesto cercano al límite en categorías: ${messageList}`;
+	function formatCategoryList(categoryList: { categoryName: string }[]) {
+		return categoryList.map(({ categoryName }) => `"${categoryName}"`).join(', ');
 	}
 </script>
 
