@@ -1,13 +1,23 @@
 <script lang="ts">
 	import { title } from '$lib';
 	import { formatDateTimeString, formatMoney } from '$lib/formatter';
-	import { pencil_svg } from '$lib/svgs';
+	import { CAUTION_SVG, pencil_svg } from '$lib/svgs';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
-	const totalBudgets = data.budgets.reduce((acc, budget) => acc + budget.amount, 0);
-	const totalSpendings = data.spendings.reduce((acc, spending) => acc + spending.amount, 0);
-	const balance = totalBudgets - totalSpendings;
+
+	const totalBudgets = data?.categoryBalances.reduce((acc, { budgets }) => acc + budgets, 0);
+	const totalSpendings = data?.categoryBalances.reduce((acc, { spendings }) => acc + spendings, 0);
+	const totalBalance = totalBudgets - totalSpendings;
+
+	const overspentCategories = data?.categoryBalances.filter(
+		({ budgets, spendings }) => budgets < spendings - 1
+	);
+	const isOverLimit = overspentCategories.length > 0;
+
+	const balanceColor = isOverLimit ? '#da3633' : null;
+	const messageList = overspentCategories.map(({ categoryName }) => `"${categoryName}"`).join(', ');
+	const tooltipInfo = `Presupuesto sobrepasado en categorías: ${messageList}`;
 </script>
 
 <svelte:head>
@@ -61,16 +71,24 @@
 		</article>
 		<article>
 			<header>Balance</header>
-			<h3>{formatMoney(balance)}</h3>
+			<h3 style="color: {balanceColor}">
+				<span class="balance">{formatMoney(totalBalance)}</span>
+				<span hidden={!isOverLimit} class="balance no-underline" data-tooltip={tooltipInfo}
+					>{@html CAUTION_SVG}</span
+				>
+			</h3>
 		</article>
 	</div>
 	<div>
 		Categorías:
 		{#each data.categories as category}
 			<div style="width: auto" role="group">
-				<button class="btn-sm outline"> {category.name} </button>
-				<a class="btn-sm" href="/categories/details/{category.id}" role="button"
-					>{@html pencil_svg(12, 12)}</a
+				<button class="btn-sm outline" style="margin-right: 0px"> {category.name} </button>
+				<a
+					class="btn-sm"
+					style="margin-left: 0px"
+					href="/categories/details/{category.id}"
+					role="button">{@html pencil_svg(12, 12)}</a
 				>
 			</div>
 		{/each}
@@ -80,6 +98,8 @@
 {#each data.spendings as spending}
 	<article class="grid">
 		<p>{formatDateTimeString(spending.date)}</p>
+		<!-- TODO: show category name -->
+		<p>{spending.category_id}</p>
 		<p>{spending.description}</p>
 		<p class="text-right">{formatMoney(spending.amount)}</p>
 	</article>
@@ -100,5 +120,13 @@
 		font-size: small;
 		padding: 0.5em;
 		margin: 0.3em;
+	}
+
+	.balance {
+		display: inline-block;
+	}
+
+	.no-underline {
+		border-bottom: 0px;
 	}
 </style>

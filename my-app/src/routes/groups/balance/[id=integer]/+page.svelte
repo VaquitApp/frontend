@@ -44,7 +44,7 @@
 	<p>Tu balance</p>
 	<p class="text-right">
 		<span style="color: {balanceColor(data?.userBalance)}">{formatMoney(data?.userBalance)}</span>
-		<span data-tooltip={personalBalanceTooltip} style="border-bottom: 0px">{@html INFO_SVG}</span>
+		<span class="no-underline" data-tooltip={personalBalanceTooltip}>{@html INFO_SVG}</span>
 	</p>
 </article>
 
@@ -53,8 +53,7 @@
 		<p>{email}</p>
 		<p class="text-right">
 			<span style="color: {balanceColor(balance)}">{formatMoney(balance)}</span>
-			<span data-tooltip={balanceTooltip(balance)} style="border-bottom: 0px">{@html INFO_SVG}</span
-			>
+			<span class="no-underline" data-tooltip={balanceTooltip(balance)}>{@html INFO_SVG}</span>
 		</p>
 	</article>
 {/each}
@@ -68,5 +67,9 @@
 
 	.text-right {
 		text-align: right;
+	}
+
+	.no-underline {
+		border-bottom: 0px;
 	}
 </style>
