@@ -11,7 +11,7 @@
 	const totalBalance = totalBudgets - totalSpendings;
 
 	const overspentCategories = data?.categoryBalances.filter(
-		({ budgets, spendings }) => budgets < spendings - 1
+		({ budgets, spendings }) => budgets < spendings
 	);
 	const isOverLimit = overspentCategories.length > 0;
 
