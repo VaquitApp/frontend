@@ -8,11 +8,19 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
 	const budgets: Budget[] = await budgetService.list(id, cookies);
 	const categories: Category[] = await categoryService.list(id, cookies);
 
-	const categoryBalances: CategoryBalance[] = computeBalancesPerCategory(spendings, budgets, categories);
+	const categoryBalances: CategoryBalance[] = computeBalancesPerCategory(
+		spendings,
+		budgets,
+		categories
+	);
 	return { group, spendings, budgets, categories, categoryBalances };
 };
 
-function computeBalancesPerCategory(spendingsList: Spending[], budgetsList: Budget[], categories: Category[]) {
+function computeBalancesPerCategory(
+	spendingsList: Spending[],
+	budgetsList: Budget[],
+	categories: Category[]
+) {
 	var balances = [];
 	for (const category of categories) {
 		const spendings = computeTotal(spendingsList, category.id);
@@ -29,6 +37,8 @@ function computeBalancesPerCategory(spendingsList: Spending[], budgetsList: Budg
 	return balances;
 }
 
-function computeTotal(objects: { category_id: Id, amount: number }[], categoryId: Id) {
-	return objects.filter(({ category_id }) => category_id == categoryId).reduce((acc, { amount }) => acc + amount, 0);
+function computeTotal(objects: { category_id: Id; amount: number }[], categoryId: Id) {
+	return objects
+		.filter(({ category_id }) => category_id == categoryId)
+		.reduce((acc, { amount }) => acc + amount, 0);
 }

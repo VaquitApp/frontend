@@ -61,11 +61,11 @@ declare global {
 	};
 	type CategoryBalance = {
 		categoryId: Id;
-		categoryName: string
+		categoryName: string;
 		categoryDescription: string;
 		budgets: number;
 		spendings: number;
 	};
 }
 
-export { };
+export {};

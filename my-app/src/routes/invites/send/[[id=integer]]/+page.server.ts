@@ -33,5 +33,5 @@ export const actions: Actions = {
 		const email = data.get('email')?.toString()!;
 		groupService.addMember(group_id, email, cookies);
 		redirect(302, `/groups/members/${group_id}`);
-	},
+	}
 };
