@@ -71,7 +71,9 @@ export const groupService = {
 		put(`group/${id}/archive`, undefined!, getAuthHeader(cookies)),
 	unarchive: (id: Id, cookies: Cookies) =>
 		put(`group/${id}/unarchive`, undefined!, getAuthHeader(cookies)),
-	listAllMembers: (id: Id, cookies: Cookies) => get(`group/${id}/member`, getAuthHeader(cookies))
+	listAllMembers: (id: Id, cookies: Cookies) => get(`group/${id}/member`, getAuthHeader(cookies)),
+	listAllMemberBalances: (id: Id, cookies: Cookies) =>
+		get(`group/${id}/balance`, getAuthHeader(cookies))
 };
 export const spendingService = {
 	save: (data: Spending, cookies: Cookies) =>

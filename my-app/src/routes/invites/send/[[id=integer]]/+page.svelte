@@ -2,18 +2,17 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	const pageTitle = `Invitar`;
 </script>
 
 <svelte:head>
-	<title>{data.group.name} - {pageTitle}</title>
+	<title>{data.group.name} - Invitar</title>
 </svelte:head>
 
 <nav aria-label="breadcrumb">
 	<ul>
 		<li><a href="/groups">Grupos</a></li>
-		<li>Invitaciones</li>
-		<li>Enviar</li>
+		<li><a href="/groups/members/{data.group.id}">Miembros</a></li>
+		<li>Invitar</li>
 	</ul>
 </nav>
 

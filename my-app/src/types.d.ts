@@ -53,6 +53,12 @@ declare global {
 	type AcceptInvite = {
 		token: string;
 	};
+	type Balance = {
+		id: Id;
+		user_id: Id;
+		group_id: Id;
+		current_balance: number;
+	};
 }
 
 export {};
