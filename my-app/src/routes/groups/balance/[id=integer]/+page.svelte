@@ -12,13 +12,13 @@
 	}
 	export const personalBalanceTooltip =
 		data?.userBalance < 0
-			? 'You owe money'
+			? 'Les debes dinero'
 			: data?.userBalance > 0
-				? 'You are owed money'
-				: 'You are even';
+				? 'Te deben dinero'
+				: 'Están a mano';
 
 	export function balanceTooltip(balance: number) {
-		return balance > 0 ? 'You owe them' : balance < 0 ? 'They owe you' : 'You are even';
+		return balance > 0 ? 'Le debes dinero' : balance < 0 ? 'Te debe dinero' : 'Están a mano';
 	}
 </script>
 
@@ -41,7 +41,7 @@
 </header>
 
 <article class="grid">
-	<p>Your balance</p>
+	<p>Tu balance</p>
 	<p class="text-right">
 		<span style="color: {balanceColor(data?.userBalance)}">{formatMoney(data?.userBalance)}</span>
 		<span data-tooltip={personalBalanceTooltip} style="border-bottom: 0px">{@html INFO_SVG}</span>

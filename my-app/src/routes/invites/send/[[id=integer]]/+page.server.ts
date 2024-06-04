@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ cookies, request, params }) => {
+	submit: async ({ cookies, request, params }) => {
 		const group_id = Number(params.id) || 0;
 		const data = await request.formData();
 		const email = data.get('email')?.toString();
@@ -26,5 +26,12 @@ export const actions: Actions = {
 		};
 		await inviteService.send(invite, cookies);
 		redirect(302, `/groups/members/${group_id}`);
-	}
+	},
+	devSubmit: async ({ params, request, cookies }) => {
+		const group_id = Number(params.id) || 0;
+		const data = await request.formData();
+		const email = data.get('email')?.toString()!;
+		groupService.addMember(group_id, email, cookies);
+		redirect(302, `/groups/members/${group_id}`);
+	},
 };
