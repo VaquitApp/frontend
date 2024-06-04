@@ -19,7 +19,7 @@ export const actions: Actions = {
 		const data = await request.formData();
 		const name = data.get('name')?.toString();
 		const description = data.get('description')?.toString();
-		const group_id = data.get('groupId')?.toString();
+		const group_id = Number(data.get('groupId'));
 		const strategy = '';
 
 		if (!name) {

@@ -74,7 +74,8 @@ export const groupService = {
 	listAllMembers: (id: Id, cookies: Cookies) => get(`group/${id}/member`, getAuthHeader(cookies)),
 	listAllMemberBalances: (id: Id, cookies: Cookies) =>
 		get(`group/${id}/balance`, getAuthHeader(cookies)),
-	addMember: (id: Id, user_identifier: Id | string, cookies: Cookies) => post(`group/${id}/member`, { user_identifier }, getAuthHeader(cookies)),
+	addMember: (id: Id, user_identifier: Id | string, cookies: Cookies) =>
+		post(`group/${id}/member`, { user_identifier }, getAuthHeader(cookies))
 };
 export const spendingService = {
 	save: (data: Spending, cookies: Cookies) =>

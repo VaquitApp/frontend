@@ -59,6 +59,13 @@ declare global {
 		group_id: Id;
 		current_balance: number;
 	};
+	type CategoryBalance = {
+		categoryId: Id;
+		categoryName: string;
+		categoryDescription: string;
+		budgets: number;
+		spendings: number;
+	};
 }
 
 export {};

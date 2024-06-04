@@ -40,6 +40,7 @@
 	<article>
 		<header class="row">
 			<b>{budget.description}</b>
+			<!-- TODO: show category name -->
 			<p>Categoría: {budget.category_id}</p>
 		</header>
 		<div class="grid">
