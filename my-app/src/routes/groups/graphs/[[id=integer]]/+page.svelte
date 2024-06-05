@@ -6,8 +6,8 @@
 
 	export let data: PageData;
 
-	export const loadGraph: Action<HTMLCanvasElement> = (canvas) => {
-		const { labels, values } = data?.graphData;
+	export const loadSpendingsByCategoryGraph: Action<HTMLCanvasElement> = (canvas) => {
+		const { labels, values } = data?.graphData.spendingSumByCategory;
 		const label = 'Gastos por categoría';
 		// NOTE: this is to have each bar be a different color
 		const datasets = values.map((v, i) => {
@@ -26,6 +26,25 @@
 				scales: { x: { stacked: true }, y: { stacked: true } }
 			},
 			data: { labels, datasets }
+		});
+		return { destroy: () => chart.destroy() };
+	};
+
+	export const loadSpendingsOverTimeGraph: Action<HTMLCanvasElement> = (canvas) => {
+		const { labels, datasets } = data?.graphData.spendingsOverTime;
+
+		const prettyDatasets = datasets.map((dataset) => {
+			return { ...dataset, tension: 0.1 };
+		});
+
+		const chart = new Chart(canvas, {
+			type: 'line',
+			options: {
+				plugins: {
+					colors: { enabled: true, forceOverride: true }
+				}
+			},
+			data: { labels, datasets: prettyDatasets }
 		});
 		return { destroy: () => chart.destroy() };
 	};
@@ -50,4 +69,26 @@
 	</div>
 </header>
 
-<div style="width: 600px;"><canvas use:loadGraph></canvas></div>
+<div class="row">
+	<div>
+		<h4>Gastos por categoría</h4>
+		<div style="width: 600px;"><canvas use:loadSpendingsByCategoryGraph></canvas></div>
+	</div>
+	<!-- spacing -->
+	<span style="padding: 24px"></span>
+	<div>
+		<h4>Consumo a través del tiempo</h4>
+		<div style="width: 600px;"><canvas use:loadSpendingsOverTimeGraph></canvas></div>
+	</div>
+</div>
+
+<!-- to allow scrolling down a bit -->
+<div style="padding: 100px"></div>
+
+<style>
+	.row {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+</style>
