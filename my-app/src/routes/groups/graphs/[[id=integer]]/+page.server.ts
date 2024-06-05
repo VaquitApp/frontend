@@ -1,5 +1,5 @@
 import { formatDateString } from '$lib/formatter';
-import { categoryService, groupService, spendingService } from '$lib/server/api';
+import { budgetService, categoryService, groupService, spendingService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
@@ -9,7 +9,8 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 		: { name: '', description: '', id: 0, owner_id: 0, is_archived: false };
 	const categories = await categoryService.list(id, cookies);
 	const spendings = await spendingService.list(id, cookies);
-	const graphData = computeGraphData(categories, spendings);
+	const budgets = await budgetService.list(id, cookies);
+	const graphData = computeGraphData(categories, spendings, budgets);
 	return { group, graphData };
 };
 
@@ -22,7 +23,7 @@ function computeSpendingsByCategory(categories: Category[], spendings: Spending[
 	return categoryMap;
 }
 
-function computeGraphData(categories: Category[], spendings: Spending[]) {
+function computeGraphData(categories: Category[], spendings: Spending[], budgets: Budget[]) {
 	const spendingsByCategory = computeSpendingsByCategory(categories, spendings);
 	const labels = Array.from(spendingsByCategory.keys()).map(
 		(id) => categories.find((c) => c.id === id)!.name
@@ -33,7 +34,8 @@ function computeGraphData(categories: Category[], spendings: Spending[]) {
 	const spendingSumByCategory = { labels, values };
 
 	const spendingsOverTime = computeSpendingsOverTime(categories, spendings, spendingsByCategory);
-	return { spendingSumByCategory, spendingsOverTime };
+	const balanceOverTime = computeBalanceOverTime(spendings, budgets);
+	return { spendingSumByCategory, spendingsOverTime, balanceOverTime };
 }
 
 function computeSpendingsOverTime(
@@ -53,20 +55,16 @@ function computeSpendingsOverTime(
 			spendings,
 			new Map<string, number>(emptySpendingsByDate)
 		);
-		const sorted = [...spendingsByDate.entries()].sort(
-			([d0, v0], [d1, v1]) => Date.parse(d0) - Date.parse(d1)
-		);
-		const data = sorted.map(([_, v]) => v);
+		const sorted = [...spendingsByDate.entries()].sort(sortDateTuples);
+		const data = sorted.map(([, v]) => v);
 		return { label, data };
 	});
-	const sorted = [...globalSpendingsByDate.entries()].sort(
-		([d0, v0], [d1, v1]) => Date.parse(d0) - Date.parse(d1)
-	);
-	const data = sorted.map(([_, v]) => v);
+	const sorted = [...globalSpendingsByDate.entries()].sort(sortDateTuples);
+	const data = sorted.map(([, v]) => v);
 
 	datasets.push({ label: 'Total', data });
 
-	const labels = sorted.map(([d, _]) => d);
+	const labels = sorted.map(([d]) => d);
 
 	return { labels, datasets };
 }
@@ -78,4 +76,31 @@ function computeSpendingsByDate(spendings: Spending[], spendingsByDate: Map<stri
 		spendingsByDate.set(date, acc + spending.amount);
 	});
 	return spendingsByDate;
+}
+
+function sortDateTuples([date0]: [string, any], [date1]: [string, any]) {
+	return sortDates(date0, date1);
+}
+function sortDates(date0: string, date1: string) {
+	return Date.parse(date0) - Date.parse(date1);
+}
+
+function computeBalanceOverTime(spendings: Spending[], budgets: Budget[]) {
+	// TODO: split this by category
+	const spendingsByDate = computeSpendingsByDate(spendings, new Map<string, number>());
+	const totalBudget = budgets.reduce((acc, b) => acc + b.amount, 0);
+
+	let acc = 0;
+	const balanceByDate = [...spendingsByDate.entries()]
+		.sort(sortDateTuples)
+		.map(([date, spendingAmount]) => {
+			acc += spendingAmount;
+			return [date, totalBudget - acc];
+		});
+
+	const data = balanceByDate.map(([, balance]) => balance);
+	const datasets = [{ label: 'Total', data }];
+	const labels = balanceByDate.map(([date]) => date);
+
+	return { labels, datasets };
 }
