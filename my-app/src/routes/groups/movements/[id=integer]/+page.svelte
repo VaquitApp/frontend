@@ -55,6 +55,7 @@
 			<ul>
 				<li><a href="/groups/balance/{data.group.id}">Estado de cuenta grupal</a></li>
 				<li><a href="/groups/graphs/{data.group.id}">Gráficos de finanzas</a></li>
+				<li><a href="/groups/aggregations/{data.group.id}">Agregación por fecha</a></li>
 			</ul>
 		</details>
 		<details class="dropdown" style="margin-left: 10px">
