@@ -20,8 +20,6 @@ export const actions: Actions = {
 
         const filteredSpendings = spendings.filter((spending: Spending) => {
 			const spendingDate = new Date(spending.date.slice(0,10)); //removing timezone
-			console.log(spendingDate, ">=", dateIni)
-			console.log(spendingDate, "<=", dateFin)
 			return spendingDate >= dateIni && spendingDate <= dateFin;
 		});
 
