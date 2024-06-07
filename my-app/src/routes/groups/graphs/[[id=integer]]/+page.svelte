@@ -114,7 +114,7 @@
 	<!-- spacing -->
 	<!-- <span style="padding: 24px"></span> -->
 	<div>
-		<h4>Balance a través del tiempo</h4>
+		<h4>Saldo a través del tiempo</h4>
 		<div style="width: 600px;"><canvas use:loadBalanceOverTimeGraph></canvas></div>
 	</div>
 </div>
