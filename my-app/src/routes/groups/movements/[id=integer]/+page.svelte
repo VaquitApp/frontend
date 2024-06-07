@@ -83,7 +83,7 @@
 			<h3>{formatMoney(totalSpendings)}</h3>
 		</article>
 		<article>
-			<header><a href="/groups/categoryBalance/{data.group.id}">Balance</a></header>
+			<header><a href="/groups/categoryBalance/{data.group.id}">Saldo</a></header>
 			<h3 style="color: {balanceColor}">
 				<span class="balance">{formatMoney(totalBalance)}</span>
 				<span hidden={!isOverLimit} class="balance no-underline" data-tooltip={tooltipInfo}

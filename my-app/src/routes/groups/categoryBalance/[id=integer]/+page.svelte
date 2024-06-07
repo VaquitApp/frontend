@@ -15,13 +15,13 @@
 	<ul>
 		<li><a href="/groups">Grupos</a></li>
 		<li><a href="/groups/movements/{data.group.id}">{data.group.name}</a></li>
-		<li>Balances por categoría</li>
+		<li>Saldos por categoría</li>
 	</ul>
 </nav>
 
 <header class="row">
 	<div>
-		<h2>Balances por categoría</h2>
+		<h2>Saldos por categoría</h2>
 		<p>{data.group.description}</p>
 	</div>
 </header>
@@ -48,7 +48,7 @@
 				<h3>{formatMoney(balance.spendings)}</h3>
 			</article>
 			<article>
-				<header>Balance</header>
+				<header>Saldo</header>
 				<h3 style="color: {balanceColor}">
 					<span class="balance">{formatMoney(total)}</span>
 					<span
