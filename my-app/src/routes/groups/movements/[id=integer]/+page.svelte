@@ -65,6 +65,7 @@
 				<li><a href="/spendings/details?groupId={data.group.id}">Añadir gasto</a></li>
 				<li><a href="/budgets/details?groupId={data.group.id}">Añadir presupuesto</a></li>
 				<li><a href="/categories/details?groupId={data.group.id}">Añadir categoría</a></li>
+				<li><a href="/payments/details?groupId={data.group.id}">Añadir pago</a></li>
 			</ul>
 		</details>
 	</div>

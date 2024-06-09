@@ -36,6 +36,14 @@ declare global {
 		amount: number;
 		date: string;
 	};
+	type Payment = {
+		id: Id;
+		group_id: Id;
+		from_id: Id;
+		to_id: Id;
+		amount: number;
+		date: string;
+	};
 	type Invite = {
 		id: Id;
 		sender_id: Id;
@@ -68,4 +76,4 @@ declare global {
 	};
 }
 
-export {};
+export { };
