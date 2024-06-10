@@ -1,4 +1,4 @@
-import { budgetService, categoryService, groupService, spendingService } from '$lib/server/api';
+import { budgetService, categoryService, groupService, paymentService, spendingService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ cookies, params }) => {
@@ -7,13 +7,14 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
 	const spendings: Spending[] = await spendingService.list(id, cookies);
 	const budgets: Budget[] = await budgetService.list(id, cookies);
 	const categories: Category[] = await categoryService.list(id, cookies);
+	const payments: Payment[] = await paymentService.list(id, cookies);
 
 	const categoryBalances: CategoryBalance[] = computeBalancesPerCategory(
 		spendings,
 		budgets,
 		categories
 	);
-	return { group, spendings, budgets, categories, categoryBalances };
+	return { group, spendings, payments, budgets, categories, categoryBalances };
 };
 
 function computeBalancesPerCategory(

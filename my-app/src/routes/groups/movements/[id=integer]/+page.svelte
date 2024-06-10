@@ -6,6 +6,9 @@
 
 	export let data: PageServerData;
 
+	const movements = [...data.spendings, ...data.payments];
+	movements.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+
 	const totalBudgets = data?.categoryBalances.reduce((acc, { budgets }) => acc + budgets, 0);
 	const totalSpendings = data?.categoryBalances.reduce((acc, { spendings }) => acc + spendings, 0);
 	const totalBalance = totalBudgets - totalSpendings;
@@ -114,14 +117,25 @@
 	</div>
 </article>
 
-{#each data.spendings as spending}
-	<article class="grid">
-		<p>{formatDateTimeString(spending.date)}</p>
-		<!-- TODO: show category name -->
-		<p>{spending.category_id}</p>
-		<p>{spending.description}</p>
-		<p class="text-right">{formatMoney(spending.amount)}</p>
-	</article>
+{#each movements as movement}
+	{#if 'category_id' in movement}
+		{@const spending = movement}
+		<article class="grid">
+			<p>{formatDateTimeString(spending.date)}</p>
+			<!-- TODO: show category name -->
+			<p>{spending.category_id}</p>
+			<p>{spending.description}</p>
+			<p class="text-right">{formatMoney(spending.amount)}</p>
+		</article>
+	{:else}
+		{@const payment = movement}
+		<article class="grid">
+			<p>{formatDateTimeString(payment.date)}</p>
+			<!-- TODO: show user email -->
+			<p>{payment.from_id} → {payment.to_id}</p>
+			<p class="text-right">{formatMoney(payment.amount)}</p>
+		</article>
+	{/if}
 {/each}
 
 <style>
