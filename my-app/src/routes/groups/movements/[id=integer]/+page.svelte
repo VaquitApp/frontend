@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { BUDGET_NEAR_LIMIT_THRESHOLD, title } from '$lib';
 	import { formatDateTimeString, formatMoney } from '$lib/formatter';
-	import { CAUTION_SVG, WARNING_SVG, pencil_svg } from '$lib/svgs';
+	import { ARROW_DOLLAR_SVG, CAUTION_SVG, WARNING_SVG, pencil_svg } from '$lib/svgs';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -126,11 +126,20 @@
 	</div>
 </article>
 
+<article class="grid">
+	<b>Fecha</b>
+	<b>Pago/Gasto</b>
+	<b>De/Categoría</b>
+	<b>A/Descripción</b>
+	<b class="text-right">Monto</b>
+</article>
+
 {#each movements as movement}
 	{#if 'category_id' in movement}
 		{@const spending = movement}
 		<article class="grid">
 			<p>{formatDateTimeString(spending.date)}</p>
+			<p>Gasto</p>
 			<p>{getCategoryNameById(spending.category_id)}</p>
 			<p>{spending.description}</p>
 			<p class="text-right">{formatMoney(spending.amount)}</p>
@@ -139,7 +148,11 @@
 		{@const payment = movement}
 		<article class="grid">
 			<p>{formatDateTimeString(payment.date)}</p>
-			<p>{getUserEmailById(payment.from_id)} → {getUserEmailById(payment.to_id)}</p>
+			<p>Pago</p>
+			<p>
+				{getUserEmailById(payment.from_id)} &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; {@html ARROW_DOLLAR_SVG}
+			</p>
+			<p>{getUserEmailById(payment.to_id)}</p>
 			<p class="text-right">{formatMoney(payment.amount)}</p>
 		</article>
 	{/if}
