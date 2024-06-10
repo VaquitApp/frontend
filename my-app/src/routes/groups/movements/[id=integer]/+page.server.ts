@@ -1,4 +1,10 @@
-import { budgetService, categoryService, groupService, paymentService, spendingService } from '$lib/server/api';
+import {
+	budgetService,
+	categoryService,
+	groupService,
+	paymentService,
+	spendingService
+} from '$lib/server/api';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ cookies, params }) => {
