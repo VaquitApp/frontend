@@ -8,13 +8,14 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
 	const budgets: Budget[] = await budgetService.list(id, cookies);
 	const categories: Category[] = await categoryService.list(id, cookies);
 	const payments: Payment[] = await paymentService.list(id, cookies);
+	const members: User[] = await groupService.listAllMembers(id, cookies);
 
 	const categoryBalances: CategoryBalance[] = computeBalancesPerCategory(
 		spendings,
 		budgets,
 		categories
 	);
-	return { group, spendings, payments, budgets, categories, categoryBalances };
+	return { group, spendings, payments, budgets, categories, members, categoryBalances };
 };
 
 function computeBalancesPerCategory(

@@ -33,6 +33,15 @@
 	function formatCategoryList(categoryList: { categoryName: string }[]) {
 		return categoryList.map(({ categoryName }) => `"${categoryName}"`).join(', ');
 	}
+
+	const categoryNameById = Object.fromEntries(data.categories.map(({ id, name }) => [id, name]));
+	function getCategoryNameById(id: number) {
+		return categoryNameById[id];
+	}
+	const userEmailById = Object.fromEntries(data.members.map(({ id, email }) => [id, email]));
+	function getUserEmailById(id: number) {
+		return userEmailById[id];
+	}
 </script>
 
 <svelte:head>
@@ -122,8 +131,7 @@
 		{@const spending = movement}
 		<article class="grid">
 			<p>{formatDateTimeString(spending.date)}</p>
-			<!-- TODO: show category name -->
-			<p>{spending.category_id}</p>
+			<p>{getCategoryNameById(spending.category_id)}</p>
 			<p>{spending.description}</p>
 			<p class="text-right">{formatMoney(spending.amount)}</p>
 		</article>
@@ -131,8 +139,7 @@
 		{@const payment = movement}
 		<article class="grid">
 			<p>{formatDateTimeString(payment.date)}</p>
-			<!-- TODO: show user email -->
-			<p>{payment.from_id} → {payment.to_id}</p>
+			<p>{getUserEmailById(payment.from_id)} → {getUserEmailById(payment.to_id)}</p>
 			<p class="text-right">{formatMoney(payment.amount)}</p>
 		</article>
 	{/if}
