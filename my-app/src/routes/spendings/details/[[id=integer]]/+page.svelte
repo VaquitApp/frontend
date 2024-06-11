@@ -2,7 +2,7 @@
 	import { title } from '$lib';
 	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
-	import { formatMoney } from '$lib/formatter';
+	import { fixDateString, formatMoney } from '$lib/formatter';
 
 	export let data: PageServerData;
 	let timezoneOffset = 0;
@@ -48,6 +48,7 @@
 
 	onMount(async () => {
 		timezoneOffset = new Date().getTimezoneOffset();
+		data.spending.date = fixDateString(data.spending.date, timezoneOffset).slice(0, 16);
 		await onGroupUpdate(data.spending.group_id);
 	});
 </script>
@@ -72,7 +73,7 @@
 			<select
 				name="groupId"
 				required
-				bind:value={data.spending.group_id}
+				value={data.spending.group_id}
 				on:change={(e) => onGroupUpdate(+e.currentTarget.value)}
 			>
 				{#each data.groups as group}
@@ -96,7 +97,7 @@
 				placeholder="Descripción"
 				list="description-list"
 				required
-				bind:value={data.spending.description}
+				value={data.spending.description}
 				on:change={(e) => autocomplete(e.currentTarget.value)}
 			/>
 			<datalist id="description-list">
@@ -107,22 +108,17 @@
 		</label>
 		<label>
 			Ingrese un monto para el gasto
-			<input
-				type="text"
-				name="amount"
-				placeholder="Monto"
-				required
-				bind:value={data.spending.amount}
-			/>
+			<input type="text" name="amount" placeholder="Monto" required value={data.spending.amount} />
 		</label>
 		<label>
-			Ingrese la fecha del gasto
+			Fecha del gasto
 			<input
 				type="datetime-local"
 				name="date"
 				placeholder="Fecha"
 				required
-				bind:value={data.spending.date}
+				readonly
+				value={data.spending.date}
 			/>
 		</label>
 		<button>Crear</button>
