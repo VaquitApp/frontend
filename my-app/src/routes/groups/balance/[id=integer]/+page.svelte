@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { title } from '$lib';
 	import { formatMoney } from '$lib/formatter';
-	import { INFO_SVG } from '$lib/svgs';
+	import { BELL_SVG, INFO_SVG } from '$lib/svgs';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -50,7 +50,15 @@
 
 {#each data?.balances as { email, balance }}
 	<article class="grid">
-		<p>{email}</p>
+		<p>
+			{email}
+			<button
+				class="outline secondary bell"
+				data-tooltip="Enviar recordatorio"
+				disabled={balance >= 0}
+				on:click={() => alert('WIP')}>{@html BELL_SVG}</button
+			>
+		</p>
 		<p class="text-right">
 			<span style="color: {balanceColor(balance)}">{formatMoney(balance)}</span>
 			<span class="no-underline" data-tooltip={balanceTooltip(balance)}>{@html INFO_SVG}</span>
@@ -71,5 +79,10 @@
 
 	.no-underline {
 		border-bottom: 0px;
+	}
+
+	.bell {
+		width: 32px;
+		padding: 0px;
 	}
 </style>
