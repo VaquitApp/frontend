@@ -30,6 +30,17 @@
 	function formatCategoryList(categoryList: { categoryName: string }[]) {
 		return categoryList.map(({ categoryName }) => `"${categoryName}"`).join(', ');
 	}
+
+	let categoryFilters: Id[] = [];
+	$: filteredSpendings = data.spendings.filter(
+		(s) => categoryFilters.length === 0 || categoryFilters.includes(s.category_id)
+	);
+
+	function toggleCategoryFilter(categoryId: Id, shouldFilter: boolean) {
+		categoryFilters = shouldFilter
+			? [...categoryFilters, categoryId]
+			: categoryFilters.filter((id) => id !== categoryId);
+	}
 </script>
 
 <svelte:head>
@@ -100,10 +111,15 @@
 	<div>
 		Categorías:
 		{#each data.categories as category}
-			<div style="width: auto" role="group">
-				<button class="btn-sm outline" style="margin-right: 0px"> {category.name} </button>
+			{@const active = categoryFilters.includes(category.id)}
+			<div style="width: auto; vertical-align: baseline;" role="group">
+				<button
+					on:click={() => toggleCategoryFilter(category.id, !active)}
+					class="btn-sm {!active ? 'outline' : ''}"
+					style="margin-right: 0px">{category.name}</button
+				>
 				<a
-					class="btn-sm"
+					class="btn-sm {!active ? 'outline' : ''}"
 					style="margin-left: 0px"
 					href="/categories/details/{category.id}"
 					role="button">{@html pencil_svg(12, 12)}</a
@@ -113,7 +129,7 @@
 	</div>
 </article>
 
-{#each data.spendings as spending}
+{#each filteredSpendings as spending}
 	<article class="grid">
 		<p>{formatDateTimeString(spending.date)}</p>
 		<!-- TODO: show category name -->
