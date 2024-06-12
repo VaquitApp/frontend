@@ -26,7 +26,6 @@ export function computeGraphDataWithFilters(data: InputData, filters: Filters) {
 	});
 	categories = categories.filter((c) => spendings.some((s) => s.category_id === c.id));
 
-	console.log(spendings.length);
 	return computeGraphData(categories, spendings, budgets);
 }
 
