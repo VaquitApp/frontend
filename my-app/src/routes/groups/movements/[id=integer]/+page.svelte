@@ -91,8 +91,13 @@
 			<summary role="button">Añadir</summary>
 			<ul>
 				<li><a href="/unique_spendings/details?groupId={data.group.id}">Añadir gasto unico</a></li>
-				<li><a href="/installment_spendings/details?groupId={data.group.id}">Añadir gasto en cuotas</a></li>
-				<li><a href="/recurring_spendings/details?groupId={data.group.id}">Añadir gasto recurrente</a></li>
+				<li>
+					<a href="/installment_spendings/details?groupId={data.group.id}">Añadir gasto en cuotas</a
+					>
+				</li>
+				<li>
+					<a href="/recurring_spendings/details?groupId={data.group.id}">Añadir gasto recurrente</a>
+				</li>
 				<li><a href="/budgets/details?groupId={data.group.id}">Añadir presupuesto</a></li>
 				<li><a href="/categories/details?groupId={data.group.id}">Añadir categoría</a></li>
 				<li><a href="/payments/details?groupId={data.group.id}">Añadir pago</a></li>

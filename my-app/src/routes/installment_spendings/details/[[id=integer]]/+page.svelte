@@ -112,7 +112,13 @@
 		</label>
 		<label>
 			Ingrese la cantidad de cuotas
-			<input type="text" name="amountOfInstallments" placeholder="Cuotas" required value={data.spending.amount_of_installments} />
+			<input
+				type="text"
+				name="amountOfInstallments"
+				placeholder="Cuotas"
+				required
+				value={data.spending.amount_of_installments}
+			/>
 		</label>
 		<label>
 			Fecha del gasto en cuotas

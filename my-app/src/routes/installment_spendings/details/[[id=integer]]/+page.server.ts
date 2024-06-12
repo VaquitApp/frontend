@@ -46,9 +46,18 @@ export const actions: Actions = {
 
 		const timezoneOffset = Number(data.get('timezoneOffset')) || 0;
 		const date = fixDateString(dateString, timezoneOffset);
-		const spending: InstallmentSpending = { id, amount, description, date, group_id, category_id, amount_of_installments, owner_id };
+		const spending: InstallmentSpending = {
+			id,
+			amount,
+			description,
+			date,
+			group_id,
+			category_id,
+			amount_of_installments,
+			owner_id
+		};
 		try {
-			await spendingService.save_installment_spending(spending, cookies);
+			await spendingService.saveInstallmentSpending(spending, cookies);
 		} catch {
 			return { success: false };
 		}

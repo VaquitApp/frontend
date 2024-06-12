@@ -44,9 +44,17 @@ export const actions: Actions = {
 
 		const timezoneOffset = Number(data.get('timezoneOffset')) || 0;
 		const date = fixDateString(dateString, timezoneOffset);
-		const spending: UniqueSpending = { id, amount, description, date, group_id, category_id, owner_id };
+		const spending: UniqueSpending = {
+			id,
+			amount,
+			description,
+			date,
+			group_id,
+			category_id,
+			owner_id
+		};
 		try {
-			await spendingService.save_unique_spending(spending, cookies);
+			await spendingService.saveUniqueSpending(spending, cookies);
 		} catch {
 			return { success: false };
 		}

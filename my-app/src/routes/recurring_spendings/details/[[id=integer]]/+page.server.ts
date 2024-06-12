@@ -44,9 +44,17 @@ export const actions: Actions = {
 
 		const timezoneOffset = Number(data.get('timezoneOffset')) || 0;
 		const date = fixDateString(dateString, timezoneOffset);
-		const spending: RecurringSpending = { id, amount, description, date, group_id, category_id, owner_id };
+		const spending: RecurringSpending = {
+			id,
+			amount,
+			description,
+			date,
+			group_id,
+			category_id,
+			owner_id
+		};
 		try {
-			await spendingService.save_recurring_spending(spending, cookies);
+			await spendingService.saveRecurringSpending(spending, cookies);
 		} catch {
 			return { success: false };
 		}

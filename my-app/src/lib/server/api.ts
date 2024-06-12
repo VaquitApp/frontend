@@ -78,25 +78,27 @@ export const groupService = {
 		post(`group/${id}/member`, { user_identifier }, getAuthHeader(cookies))
 };
 export const spendingService = {
-	save: (data: Spending, cookies: Cookies) =>
-		data.id > 0
-			? put(`spending/${data.id}`, data, getAuthHeader(cookies))
-			: post('spending', data, getAuthHeader(cookies)),
 	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/spending`, getAuthHeader(cookies)),
-	
-	save_unique_spending: (data: UniqueSpending, cookies: Cookies) => post('unique-spending', data, getAuthHeader(cookies)),
-	list_unique_spendings: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/unique-spending`, getAuthHeader(cookies)),
 
-	save_installment_spending: (data: InstallmentSpending, cookies: Cookies) => post('installment-spending', data, getAuthHeader(cookies)),
-	list_installment_spendings: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/installment-spending`, getAuthHeader(cookies)),
-	
-	save_recurring_spending: (data: RecurringSpending, cookies: Cookies) =>
+	saveUniqueSpending: (data: UniqueSpending, cookies: Cookies) =>
+		post('unique-spending', data, getAuthHeader(cookies)),
+	listUniqueSpendings: (groupId: Id, cookies: Cookies) =>
+		get(`group/${groupId}/unique-spending`, getAuthHeader(cookies)),
+
+	saveInstallmentSpending: (data: InstallmentSpending, cookies: Cookies) =>
+		post('installment-spending', data, getAuthHeader(cookies)),
+	listInstallmentSpendings: (groupId: Id, cookies: Cookies) =>
+		get(`group/${groupId}/installment-spending`, getAuthHeader(cookies)),
+
+	saveRecurringSpending: (data: RecurringSpending, cookies: Cookies) =>
 		data.id > 0
 			? put(`recurring-spending/${data.id}`, data, getAuthHeader(cookies))
 			: post('recurring-spending', data, getAuthHeader(cookies)),
-	list_recurring_spendings: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/recurring-spending`, getAuthHeader(cookies)),
+	listRecurringSpendings: (groupId: Id, cookies: Cookies) =>
+		get(`group/${groupId}/recurring-spending`, getAuthHeader(cookies)),
 
-	list_all_spendings: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/spending`, getAuthHeader(cookies)),
+	listAllSpendings: (groupId: Id, cookies: Cookies) =>
+		get(`group/${groupId}/spending`, getAuthHeader(cookies))
 };
 
 export const paymentService = {
