@@ -64,12 +64,12 @@
 	</ul>
 </nav>
 
-<h2>Nuevo Gasto</h2>
+<h2>Nuevo Gasto en Cuotas</h2>
 <form method="POST" autocomplete="off">
 	<fieldset>
 		<input type="hidden" name="timezoneOffset" value={timezoneOffset} required />
 		<label>
-			Ingrese el grupo al que pertenece el gasto
+			Ingrese el grupo al que pertenece el gasto en cuotas
 			<select
 				name="groupId"
 				required
@@ -82,7 +82,7 @@
 			</select>
 		</label>
 		<label>
-			Ingrese la categoría a la que pertenece el gasto
+			Ingrese la categoría a la que pertenece el gasto en cuotas
 			<select name="categoryId" required value={data.spending.category_id}>
 				{#each categories as category}
 					<option value={category.id}>{category.name}</option>
@@ -90,7 +90,7 @@
 			</select>
 		</label>
 		<label>
-			Ingrese una descripción para el gasto
+			Ingrese una descripción para el gasto en cuotas
 			<input
 				type="text"
 				name="description"
@@ -107,11 +107,15 @@
 			</datalist>
 		</label>
 		<label>
-			Ingrese un monto para el gasto
+			Ingrese un el monto de la cuota
 			<input type="text" name="amount" placeholder="Monto" required value={data.spending.amount} />
 		</label>
 		<label>
-			Fecha del gasto
+			Ingrese la cantidad de cuotas
+			<input type="text" name="amountOfInstallments" placeholder="Cuotas" required value={data.spending.amount_of_installments} />
+		</label>
+		<label>
+			Fecha del gasto en cuotas
 			<input
 				type="datetime-local"
 				name="date"

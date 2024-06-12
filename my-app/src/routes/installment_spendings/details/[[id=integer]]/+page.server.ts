@@ -8,13 +8,14 @@ import { getUserId } from '$lib/auth';
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const group_id = Number(url.searchParams.get('groupId'));
 	const id = Number(params.id) || 0;
-	const spending: Spending = {
+	const spending: InstallmentSpending = {
 		id,
 		description: '',
 		amount: 0,
 		owner_id: 0,
 		date: new Date().toJSON(),
 		category_id: 0,
+		amount_of_installments: 0,
 		group_id
 	};
 	const groups: Group[] = await groupService.list(cookies);
@@ -30,6 +31,7 @@ export const actions: Actions = {
 		const dateString = data.get('date')?.toString();
 		const group_id = Number(data.get('groupId'));
 		const category_id = Number(data.get('categoryId'));
+		const amount_of_installments = Number(data.get('amountOfInstallments'));
 		const owner_id = getUserId(cookies);
 
 		if (!description) {
@@ -44,9 +46,9 @@ export const actions: Actions = {
 
 		const timezoneOffset = Number(data.get('timezoneOffset')) || 0;
 		const date = fixDateString(dateString, timezoneOffset);
-		const spending: Spending = { id, amount, description, date, group_id, category_id, owner_id };
+		const spending: InstallmentSpending = { id, amount, description, date, group_id, category_id, amount_of_installments, owner_id };
 		try {
-			await spendingService.save(spending, cookies);
+			await spendingService.save_installment_spending(spending, cookies);
 		} catch {
 			return { success: false };
 		}
