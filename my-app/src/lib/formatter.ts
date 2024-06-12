@@ -26,7 +26,7 @@ export function formatDateTimeString(dateString: string): string {
 
 export function fixDateString(dateString: string, timezoneOffset: number) {
 	const dateTimestamp = Date.parse(dateString);
-	const fixedDateTimestamp = dateTimestamp + timezoneOffset * 60 * 1000;
+	const fixedDateTimestamp = dateTimestamp - timezoneOffset * 60 * 1000;
 	const fixedDate = new Date(fixedDateTimestamp);
 	return fixedDate.toJSON();
 }

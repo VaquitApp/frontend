@@ -69,7 +69,7 @@
 		<h3>Por Categorias</h3>
 		<ul>
 			{#each Object.entries(form.sumPerCategory) as [category_id, sum]}
-				<li>{getCategoryName(category_id)}: {sum}</li>
+				<li>{getCategoryName(+category_id)}: {sum}</li>
 			{/each}
 		</ul>
 	</div>
