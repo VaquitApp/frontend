@@ -102,6 +102,10 @@ declare global {
 		budgets: number;
 		spendings: number;
 	};
+	type PaymentReminder = {
+		receiver_email: string;
+		message: string;
+	}
 }
 
-export {};
+export { };
