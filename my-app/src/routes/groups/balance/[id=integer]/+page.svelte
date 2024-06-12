@@ -6,6 +6,9 @@
 
 	export let data: PageServerData;
 
+	export let popupEmail: string = '';
+	export let message: string = '';
+
 	// Green for positive, red for negative, default for zero
 	export function balanceColor(balance: number) {
 		return balance > 0 ? '#056517' : balance < 0 ? '#bf1029' : null;
@@ -19,6 +22,14 @@
 
 	export function balanceTooltip(balance: number) {
 		return balance > 0 ? 'Le debes dinero' : balance < 0 ? 'Te debe dinero' : 'Están a mano';
+	}
+
+	export async function sendReminder() {
+		const headers = { 'content-type': 'application/json' };
+		const body = JSON.stringify({ receiver_email: popupEmail, message, group_id: data.group.id });
+		await fetch(`/api/reminders`, { method: 'POST', body, headers });
+		popupEmail = '';
+		message = '';
 	}
 </script>
 
@@ -48,6 +59,29 @@
 	</p>
 </article>
 
+<dialog open={popupEmail !== ''}>
+	<article>
+		<header>
+			<p>
+				<strong>🔔 Enviando recordatorio de pago</strong>
+			</p>
+		</header>
+		<p>El recordatorio se enviará a {popupEmail}, junto con el mensaje:</p>
+		<textarea
+			name="message"
+			placeholder="Mensaje (opcional)"
+			cols="40"
+			rows="2"
+			maxlength="255"
+			bind:value={message}
+		/>
+		<footer>
+			<button class="secondary" on:click={() => (popupEmail = '')}>Cancelar</button>
+			<button on:click={sendReminder}>Enviar</button>
+		</footer>
+	</article>
+</dialog>
+
 {#each data?.balances as { email, balance }}
 	<article class="grid">
 		<p>
@@ -56,7 +90,7 @@
 				class="outline secondary bell"
 				data-tooltip="Enviar recordatorio"
 				disabled={balance >= 0}
-				on:click={() => alert('WIP')}>{@html BELL_SVG}</button
+				on:click={() => (popupEmail = email)}>{@html BELL_SVG}</button
 			>
 		</p>
 		<p class="text-right">
