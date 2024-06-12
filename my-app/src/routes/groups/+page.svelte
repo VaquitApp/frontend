@@ -24,7 +24,9 @@
 			<summary role="button">Opciones</summary>
 			<ul>
 				<li><a href="/groups/details">Añadir grupo</a></li>
-				<li><a href="/spendings/details">Añadir gasto</a></li>
+				<li><a href="/unique_spendings/details">Añadir gasto unico</a></li>
+				<li><a href="/installment_spendings/details">Añadir gasto en cuotas</a></li>
+				<li><a href="/recurring_spendings/details">Añadir gasto recurrente</a></li>
 				<li><a href="/budgets/details">Añadir presupuesto</a></li>
 				<li><a href="/categories/details">Añadir categoría</a></li>
 			</ul>

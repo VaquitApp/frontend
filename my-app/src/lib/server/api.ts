@@ -16,7 +16,7 @@ type Opts = {
 };
 
 function stripTrailingSlash(url: string): string {
-	return url.endsWith('/') ? stripTrailingSlash(url.slice(0, -1)) : url;
+	return url?.endsWith('/') ? stripTrailingSlash(url.slice(0, -1)) : url;
 }
 
 const base = stripTrailingSlash(env.VITE_API_URL);
@@ -78,12 +78,29 @@ export const groupService = {
 		post(`group/${id}/member`, { user_identifier }, getAuthHeader(cookies))
 };
 export const spendingService = {
-	save: (data: Spending, cookies: Cookies) =>
+	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/spending`, getAuthHeader(cookies)),
+
+	saveUniqueSpending: (data: UniqueSpending, cookies: Cookies) =>
+		post('unique-spending', data, getAuthHeader(cookies)),
+	listUniqueSpendings: (groupId: Id, cookies: Cookies) =>
+		get(`group/${groupId}/unique-spending`, getAuthHeader(cookies)),
+
+	saveInstallmentSpending: (data: InstallmentSpending, cookies: Cookies) =>
+		post('installment-spending', data, getAuthHeader(cookies)),
+	listInstallmentSpendings: (groupId: Id, cookies: Cookies) =>
+		get(`group/${groupId}/installment-spending`, getAuthHeader(cookies)),
+
+	saveRecurringSpending: (data: RecurringSpending, cookies: Cookies) =>
 		data.id > 0
-			? put(`spending/${data.id}`, data, getAuthHeader(cookies))
-			: post('spending', data, getAuthHeader(cookies)),
-	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/spending`, getAuthHeader(cookies))
+			? put(`recurring-spending/${data.id}`, data, getAuthHeader(cookies))
+			: post('recurring-spending', data, getAuthHeader(cookies)),
+	listRecurringSpendings: (groupId: Id, cookies: Cookies) =>
+		get(`group/${groupId}/recurring-spending`, getAuthHeader(cookies)),
+
+	listAllSpendings: (groupId: Id, cookies: Cookies) =>
+		get(`group/${groupId}/spending`, getAuthHeader(cookies))
 };
+
 export const paymentService = {
 	save: (data: Payment, cookies: Cookies) =>
 		data.id > 0

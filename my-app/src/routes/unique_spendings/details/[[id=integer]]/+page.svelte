@@ -54,7 +54,7 @@
 </script>
 
 <svelte:head>
-	<title>{title} - Nuevo Gasto</title>
+	<title>{title} - Nuevo Gasto Unico</title>
 </svelte:head>
 
 <nav aria-label="breadcrumb">
@@ -69,7 +69,7 @@
 	<fieldset>
 		<input type="hidden" name="timezoneOffset" value={timezoneOffset} required />
 		<label>
-			Ingrese el grupo al que pertenece el gasto
+			Ingrese el grupo al que pertenece el gasto unico
 			<select
 				name="groupId"
 				required
@@ -82,7 +82,7 @@
 			</select>
 		</label>
 		<label>
-			Ingrese la categoría a la que pertenece el gasto
+			Ingrese la categoría a la que pertenece el gasto unico
 			<select name="categoryId" required value={data.spending.category_id}>
 				{#each categories as category}
 					<option value={category.id}>{category.name}</option>
@@ -90,7 +90,7 @@
 			</select>
 		</label>
 		<label>
-			Ingrese una descripción para el gasto
+			Ingrese una descripción para el gasto unico
 			<input
 				type="text"
 				name="description"
@@ -107,11 +107,11 @@
 			</datalist>
 		</label>
 		<label>
-			Ingrese un monto para el gasto
+			Ingrese un monto para el gasto unico
 			<input type="text" name="amount" placeholder="Monto" required value={data.spending.amount} />
 		</label>
 		<label>
-			Fecha del gasto
+			Fecha del gasto unico
 			<input
 				type="datetime-local"
 				name="date"
