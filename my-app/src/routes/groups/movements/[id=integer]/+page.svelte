@@ -43,12 +43,14 @@
 		return userEmailById[id];
 	}
 
+	function is_spending(movement: Spending | Payment) {
+		return 'category_id' in movement;
+	}
+
 	let categoryFilters: Id[] = [];
 	$: filteredMovements = movements.filter(
-		(s) =>
-			categoryFilters.length === 0 ||
-			s.category_id === undefined ||
-			categoryFilters.includes(s.category_id)
+		(m) =>
+			categoryFilters.length === 0 || (is_spending(m) && categoryFilters.includes(m.category_id))
 	);
 
 	function toggleCategoryFilter(categoryId: Id, shouldFilter: boolean) {
@@ -154,7 +156,7 @@
 </article>
 
 {#each filteredMovements as movement}
-	{#if 'category_id' in movement}
+	{#if is_spending(movement)}
 		{@const spending = movement}
 		<article class="grid">
 			<p>{formatDateTimeString(spending.date)}</p>
