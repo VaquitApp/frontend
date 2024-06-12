@@ -10,17 +10,14 @@
 	const last_week = new Date();
 	last_week.setDate(now.getDay() - 7);
 
-	let initDate = last_week.toJSON()
-	let finDate = now.toJSON()
+	let initDate = last_week.toJSON();
+	let finDate = now.toJSON();
 
-	function getCategoryName(id: number): string {
-		return data.categories.filter(
-			(category: Category) => {
-				return category.id == id
-			}
-		)[0].name
+	function getCategoryName(id: Number): string {
+		return data.categories.filter((category: Category) => {
+			return category.id == id;
+		})[0].name;
 	}
-
 </script>
 
 <svelte:head>

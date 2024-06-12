@@ -84,6 +84,13 @@ export const spendingService = {
 			: post('spending', data, getAuthHeader(cookies)),
 	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/spending`, getAuthHeader(cookies))
 };
+export const paymentService = {
+	save: (data: Payment, cookies: Cookies) =>
+		data.id > 0
+			? put(`payment/${data.id}`, data, getAuthHeader(cookies))
+			: post('payment', data, getAuthHeader(cookies)),
+	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/payment`, getAuthHeader(cookies))
+};
 export const budgetService = {
 	save: (data: Budget, cookies: Cookies) =>
 		data.id > 0
