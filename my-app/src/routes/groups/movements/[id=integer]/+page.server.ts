@@ -15,38 +15,5 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
 	const categories: Category[] = await categoryService.list(id, cookies);
 	const payments: Payment[] = await paymentService.list(id, cookies);
 	const members: User[] = await groupService.listAllMembers(id, cookies);
-
-	const categoryBalances: CategoryBalance[] = computeBalancesPerCategory(
-		spendings,
-		budgets,
-		categories
-	);
-	return { group, spendings, payments, budgets, categories, members, categoryBalances };
+	return { group, spendings, payments, budgets, categories, members };
 };
-
-function computeBalancesPerCategory(
-	spendingsList: Spending[],
-	budgetsList: Budget[],
-	categories: Category[]
-) {
-	var balances = [];
-	for (const category of categories) {
-		const spendings = computeTotal(spendingsList, category.id);
-		const budgets = computeTotal(budgetsList, category.id);
-		const balance = {
-			categoryId: category.id,
-			categoryName: category.name,
-			categoryDescription: category.description,
-			budgets,
-			spendings
-		};
-		balances.push(balance);
-	}
-	return balances;
-}
-
-function computeTotal(objects: { category_id: Id; amount: number }[], categoryId: Id) {
-	return objects
-		.filter(({ category_id }) => category_id == categoryId)
-		.reduce((acc, { amount }) => acc + amount, 0);
-}
