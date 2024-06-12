@@ -1,77 +1,29 @@
 <script lang="ts">
 	import { title } from '$lib';
 	import type { PageData } from './$types';
-	import type { Action } from 'svelte/action';
+	import { computeGraphDataWithFilters } from './graphs-utils';
+	import { formatDateInput } from '$lib/formatter';
 	import {
-		Chart,
-		type ScriptableChartContext,
-		type ScriptableContext,
-		type ScriptableLineSegmentContext
-	} from 'chart.js/auto';
+		loadSpendingsByCategoryGraph,
+		loadSpendingsOverTimeGraph,
+		loadBalanceOverTimeGraph
+	} from './graphs-actions';
 
 	export let data: PageData;
 
-	export const loadSpendingsByCategoryGraph: Action<HTMLCanvasElement> = (canvas) => {
-		const { labels, values } = data?.graphData.spendingSumByCategory;
-		const label = 'Gastos por categoría';
-		// NOTE: this is to have each bar be a different color
-		const datasets = values.map((v, i) => {
-			let data = Array(values.length).fill(0);
-			data[i] = v;
-			return { label, data };
-		});
-
-		const chart = new Chart(canvas, {
-			type: 'bar',
-			options: {
-				plugins: {
-					legend: { display: false },
-					colors: { enabled: true, forceOverride: true }
-				},
-				scales: { x: { stacked: true }, y: { stacked: true } }
-			},
-			data: { labels, datasets }
-		});
-		return { destroy: () => chart.destroy() };
+	const graphFilter = {
+		since: formatDateInput(
+			new Date(
+				data.spendings.reduce((d, s) => Math.min(d, Date.parse(s.date)), Date.now())
+			).toJSON()
+		),
+		upto: formatDateInput(new Date().toJSON())
 	};
 
-	export const loadSpendingsOverTimeGraph: Action<HTMLCanvasElement> = (canvas) => {
-		const { labels, datasets } = data?.graphData.spendingsOverTime;
-
-		const prettyDatasets = datasets.map((dataset) => {
-			return { ...dataset, tension: 0.1 };
-		});
-
-		const chart = new Chart(canvas, {
-			type: 'line',
-			options: {
-				plugins: {
-					colors: { enabled: true, forceOverride: true }
-				}
-			},
-			data: { labels, datasets: prettyDatasets }
-		});
-		return { destroy: () => chart.destroy() };
-	};
-
-	export const loadBalanceOverTimeGraph: Action<HTMLCanvasElement> = (canvas) => {
-		const { labels, datasets } = data?.graphData.balanceOverTime;
-
-		const prettyDatasets = datasets.map((dataset) => {
-			return { ...dataset, tension: 0.1, fill: 'origin' };
-		});
-
-		const chart = new Chart(canvas, {
-			type: 'line',
-			options: {
-				plugins: {
-					colors: { enabled: true, forceOverride: true }
-				}
-			},
-			data: { labels, datasets: prettyDatasets }
-		});
-		return { destroy: () => chart.destroy() };
-	};
+	$: graphData = computeGraphDataWithFilters(data, {
+		since: new Date(graphFilter.since),
+		upto: new Date(graphFilter.upto)
+	});
 </script>
 
 <svelte:head>
@@ -93,16 +45,23 @@
 	</div>
 </header>
 
+<form>
+	<fieldset class="grid">
+		<label>Desde <input type="date" bind:value={graphFilter.since} /></label>
+		<label>Hasta <input type="date" bind:value={graphFilter.upto} /></label>
+	</fieldset>
+</form>
+
 <div class="row">
 	<div>
 		<h4>Gastos por categoría</h4>
-		<div style="width: 600px;"><canvas use:loadSpendingsByCategoryGraph></canvas></div>
+		<div style="width: 600px;"><canvas use:loadSpendingsByCategoryGraph={graphData}></canvas></div>
 	</div>
 	<!-- spacing -->
 	<span style="padding: 24px"></span>
 	<div>
 		<h4>Consumo a través del tiempo</h4>
-		<div style="width: 600px;"><canvas use:loadSpendingsOverTimeGraph></canvas></div>
+		<div style="width: 600px;"><canvas use:loadSpendingsOverTimeGraph={graphData}></canvas></div>
 	</div>
 </div>
 
@@ -115,7 +74,7 @@
 	<!-- <span style="padding: 24px"></span> -->
 	<div>
 		<h4>Saldo a través del tiempo</h4>
-		<div style="width: 600px;"><canvas use:loadBalanceOverTimeGraph></canvas></div>
+		<div style="width: 600px;"><canvas use:loadBalanceOverTimeGraph={graphData}></canvas></div>
 	</div>
 </div>
 

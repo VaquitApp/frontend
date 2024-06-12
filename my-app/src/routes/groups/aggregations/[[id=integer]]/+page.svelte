@@ -10,17 +10,14 @@
 	const last_week = new Date();
 	last_week.setDate(now.getDay() - 7);
 
-	let initDate = last_week.toJSON()
-	let finDate = now.toJSON()
+	let initDate = last_week.toJSON();
+	let finDate = now.toJSON();
 
 	function getCategoryName(id: Number): string {
-		return data.categories.filter(
-			(category: Category) => {
-				return category.id == id
-			}
-		)[0].name
+		return data.categories.filter((category: Category) => {
+			return category.id == id;
+		})[0].name;
 	}
-
 </script>
 
 <svelte:head>
@@ -72,7 +69,7 @@
 		<h3>Por Categorias</h3>
 		<ul>
 			{#each Object.entries(form.sumPerCategory) as [category_id, sum]}
-				<li>{getCategoryName(category_id)}: {sum}</li>
+				<li>{getCategoryName(+category_id)}: {sum}</li>
 			{/each}
 		</ul>
 	</div>

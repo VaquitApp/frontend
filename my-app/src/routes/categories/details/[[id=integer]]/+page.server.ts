@@ -4,7 +4,7 @@ import { categoryService, groupService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
-	const group_id = url.searchParams.get('groupId') || '';
+	const group_id = Number(url.searchParams.get('groupId')) || 0;
 	const id = Number(params.id) || 0;
 	const category: Category = id
 		? await categoryService.get(id, cookies)

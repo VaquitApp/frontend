@@ -2,7 +2,7 @@
 	import { title } from '$lib';
 	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
-	import { formatMoney } from '$lib/formatter';
+	import { fixDateString, formatMoney } from '$lib/formatter';
 
 	export let data: PageServerData;
 	let timezoneOffset = 0;
@@ -48,12 +48,13 @@
 
 	onMount(async () => {
 		timezoneOffset = new Date().getTimezoneOffset();
+		data.spending.date = fixDateString(data.spending.date, timezoneOffset).slice(0, 16);
 		await onGroupUpdate(data.spending.group_id);
 	});
 </script>
 
 <svelte:head>
-	<title>{title} - Nuevo Gasto</title>
+	<title>{title} - Nuevo Gasto Unico</title>
 </svelte:head>
 
 <nav aria-label="breadcrumb">
@@ -68,11 +69,11 @@
 	<fieldset>
 		<input type="hidden" name="timezoneOffset" value={timezoneOffset} required />
 		<label>
-			Ingrese el grupo al que pertenece el gasto
+			Ingrese el grupo al que pertenece el gasto unico
 			<select
 				name="groupId"
 				required
-				bind:value={data.spending.group_id}
+				value={data.spending.group_id}
 				on:change={(e) => onGroupUpdate(+e.currentTarget.value)}
 			>
 				{#each data.groups as group}
@@ -81,7 +82,7 @@
 			</select>
 		</label>
 		<label>
-			Ingrese la categoría a la que pertenece el gasto
+			Ingrese la categoría a la que pertenece el gasto unico
 			<select name="categoryId" required value={data.spending.category_id}>
 				{#each categories as category}
 					<option value={category.id}>{category.name}</option>
@@ -89,14 +90,14 @@
 			</select>
 		</label>
 		<label>
-			Ingrese una descripción para el gasto
+			Ingrese una descripción para el gasto unico
 			<input
 				type="text"
 				name="description"
 				placeholder="Descripción"
 				list="description-list"
 				required
-				bind:value={data.spending.description}
+				value={data.spending.description}
 				on:change={(e) => autocomplete(e.currentTarget.value)}
 			/>
 			<datalist id="description-list">
@@ -106,23 +107,18 @@
 			</datalist>
 		</label>
 		<label>
-			Ingrese un monto para el gasto
-			<input
-				type="text"
-				name="amount"
-				placeholder="Monto"
-				required
-				bind:value={data.spending.amount}
-			/>
+			Ingrese un monto para el gasto unico
+			<input type="text" name="amount" placeholder="Monto" required value={data.spending.amount} />
 		</label>
 		<label>
-			Ingrese la fecha del gasto
+			Fecha del gasto unico
 			<input
 				type="datetime-local"
 				name="date"
 				placeholder="Fecha"
 				required
-				bind:value={data.spending.date}
+				readonly
+				value={data.spending.date}
 			/>
 		</label>
 		<button>Crear</button>
