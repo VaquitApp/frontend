@@ -2,6 +2,7 @@ import { groupService, inviteService } from '$lib/server/api';
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { getUserId } from '$lib/auth';
+import { routes } from '$lib';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
 	const group_id = Number(params.id) || 0;
@@ -25,13 +26,13 @@ export const actions: Actions = {
 			group_id: group_id
 		};
 		await inviteService.send(invite, cookies);
-		redirect(302, `/groups/members/${group_id}`);
+		redirect(302, `${routes.groupMembers}/${group_id}`);
 	},
 	devSubmit: async ({ params, request, cookies }) => {
 		const group_id = Number(params.id) || 0;
 		const data = await request.formData();
 		const email = data.get('email')?.toString()!;
-		groupService.addMember(group_id, email, cookies);
-		redirect(302, `/groups/members/${group_id}`);
+		await groupService.addMember(group_id, email, cookies);
+		redirect(302, `${routes.groupMembers}/${group_id}`);
 	}
 };

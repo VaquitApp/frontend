@@ -1,6 +1,7 @@
 import { inviteService } from '$lib/server/api';
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { routes } from '$lib';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
 	const token = params.id || '';
@@ -9,8 +10,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 };
 
 export const actions: Actions = {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	default: async ({ cookies, request, params }) => {
+	default: async ({ cookies, params }) => {
 		const token = params.id || '';
 
 		// TODO: El metodo getGroup esta restringido a solo lectura de usuarios que ya forman parte del team
@@ -25,6 +25,6 @@ export const actions: Actions = {
 			token: token
 		};
 		await inviteService.accept(invite, cookies);
-		redirect(302, `/groups`);
+		redirect(302, routes.groups);
 	}
 };

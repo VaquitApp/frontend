@@ -3,7 +3,7 @@ import type { Actions, PageServerLoad } from './$types';
 import { groupService, paymentService } from '$lib/server/api';
 import { getUserId } from '$lib/auth';
 
-export const load: PageServerLoad = async ({ params, url, cookies }) => {
+export const load: PageServerLoad = async ({ url, cookies }) => {
 	const groupId = url.searchParams.get('groupId') || '';
 	// const id = Number(params.id) || 0;
 	const groups: Group[] = await groupService.list(cookies);

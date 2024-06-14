@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
 	import { fixDateString, formatMoney } from '$lib/formatter';
@@ -38,7 +38,7 @@
 	async function updateCategories(groupId: number) {
 		if (groupId != 0) {
 			try {
-				const response = await fetch(`/api/categories?groupId=${groupId}`);
+				const response = await fetch(`${routes.apiCategories}?groupId=${groupId}`);
 				categories = await response.json();
 				return;
 			} catch {}
@@ -54,22 +54,22 @@
 </script>
 
 <svelte:head>
-	<title>{title} - Nuevo Gasto Unico</title>
+	<title>{title} - Nuevo Gasto</title>
 </svelte:head>
 
 <nav aria-label="breadcrumb">
 	<ul>
-		<li><a href="/groups">Grupos</a></li>
+		<li><a href={routes.groups}>Grupos</a></li>
 		<li>Gastos</li>
 	</ul>
 </nav>
 
-<h2>Nuevo Gasto</h2>
+<h2>Nuevo Gasto en Cuotas</h2>
 <form method="POST" autocomplete="off">
 	<fieldset>
 		<input type="hidden" name="timezoneOffset" value={timezoneOffset} required />
 		<label>
-			Ingrese el grupo al que pertenece el gasto unico
+			Ingrese el grupo al que pertenece el gasto en cuotas
 			<select
 				name="groupId"
 				required
@@ -82,7 +82,7 @@
 			</select>
 		</label>
 		<label>
-			Ingrese la categoría a la que pertenece el gasto unico
+			Ingrese la categoría a la que pertenece el gasto en cuotas
 			<select name="categoryId" required value={data.spending.category_id}>
 				{#each categories as category}
 					<option value={category.id}>{category.name}</option>
@@ -90,7 +90,7 @@
 			</select>
 		</label>
 		<label>
-			Ingrese una descripción para el gasto unico
+			Ingrese una descripción para el gasto en cuotas
 			<input
 				type="text"
 				name="description"
@@ -107,11 +107,21 @@
 			</datalist>
 		</label>
 		<label>
-			Ingrese un monto para el gasto unico
+			Ingrese un el monto de la cuota
 			<input type="text" name="amount" placeholder="Monto" required value={data.spending.amount} />
 		</label>
 		<label>
-			Fecha del gasto unico
+			Ingrese la cantidad de cuotas
+			<input
+				type="text"
+				name="amountOfInstallments"
+				placeholder="Cuotas"
+				required
+				value={data.spending.amount_of_installments}
+			/>
+		</label>
+		<label>
+			Fecha del gasto en cuotas
 			<input
 				type="datetime-local"
 				name="date"

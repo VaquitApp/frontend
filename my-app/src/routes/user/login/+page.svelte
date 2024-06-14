@@ -1,5 +1,5 @@
 <script>
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 </script>
 
 <svelte:head>
@@ -15,10 +15,10 @@
 		<label>
 			Ingrese su contraseña
 			<input type="password" name="password" placeholder="Contaseña" required />
-			<a href="/recover">Olvidé mi contraseña</a>
+			<a href={routes.recover}>Olvidé mi contraseña</a>
 		</label>
 	</fieldset>
 
 	<button type="submit">Ingresar</button>
-	<a href="/register">Registrarme</a>
+	<a href={routes.register}>Registrarme</a>
 </form>

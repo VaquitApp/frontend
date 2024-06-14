@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 	import { confirmArchiveGroup } from '$lib/client/alerts';
 	import { pencil_svg } from '$lib/svgs';
 	import type { PageData } from './$types';
@@ -23,12 +23,10 @@
 			<!-- svelte-ignore a11y-no-redundant-roles -->
 			<summary role="button">Opciones</summary>
 			<ul>
-				<li><a href="/groups/details">Añadir grupo</a></li>
-				<li><a href="/unique_spendings/details">Añadir gasto unico</a></li>
-				<li><a href="/installment_spendings/details">Añadir gasto en cuotas</a></li>
-				<li><a href="/recurring_spendings/details">Añadir gasto recurrente</a></li>
-				<li><a href="/budgets/details">Añadir presupuesto</a></li>
-				<li><a href="/categories/details">Añadir categoría</a></li>
+				<li><a href={routes.groupDetails}>Añadir grupo</a></li>
+				<li><a href={routes.spendingDetails}>Añadir gasto</a></li>
+				<li><a href={routes.budgetDetails}>Añadir presupuesto</a></li>
+				<li><a href={routes.categoryDetails}>Añadir categoría</a></li>
 			</ul>
 		</details>
 	</div>
@@ -37,24 +35,28 @@
 	{#if !data.groups.length}
 		<article class="centered">
 			<p>Todavía no pertenece a ningún grupo. ¿Por qué no crea uno?</p>
-			<a href="/groups/details">Crear un nuevo grupo</a>
+			<a href={routes.groupDetails}>Crear un nuevo grupo</a>
 		</article>
 	{/if}
 	{#each activeGroups as group}
 		<article>
 			<header class="row">
 				<b style="padding: 15px">{group.name}</b>
-				<a class="secondary" href="/groups/details/{group.id}" role="button"
+				<a class="secondary" href="{routes.groupDetails}/{group.id}" role="button"
 					>{@html pencil_svg(25, 25)}</a
 				>
 			</header>
 			<p>{group.description}</p>
 			<footer class="grid">
-				<a href="/groups/movements/{group.id}" role="button" class="outline">Ver moovimientos</a>
-				<a href="/groups/details/{group.id}" role="button" class="outline secondary">
+				<a href="{routes.groupMovements}/{group.id}" role="button" class="outline"
+					>Ver moovimientos</a
+				>
+				<a href="{routes.groupDetails}/{group.id}" role="button" class="outline secondary">
 					Editar grupo
 				</a>
-				<a href="/groups/members/{group.id}" role="button" class="outline secondary"> Miembros </a>
+				<a href="{routes.groupMembers}/{group.id}" role="button" class="outline secondary">
+					Miembros
+				</a>
 				<button class="outline contrast" on:click={() => confirmArchiveGroup(group)}>
 					Archivar
 				</button>

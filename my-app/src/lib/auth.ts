@@ -24,7 +24,7 @@ export function getAuthHeader(cookies: Cookies) {
 }
 
 export function getUserId(cookies: Cookies) {
-	return Number(cookies.get('userId'));
+	return Number(cookies.get('userId')) || undefined;
 }
 
 export function getUserEmail(cookies: Cookies) {

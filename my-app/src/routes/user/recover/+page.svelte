@@ -1,3 +1,7 @@
+<script>
+	import { routes } from '$lib';
+</script>
+
 <form method="POST">
 	<fieldset>
 		<label>
@@ -6,5 +10,5 @@
 		</label>
 	</fieldset>
 	<button type="submit"> Enviar </button>
-	<a href="/register">Registrarme</a>
+	<a href={routes.register}>Registrarme</a>
 </form>

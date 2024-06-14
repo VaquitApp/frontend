@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -17,7 +17,7 @@
 
 <nav aria-label="breadcrumb">
 	<ul>
-		<li><a href="/groups">Grupos</a></li>
+		<li><a href={routes.groups}>Grupos</a></li>
 		<li>Categorías</li>
 	</ul>
 </nav>

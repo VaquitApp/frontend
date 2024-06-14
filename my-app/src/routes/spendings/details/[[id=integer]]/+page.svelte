@@ -1,13 +1,17 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
 	import { fixDateString, formatMoney } from '$lib/formatter';
+	import { spendingType } from './spending-utils';
 
 	export let data: PageServerData;
 	let timezoneOffset = 0;
 	let suggestions: Map<string, Spending> = new Map();
 	let categories: Category[] = [];
+	let type = spendingType.unique;
+
+	$: isInstallment = type === spendingType.installment;
 
 	async function onGroupUpdate(groupId: number) {
 		await Promise.all([updateSuggestions(groupId), updateCategories(groupId)]);
@@ -17,7 +21,7 @@
 		const newSuggestions: Map<string, Spending> = new Map();
 		if (groupId != 0) {
 			try {
-				const response = await fetch(`/api/spendings?groupId=${groupId}`);
+				const response = await fetch(`${routes.apiSpendings}?groupId=${groupId}`);
 				const body: Spending[] = await response.json();
 				body.forEach((spending) => {
 					newSuggestions.set(spending.description, spending);
@@ -25,6 +29,17 @@
 			} catch {}
 		}
 		suggestions = newSuggestions;
+	}
+
+	async function updateCategories(groupId: number) {
+		if (groupId != 0) {
+			try {
+				const response = await fetch(`${routes.apiCategories}?groupId=${groupId}`);
+				categories = await response.json();
+				return;
+			} catch {}
+		}
+		categories = [];
 	}
 
 	function autocomplete(value: string) {
@@ -35,17 +50,6 @@
 		data.spending.category_id = spending.category_id;
 	}
 
-	async function updateCategories(groupId: number) {
-		if (groupId != 0) {
-			try {
-				const response = await fetch(`/api/categories?groupId=${groupId}`);
-				categories = await response.json();
-				return;
-			} catch {}
-		}
-		categories = [];
-	}
-
 	onMount(async () => {
 		timezoneOffset = new Date().getTimezoneOffset();
 		data.spending.date = fixDateString(data.spending.date, timezoneOffset).slice(0, 16);
@@ -54,22 +58,22 @@
 </script>
 
 <svelte:head>
-	<title>{title} - Nuevo Gasto</title>
+	<title>{title} - Nuevo Gasto Unico</title>
 </svelte:head>
 
 <nav aria-label="breadcrumb">
 	<ul>
-		<li><a href="/groups">Grupos</a></li>
+		<li><a href={routes.groups}>Grupos</a></li>
 		<li>Gastos</li>
 	</ul>
 </nav>
 
-<h2>Nuevo Gasto en Cuotas</h2>
+<h2>Nuevo Gasto</h2>
 <form method="POST" autocomplete="off">
 	<fieldset>
 		<input type="hidden" name="timezoneOffset" value={timezoneOffset} required />
 		<label>
-			Ingrese el grupo al que pertenece el gasto en cuotas
+			Ingrese el grupo al que pertenece el gasto
 			<select
 				name="groupId"
 				required
@@ -82,7 +86,7 @@
 			</select>
 		</label>
 		<label>
-			Ingrese la categoría a la que pertenece el gasto en cuotas
+			Ingrese la categoría a la que pertenece el gasto
 			<select name="categoryId" required value={data.spending.category_id}>
 				{#each categories as category}
 					<option value={category.id}>{category.name}</option>
@@ -90,7 +94,7 @@
 			</select>
 		</label>
 		<label>
-			Ingrese una descripción para el gasto en cuotas
+			Ingrese una descripción para el gasto
 			<input
 				type="text"
 				name="description"
@@ -106,22 +110,35 @@
 				{/each}
 			</datalist>
 		</label>
+		<fieldset class="grid">
+			Seleccione una forma de pago
+			<label>
+				<input type="radio" name="type" value={spendingType.unique} bind:group={type} /> Único
+			</label>
+			<label>
+				<input type="radio" name="type" value={spendingType.installment} bind:group={type} /> En Cuotas
+			</label>
+			<label>
+				<input type="radio" name="type" value={spendingType.recurring} bind:group={type} /> Recurrente
+			</label>
+		</fieldset>
 		<label>
-			Ingrese un el monto de la cuota
+			Ingrese un monto para {isInstallment ? 'las cuotas' : 'el gasto'}
 			<input type="text" name="amount" placeholder="Monto" required value={data.spending.amount} />
 		</label>
+		{#if isInstallment}
+			<label>
+				Ingrese la cantidad de cuotas
+				<input
+					type="text"
+					name="amountOfInstallments"
+					placeholder="Cuotas"
+					required={isInstallment}
+				/>
+			</label>
+		{/if}
 		<label>
-			Ingrese la cantidad de cuotas
-			<input
-				type="text"
-				name="amountOfInstallments"
-				placeholder="Cuotas"
-				required
-				value={data.spending.amount_of_installments}
-			/>
-		</label>
-		<label>
-			Fecha del gasto en cuotas
+			Fecha del gasto
 			<input
 				type="datetime-local"
 				name="date"

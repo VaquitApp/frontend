@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { PageData } from './$types';
 	import { formatDateInput } from '$lib/formatter';
+	import { routes } from '$lib';
 
 	export let form;
 	export let data: PageData;
@@ -26,7 +27,7 @@
 
 <nav aria-label="breadcrumb">
 	<ul>
-		<li><a href="/groups">Grupos</a></li>
+		<li><a href={routes.groups}>Grupos</a></li>
 		<li>Agregaciones</li>
 	</ul>
 </nav>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 	import { formatMoney } from '$lib/formatter';
 	import { BELL_SVG, INFO_SVG } from '$lib/svgs';
 	import type { PageServerData } from './$types';
@@ -39,8 +39,8 @@
 
 <nav aria-label="breadcrumb">
 	<ul>
-		<li><a href="/groups">Grupos</a></li>
-		<li><a href="/groups/movements/{data.group.id}">{data.group.name}</a></li>
+		<li><a href={routes.groups}>Grupos</a></li>
+		<li><a href="{routes.groupMovements}/{data.group.id}">{data.group.name}</a></li>
 		<li>Estado de cuenta grupal</li>
 	</ul>
 </nav>

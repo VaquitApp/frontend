@@ -4,11 +4,12 @@ import { groupService, spendingService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
 import { fixDateString } from '$lib/formatter';
 import { getUserId } from '$lib/auth';
+import { routes } from '$lib';
 
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const group_id = Number(url.searchParams.get('groupId'));
 	const id = Number(params.id) || 0;
-	const spending: UniqueSpending = {
+	const spending: RecurringSpending = {
 		id,
 		description: '',
 		amount: 0,
@@ -44,7 +45,7 @@ export const actions: Actions = {
 
 		const timezoneOffset = Number(data.get('timezoneOffset')) || 0;
 		const date = fixDateString(dateString, timezoneOffset);
-		const spending: UniqueSpending = {
+		const spending: RecurringSpending = {
 			id,
 			amount,
 			description,
@@ -54,11 +55,11 @@ export const actions: Actions = {
 			owner_id
 		};
 		try {
-			await spendingService.saveUniqueSpending(spending, cookies);
+			await spendingService.saveRecurringSpending(spending, cookies);
 		} catch {
 			return { success: false };
 		}
 
-		redirect(302, `/groups/movements/${group_id}`);
+		redirect(302, `${routes.groupMovements}/${group_id}`);
 	}
 };

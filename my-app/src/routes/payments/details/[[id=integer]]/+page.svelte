@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
@@ -11,7 +11,7 @@
 		members = [];
 		if (groupId != 0) {
 			try {
-				const response = await fetch(`/api/members?groupId=${groupId}`);
+				const response = await fetch(`/${routes.apiMembers}?groupId=${groupId}`);
 				members = await response.json();
 			} catch {}
 		}
@@ -28,7 +28,7 @@
 
 <nav aria-label="breadcrumb">
 	<ul>
-		<li><a href="/groups">Grupos</a></li>
+		<li><a href={routes.groups}>Grupos</a></li>
 		<li>Pagos</li>
 	</ul>
 </nav>

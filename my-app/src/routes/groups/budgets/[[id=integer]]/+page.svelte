@@ -1,10 +1,17 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { getCategoryNameById, routes, title } from '$lib';
+	import CategoryFilter from '$lib/components/CategoryFilter.svelte';
+	import CssIcon from '$lib/components/CssIcon.svelte';
 	import { formatDateString, formatMoney } from '$lib/formatter';
-	import { pencil_svg } from '$lib/svgs';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
+
+	let categoryFilter: Id[] = [];
+
+	$: filteredBudgets = categoryFilter.length
+		? data.budgets.filter((b) => categoryFilter.includes(b.category_id))
+		: data.budgets;
 </script>
 
 <svelte:head>
@@ -13,8 +20,8 @@
 
 <nav aria-label="breadcrumb">
 	<ul>
-		<li><a href="/groups">Grupos</a></li>
-		<li><a href="/groups/movements/{data.group.id}">{data.group.name}</a></li>
+		<li><a href={routes.groups}>Grupos</a></li>
+		<li><a href="{routes.groupMovements}/{data.group.id}">{data.group.name}</a></li>
 		<li>Presupuestos</li>
 	</ul>
 </nav>
@@ -25,23 +32,20 @@
 		<p>{data.group.description}</p>
 	</div>
 	<div>
-		<a href="/budgets/details?groupId={data.group.id}" role="button">Nuevo presupuesto</a>
+		<a href="{routes.budgetDetails}?groupId={data.group.id}" role="button">Nuevo presupuesto</a>
 	</div>
 </header>
 
 <article>
-	Categorias:
-	{#each data.categories as category}
-		<button class="btn-sm outline"> {category.name} </button>
-	{/each}
+	<CategoryFilter categories={data.categories} bind:filter={categoryFilter} />
 </article>
 
-{#each data?.budgets as budget}
+{#each filteredBudgets as budget}
 	<article>
 		<header class="row">
 			<b>{budget.description}</b>
 			<!-- TODO: show category name -->
-			<p>Categoría: {budget.category_id}</p>
+			<p>{getCategoryNameById(data.categories, budget.category_id)}</p>
 		</header>
 		<div class="grid">
 			{formatDateString(budget.start_date)} — {formatDateString(budget.end_date)}
@@ -49,9 +53,14 @@
 				<p class="text-right" style="margin-left: auto; padding-right:5%">
 					{formatMoney(budget.amount)}
 				</p>
-				<a class="secondary" href="/budgets/details/{budget.id}" role="button"
-					>{@html pencil_svg(25, 25)}</a
+				<a
+					class="secondary outline"
+					href="{routes.budgetDetails}/{budget.id}"
+					role="button"
+					data-tooltip="Editar"
 				>
+					<CssIcon name="pen" />
+				</a>
 			</div>
 		</div>
 	</article>

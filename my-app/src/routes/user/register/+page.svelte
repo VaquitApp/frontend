@@ -1,5 +1,5 @@
 <script>
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 </script>
 
 <svelte:head>
@@ -22,5 +22,5 @@
 		</label>
 	</fieldset>
 	<button type="submit"> Registrarse </button>
-	<a href="/login">Ya tengo una cuenta</a>
+	<a href={routes.login}>Ya tengo una cuenta</a>
 </form>

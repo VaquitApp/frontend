@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 	import { confirmArchiveGroup } from '$lib/client/alerts';
 	import type { PageData } from './$types';
 
@@ -15,7 +15,7 @@
 
 <nav aria-label="breadcrumb">
 	<ul>
-		<li><a href="/groups">Grupos</a></li>
+		<li><a href={routes.groups}>Grupos</a></li>
 		<li>Detalles</li>
 	</ul>
 </nav>

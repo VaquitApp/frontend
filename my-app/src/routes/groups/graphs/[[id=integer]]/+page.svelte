@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 	import type { PageData } from './$types';
 	import { computeGraphDataWithFilters } from './graphs-utils';
 	import { formatDateInput } from '$lib/formatter';
@@ -32,8 +32,8 @@
 
 <nav aria-label="breadcrumb">
 	<ul>
-		<li><a href="/groups">Grupos</a></li>
-		<li><a href="/groups/movements/{data.group.id}">{data.group.name}</a></li>
+		<li><a href={routes.groups}>Grupos</a></li>
+		<li><a href="{routes.groupMovements}/{data.group.id}">{data.group.name}</a></li>
 		<li>Gráficos de finanzas</li>
 	</ul>
 </nav>
