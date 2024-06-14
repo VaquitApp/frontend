@@ -14,15 +14,15 @@ type Filters = {
 export type GraphData = ReturnType<typeof computeGraphData>;
 
 export function computeGraphDataWithFilters(data: InputData, filters: Filters) {
-	let { since, upto: upTo } = filters;
+	let { since, upto } = filters;
 	let { categories, spendings, budgets } = data;
 
 	// include up to date
-	upTo = new Date(upTo.getTime() + 24 * 60 * 60 * 1000);
+	upto = new Date(upto.getTime() + 24 * 60 * 60 * 1000);
 
 	spendings = spendings.filter((s) => {
 		const date = new Date(s.date);
-		return since <= date && date <= upTo;
+		return since <= date && date <= upto;
 	});
 	categories = categories.filter((c) => spendings.some((s) => s.category_id === c.id));
 
@@ -61,10 +61,10 @@ function computeSpendingsOverTime(
 	const globalSpendingsByDate = computeSpendingsByDate(spendings, new Map<string, number>());
 
 	const emptySpendingsByDate = new Map<string, number>(
-		Array.from(globalSpendingsByDate.entries()).map(([date, _]) => [date, 0])
+		Array.from(globalSpendingsByDate.entries()).map(([date]) => [date, 0])
 	);
 
-	let datasets = Array.from(spendingsByCategory.entries()).map(([id, spendings]) => {
+	const datasets = Array.from(spendingsByCategory.entries()).map(([id, spendings]) => {
 		const label = categories.find((c) => c.id === id)!.name;
 		const spendingsByDate = computeSpendingsByDate(
 			spendings,
@@ -93,7 +93,7 @@ function computeSpendingsByDate(spendings: Spending[], spendingsByDate: Map<stri
 	return spendingsByDate;
 }
 
-function sortDateTuples([date0]: [string, any], [date1]: [string, any]) {
+function sortDateTuples([date0]: [string, unknown], [date1]: [string, unknown]) {
 	return sortDates(date0, date1);
 }
 

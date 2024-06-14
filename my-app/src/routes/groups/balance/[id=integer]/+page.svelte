@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { routes, title } from '$lib';
+	import Avatar from '$lib/components/Avatar.svelte';
+	import CssIcon from '$lib/components/CssIcon.svelte';
 	import { formatMoney } from '$lib/formatter';
-	import { BELL_SVG, INFO_SVG } from '$lib/svgs';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -13,21 +14,16 @@
 	export function balanceColor(balance: number) {
 		return balance > 0 ? '#056517' : balance < 0 ? '#bf1029' : null;
 	}
-	export const personalBalanceTooltip =
-		data?.userBalance < 0
-			? 'Les debes dinero'
-			: data?.userBalance > 0
-				? 'Te deben dinero'
-				: 'Están a mano';
+	export const personalBalanceTooltip = balanceTooltip(data.userBalance);
 
 	export function balanceTooltip(balance: number) {
-		return balance > 0 ? 'Le debes dinero' : balance < 0 ? 'Te debe dinero' : 'Están a mano';
+		return balance > 0 ? 'Debes dinero' : balance < 0 ? 'Te debe dinero' : 'Están a mano';
 	}
 
 	export async function sendReminder() {
 		const headers = { 'content-type': 'application/json' };
 		const body = JSON.stringify({ receiver_email: popupEmail, message, group_id: data.group.id });
-		await fetch(`/api/reminders`, { method: 'POST', body, headers });
+		await fetch(routes.apiReminders, { method: 'POST', body, headers });
 		popupEmail = '';
 		message = '';
 	}
@@ -45,7 +41,7 @@
 	</ul>
 </nav>
 
-<header class="row">
+<header class="row jc-space-between">
 	<div>
 		<h2>Estado de cuenta grupal</h2>
 	</div>
@@ -53,9 +49,11 @@
 
 <article class="grid">
 	<p>Tu balance</p>
-	<p class="text-right">
+	<p class="t-right">
 		<span style="color: {balanceColor(data?.userBalance)}">{formatMoney(data?.userBalance)}</span>
-		<span class="no-underline" data-tooltip={personalBalanceTooltip}>{@html INFO_SVG}</span>
+		<span class="no-underline" data-tooltip={personalBalanceTooltip}>
+			<CssIcon name="info" />
+		</span>
 	</p>
 </article>
 
@@ -85,38 +83,28 @@
 {#each data?.balances as { email, balance }}
 	<article class="grid">
 		<p>
+			<Avatar seed={email} size={40} />
 			{email}
 			<button
-				class="outline secondary bell"
+				class="outline secondary btn-sm"
 				data-tooltip="Enviar recordatorio"
 				disabled={balance >= 0}
-				on:click={() => (popupEmail = email)}>{@html BELL_SVG}</button
+				on:click={() => (popupEmail = email)}
 			>
+				<CssIcon name="bell" />
+			</button>
 		</p>
-		<p class="text-right">
+		<p class="t-right">
 			<span style="color: {balanceColor(balance)}">{formatMoney(balance)}</span>
-			<span class="no-underline" data-tooltip={balanceTooltip(balance)}>{@html INFO_SVG}</span>
+			<span class="no-underline" data-tooltip={balanceTooltip(balance)}>
+				<CssIcon name="info" />
+			</span>
 		</p>
 	</article>
 {/each}
 
 <style>
-	.row {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-	}
-
-	.text-right {
-		text-align: right;
-	}
-
 	.no-underline {
 		border-bottom: 0px;
-	}
-
-	.bell {
-		width: 32px;
-		padding: 0px;
 	}
 </style>

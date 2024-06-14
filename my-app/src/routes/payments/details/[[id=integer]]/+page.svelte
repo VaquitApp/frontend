@@ -7,7 +7,7 @@
 
 	export let members: User[] = [];
 
-	async function updateMembers(groupId: number) {
+	async function updateMembers(groupId: Id) {
 		members = [];
 		if (groupId != 0) {
 			try {

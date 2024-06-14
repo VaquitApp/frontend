@@ -4,6 +4,7 @@
 	import CssIcon from '$lib/components/CssIcon.svelte';
 	import { onMount } from 'svelte';
 	import type { LayoutServerData } from './$types';
+	import { assets } from '$app/paths';
 
 	export let data: LayoutServerData;
 
@@ -56,6 +57,8 @@
 	{#each ICONS as iconName}
 		<link href="https://unpkg.com/css.gg@2.0.0/icons/css/{iconName}.css" rel="stylesheet" />
 	{/each}
+	<!-- Custom -->
+	<link rel="stylesheet" href="{assets}/styles.css" />
 </svelte:head>
 
 <main class="container">
@@ -86,14 +89,14 @@
 							{/if}
 						</li>
 						<li>
-							<input
-								id="theme"
-								type="checkbox"
-								role="switch"
-								on:change={(e) => changeTheme(e.currentTarget.checked)}
-								bind:checked={useDarkTheme}
-							/>
-							<label for="theme">
+							<label>
+								<input
+									id="theme"
+									type="checkbox"
+									role="switch"
+									on:change={(e) => changeTheme(e.currentTarget.checked)}
+									bind:checked={useDarkTheme}
+								/>
 								<CssIcon name={useDarkTheme ? 'moon' : 'sun'} />
 							</label>
 						</li>

@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { BUDGET_NEAR_LIMIT_THRESHOLD, routes, title } from '$lib';
-	import { formatMoney } from '$lib/formatter';
-	import { CAUTION_SVG, WARNING_SVG } from '$lib/svgs';
+	import { routes, title } from '$lib';
+	import BalanceDisplay from '$lib/components/BalanceDisplay.svelte';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -19,66 +18,19 @@
 	</ul>
 </nav>
 
-<header class="row">
-	<div>
-		<h2>Saldos por categoría</h2>
-		<p>{data.group.description}</p>
-	</div>
+<header>
+	<h2>Saldos por categoría</h2>
+	<p>{data.group.description}</p>
 </header>
 
 {#each data?.categoryBalances as balance}
-	{@const total = balance.budgets - balance.spendings}
-	{@const isOverLimit = total < 0}
-	{@const isNearLimit = balance.spendings / balance.budgets >= BUDGET_NEAR_LIMIT_THRESHOLD}
-	{@const balanceColor = isOverLimit ? '#da3633' : isNearLimit ? '#d29922' : null}
 	<article>
-		<header class="row">
+		<header class="row jc-space-between">
 			<p>
 				<b>{balance.categoryName}</b> -
 				{balance.categoryDescription}
 			</p>
 		</header>
-		<div class="grid">
-			<article>
-				<header>Presupuestos</header>
-				<h3>{formatMoney(balance.budgets)}</h3>
-			</article>
-			<article>
-				<header>Gastos</header>
-				<h3>{formatMoney(balance.spendings)}</h3>
-			</article>
-			<article>
-				<header>Saldo</header>
-				<h3 style="color: {balanceColor}">
-					<span class="balance">{formatMoney(total)}</span>
-					<span
-						hidden={!isOverLimit}
-						class="balance no-underline"
-						data-tooltip="Presupuesto sobrepasado">{@html CAUTION_SVG}</span
-					>
-					<span
-						hidden={isOverLimit || !isNearLimit}
-						class="balance no-underline"
-						data-tooltip="Presupuesto cercano a su límite">{@html WARNING_SVG}</span
-					>
-				</h3>
-			</article>
-		</div>
+		<BalanceDisplay {balance} />
 	</article>
 {/each}
-
-<style>
-	.row {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-	}
-
-	.balance {
-		display: inline-block;
-	}
-
-	.no-underline {
-		border-bottom: 0px;
-	}
-</style>

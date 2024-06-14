@@ -14,7 +14,7 @@
 	let initDate = last_week.toJSON();
 	let finDate = now.toJSON();
 
-	function getCategoryName(id: Number): string {
+	function getCategoryName(id: number): string {
 		return data.categories.filter((category: Category) => {
 			return category.id == id;
 		})[0].name;

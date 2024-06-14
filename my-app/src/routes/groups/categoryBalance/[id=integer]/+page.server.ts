@@ -1,3 +1,4 @@
+import { computeBalancesPerCategory } from '$lib/balance-utils';
 import { budgetService, categoryService, groupService, spendingService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
 
@@ -15,30 +16,3 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
 	);
 	return { group, spendings, budgets, categories, categoryBalances };
 };
-
-function computeBalancesPerCategory(
-	spendingsList: Spending[],
-	budgetsList: Budget[],
-	categories: Category[]
-) {
-	var balances = [];
-	for (const category of categories) {
-		const spendings = computeTotal(spendingsList, category.id);
-		const budgets = computeTotal(budgetsList, category.id);
-		const balance = {
-			categoryId: category.id,
-			categoryName: category.name,
-			categoryDescription: category.description,
-			budgets,
-			spendings
-		};
-		balances.push(balance);
-	}
-	return balances;
-}
-
-function computeTotal(objects: { category_id: Id; amount: number }[], categoryId: Id) {
-	return objects
-		.filter(({ category_id }) => category_id == categoryId)
-		.reduce((acc, { amount }) => acc + amount, 0);
-}

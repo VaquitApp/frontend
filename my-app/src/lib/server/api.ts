@@ -131,5 +131,6 @@ export const inviteService = {
 		post(`invite/join/${data.token}`, undefined!, getAuthHeader(cookies))
 };
 export const paymentReminderService = {
-	send: (data: PaymentReminder, cookies: Cookies) => post(`payment_reminder`, data, getAuthHeader(cookies))
+	send: (data: PaymentReminder, cookies: Cookies) =>
+		post(`payment_reminder`, data, getAuthHeader(cookies))
 };

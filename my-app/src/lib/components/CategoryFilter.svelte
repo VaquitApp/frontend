@@ -11,6 +11,7 @@
 </script>
 
 <div>
+	<CssIcon name="tag" />
 	Categorías:
 	{#each categories as category}
 		{@const active = filter.includes(category.id)}
@@ -31,12 +32,3 @@
 		</div>
 	{/each}
 </div>
-
-<style>
-	.btn-sm {
-		font-size: small;
-		padding: 0.5em;
-		display: flex;
-		align-items: center;
-	}
-</style>

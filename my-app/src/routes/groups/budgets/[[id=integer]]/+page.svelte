@@ -26,7 +26,7 @@
 	</ul>
 </nav>
 
-<header class="row">
+<header class="row jc-space-between">
 	<div>
 		<h2>Presupuestos</h2>
 		<p>{data.group.description}</p>
@@ -42,19 +42,18 @@
 
 {#each filteredBudgets as budget}
 	<article>
-		<header class="row">
+		<header class="row jc-space-between">
 			<b>{budget.description}</b>
-			<!-- TODO: show category name -->
 			<p>{getCategoryNameById(data.categories, budget.category_id)}</p>
 		</header>
 		<div class="grid">
 			{formatDateString(budget.start_date)} — {formatDateString(budget.end_date)}
 			<div class="row">
-				<p class="text-right" style="margin-left: auto; padding-right:5%">
+				<p class="t-right" style="margin-left: auto; padding-right:5%">
 					{formatMoney(budget.amount)}
 				</p>
 				<a
-					class="secondary outline"
+					class="secondary outline btn-sm"
 					href="{routes.budgetDetails}/{budget.id}"
 					role="button"
 					data-tooltip="Editar"
@@ -65,21 +64,3 @@
 		</div>
 	</article>
 {/each}
-
-<style>
-	.row {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-	}
-
-	.text-right {
-		text-align: right;
-	}
-
-	.btn-sm {
-		font-size: small;
-		padding: 0.5em;
-		margin: 0.3em;
-	}
-</style>

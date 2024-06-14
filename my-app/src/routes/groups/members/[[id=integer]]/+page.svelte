@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { routes } from '$lib';
 	import Avatar from '$lib/components/Avatar.svelte';
-	import { ADD_USER_SVG } from '$lib/svgs';
+	import CssIcon from '$lib/components/CssIcon.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -15,15 +15,19 @@
 <nav aria-label="breadcrumb">
 	<ul>
 		<li><a href={routes.groups}>Grupos</a></li>
+		<li><a href="{routes.groupMovements}/{data.group.id}">{data.group.name}</a></li>
 		<li>Miembros</li>
 	</ul>
 </nav>
 
-<header class="row">
-	<h2 style="padding: 15px">Miembros de {data.group.name}</h2>
-	<a class="secondary" href="{routes.sendInvite}/{data.group.id}" role="button"
-		>{@html ADD_USER_SVG}</a
-	>
+<header class="row jc-space-between m-b">
+	<h2>Miembros de {data.group.name}</h2>
+	<div>
+		<a href="{routes.sendInvite}/{data.group.id}" role="button">
+			<CssIcon name="user-add" />
+			Invitar
+		</a>
+	</div>
 </header>
 
 {#each data.members as user}
@@ -32,11 +36,3 @@
 		{user.email}
 	</article>
 {/each}
-
-<style>
-	.row {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-	}
-</style>

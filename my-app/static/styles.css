@@ -1,0 +1,24 @@
+.m-b {
+	margin-bottom: 1em;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.jc-space-between {
+	justify-content: space-between;
+}
+
+.t-center {
+	text-align: center;
+}
+.t-right {
+	text-align: right;
+}
+
+.btn-sm {
+	font-size: small;
+	padding: 0.5em;
+}

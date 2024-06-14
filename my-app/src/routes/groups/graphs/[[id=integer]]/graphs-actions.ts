@@ -23,7 +23,7 @@ export const loadSpendingsByCategoryGraph: GraphAction = (canvas, graphData) => 
 		const label = 'Gastos por categoría';
 		// NOTE: this is to have each bar be a different color
 		const datasets = values.map((v, i) => {
-			let data = Array(values.length).fill(0);
+			const data = Array(values.length).fill(0);
 			data[i] = v;
 			return { label, data };
 		});

@@ -3,7 +3,21 @@
 export const title = 'VaquitApp';
 
 // icons from CSS.GG
-export const ICONS = ['sun', 'moon', 'color-picker', 'pen'] as const;
+export const ICONS = [
+	'sun',
+	'moon',
+	'color-picker',
+	'pen',
+	'enter',
+	'lock',
+	'lock-unlock',
+	'user-list',
+	'user-add',
+	'tag',
+	'bell',
+	'info',
+	'danger'
+] as const;
 
 // app routes
 export const routes = {

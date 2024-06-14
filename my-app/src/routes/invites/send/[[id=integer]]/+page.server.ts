@@ -21,7 +21,7 @@ export const actions: Actions = {
 		}
 
 		const invite: SendInvite = {
-			sender_id: getUserId(cookies),
+			sender_id: getUserId(cookies) || 0,
 			receiver_email: email,
 			group_id: group_id
 		};
@@ -31,7 +31,7 @@ export const actions: Actions = {
 	devSubmit: async ({ params, request, cookies }) => {
 		const group_id = Number(params.id) || 0;
 		const data = await request.formData();
-		const email = data.get('email')?.toString()!;
+		const email = data.get('email')?.toString() || '';
 		await groupService.addMember(group_id, email, cookies);
 		redirect(302, `${routes.groupMembers}/${group_id}`);
 	}
