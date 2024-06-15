@@ -17,7 +17,7 @@
 	export const personalBalanceTooltip = balanceTooltip(data.userBalance);
 
 	export function balanceTooltip(balance: number) {
-		return balance > 0 ? 'Debes dinero' : balance < 0 ? 'Te debe dinero' : 'Están a mano';
+		return balance > 0 ? 'Debe dinero' : balance < 0 ? 'Se le debe dinero' : 'Sin deudas';
 	}
 
 	export async function sendReminder() {
