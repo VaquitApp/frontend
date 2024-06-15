@@ -18,7 +18,7 @@
 	<title>{title} - {data.group.name}</title>
 </svelte:head>
 
-<header class="row jc-space-between">
+<header class="row jc-space-between mb">
 	<hgroup>
 		<h2>Presupuestos</h2>
 	</hgroup>
