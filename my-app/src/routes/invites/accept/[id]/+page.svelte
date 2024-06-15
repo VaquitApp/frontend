@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { routes, title } from '$lib';
+	import { title } from '$lib';
 	import type { PageData } from './$types';
 
 	export let data: PageData;

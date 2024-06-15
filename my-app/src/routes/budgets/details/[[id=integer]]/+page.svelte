@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { routes, title } from '$lib';
+	import { title } from '$lib';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import { formatDateInput, formatMoney } from '$lib/formatter';
