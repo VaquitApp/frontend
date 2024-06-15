@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { routes, title } from '$lib';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
@@ -7,11 +7,11 @@
 
 	export let members: User[] = [];
 
-	async function updateMembers(groupId: number) {
+	async function updateMembers(groupId: Id) {
 		members = [];
 		if (groupId != 0) {
 			try {
-				const response = await fetch(`/api/members?groupId=${groupId}`);
+				const response = await fetch(`${routes.apiMembers}?groupId=${groupId}`);
 				members = await response.json();
 			} catch {}
 		}
@@ -25,13 +25,6 @@
 <svelte:head>
 	<title>{title} - Nuevo Pago</title>
 </svelte:head>
-
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href="/groups">Grupos</a></li>
-		<li>Pagos</li>
-	</ul>
-</nav>
 
 <h2>Registrando Pago</h2>
 <form method="POST">

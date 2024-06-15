@@ -10,15 +10,12 @@
 	<title>{title} - {pageTitle}</title>
 </svelte:head>
 
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href="/groups">Grupos</a></li>
-		<li>Invitaciones</li>
-		<li>Aceptar</li>
-	</ul>
-</nav>
+<header>
+	<hgroup>
+		<h2>¡Has sido Invitad@ a un grupo!</h2>
+	</hgroup>
+</header>
 
-<h2>¡Has sido Invitad@ a un grupo!</h2>
 <form method="POST">
 	<fieldset>
 		<!--TODO: TRAERNOS DATOS DEL GRUPO..-->

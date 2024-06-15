@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { routes } from '$lib';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -7,13 +8,13 @@
 <header>
 	{#if data.user}
 		<h3>Bienvenido, {data.user}</h3>
-		<a role="button" href="/groups">Ver mis grupos</a>
-		<a role="button" class="outline" href="/logout">Salir</a>
+		<a role="button" href={routes.groups}>Ver mis grupos</a>
+		<a role="button" class="outline" href={routes.logout}>Salir</a>
 	{:else}
 		<h2>Gestionar tus finanzas</h2>
-		<h3>ahora es <em>mooocho</em> más fácil</h3>
-		<a role="button" href="/login">Ingresar</a>
-		<a role="button" class="outline" href="/register">Registrarme</a>
+		<h3>ahora es <em>muucho</em> más fácil</h3>
+		<a role="button" href={routes.login}>Ingresar</a>
+		<a role="button" class="outline" href={routes.register}>Registrarme</a>
 	{/if}
 </header>
 

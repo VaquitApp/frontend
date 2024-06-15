@@ -1,7 +1,8 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { groupService } from '$lib/server/api';
+import { categoryService, groupService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
+import { routes } from '$lib';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
 	const id = Number(params.id) || 0;
@@ -14,6 +15,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
 export const actions: Actions = {
 	default: async ({ cookies, request, params }) => {
 		let id = Number(params.id) || 0;
+		const isNew = id === 0;
 		const data = await request.formData();
 		const name = data.get('name')?.toString();
 		const description = data.get('description')?.toString();
@@ -28,6 +30,20 @@ export const actions: Actions = {
 		const group: Group = { id, name, description, owner_id: 0, is_archived: false };
 		const body = await groupService.save(group, cookies);
 		id = body.id;
-		redirect(302, `/groups/movements/${id}`);
+
+		if (isNew) {
+			await categoryService.save(
+				{
+					id: 0,
+					group_id: id,
+					name: 'Sin categorizar',
+					description: '',
+					strategy: ''
+				},
+				cookies
+			);
+		}
+
+		redirect(302, routes.groupMovements(id));
 	}
 };

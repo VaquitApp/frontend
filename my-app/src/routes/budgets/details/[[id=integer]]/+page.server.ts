@@ -3,6 +3,7 @@ import type { Actions } from './$types';
 import type { PageServerLoad } from './$types';
 import { budgetService, groupService } from '$lib/server/api';
 import { fixDateString } from '$lib/formatter';
+import { routes } from '$lib';
 
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const group_id = Number(url.searchParams.get('groupId'));
@@ -60,6 +61,6 @@ export const actions: Actions = {
 			group_id
 		};
 		await budgetService.save(budget, cookies);
-		redirect(302, `/groups/budgets/${group_id}`);
+		redirect(302, routes.groupBudgets(group_id));
 	}
 };
