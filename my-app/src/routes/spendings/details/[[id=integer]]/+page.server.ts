@@ -71,6 +71,6 @@ export const actions: Actions = {
 			return { success: false };
 		}
 
-		redirect(302, `${routes.groupMovements}/${group_id}`);
+		redirect(302, routes.groupMovements(group_id));
 	}
 };

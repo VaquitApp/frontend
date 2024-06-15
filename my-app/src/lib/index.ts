@@ -16,7 +16,9 @@ export const ICONS = [
 	'tag',
 	'bell',
 	'info',
-	'danger'
+	'danger',
+	'loadbar-doc',
+	'add'
 ] as const;
 
 // app routes
@@ -29,14 +31,14 @@ export const routes = {
 	recover: '/user/recover',
 	// groups
 	groups: '/groups',
-	groupAggregations: '/groups/aggregations',
-	groupBalance: '/groups/balance',
-	groupBudgets: '/groups/budgets',
-	groupCategoryBalance: '/groups/categoryBalance',
 	groupDetails: '/groups/details',
-	groupGraphs: '/groups/graphs',
-	groupMembers: '/groups/members',
-	groupMovements: '/groups/movements',
+	groupAggregations: (groupId: Id) => `/groups/${groupId}/aggregations`,
+	groupBalance: (groupId: Id) => `/groups/${groupId}/balance`,
+	groupBudgets: (groupId: Id) => `/groups/${groupId}/budgets`,
+	groupCategoryBalance: (groupId: Id) => `/groups/${groupId}/categoryBalance`,
+	groupGraphs: (groupId: Id) => `/groups/${groupId}/graphs`,
+	groupMembers: (groupId: Id) => `/groups/${groupId}/members`,
+	groupMovements: (groupId: Id) => `/groups/${groupId}/movements`,
 	// categories
 	categoryDetails: '/categories/details',
 	// budgets

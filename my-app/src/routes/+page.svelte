@@ -12,7 +12,7 @@
 		<a role="button" class="outline" href={routes.logout}>Salir</a>
 	{:else}
 		<h2>Gestionar tus finanzas</h2>
-		<h3>ahora es <em>mooocho</em> más fácil</h3>
+		<h3>ahora es <em>muucho</em> más fácil</h3>
 		<a role="button" href={routes.login}>Ingresar</a>
 		<a role="button" class="outline" href={routes.register}>Registrarme</a>
 	{/if}

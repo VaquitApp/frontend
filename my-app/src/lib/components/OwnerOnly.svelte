@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	export let ownerId: number;
+	export let ownerId: Id;
 </script>
 
-{#if ownerId === $page.data.userId}
+{#if $page.data.userId === ownerId}
 	<slot />
 {/if}

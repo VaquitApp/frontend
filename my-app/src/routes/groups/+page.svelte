@@ -2,6 +2,7 @@
 	import { routes, title } from '$lib';
 	import { confirmArchiveGroup } from '$lib/client/alerts';
 	import CssIcon from '$lib/components/CssIcon.svelte';
+	import OwnerOnly from '$lib/components/OwnerOnly.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -14,14 +15,17 @@
 </svelte:head>
 
 <header class="row jc-space-between">
-	<div>
+	<hgroup>
 		<h2>Grupos</h2>
 		<p>Ingrese a un grupo para poder ver sus movimientos y agregar nuevos</p>
-	</div>
+	</hgroup>
 	<div>
 		<details class="dropdown">
 			<!-- svelte-ignore a11y-no-redundant-roles -->
-			<summary role="button">Opciones</summary>
+			<summary role="button">
+				<CssIcon name="add" />
+				Nuevo
+			</summary>
 			<ul dir="rtl">
 				<li><a href={routes.groupDetails}>Añadir grupo</a></li>
 				<li><a href={routes.spendingDetails}>Añadir gasto</a></li>
@@ -47,22 +51,24 @@
 			</header>
 			<p>{group.description}</p>
 			<footer class="grid">
-				<a href="{routes.groupMovements}/{group.id}" role="button" class="outline">
+				<a href={routes.groupMovements(group.id)} role="button" class="outline">
 					<CssIcon name="enter" />
 					Moovimientos</a
 				>
-				<a href="{routes.groupMembers}/{group.id}" role="button" class="outline secondary">
+				<a href={routes.groupMembers(group.id)} role="button" class="outline secondary">
 					<CssIcon name="user-list" />
 					Miembros
 				</a>
-				<a href="{routes.groupDetails}/{group.id}" role="button" class="outline secondary">
-					<CssIcon name="pen" />
-					Editar
-				</a>
-				<button class="outline contrast" on:click={() => confirmArchiveGroup(group)}>
-					<CssIcon name="lock" />
-					Archivar
-				</button>
+				<OwnerOnly ownerId={group.owner_id}>
+					<a href="{routes.groupDetails}/{group.id}" role="button" class="outline secondary">
+						<CssIcon name="pen" />
+						Editar
+					</a>
+					<button class="outline contrast" on:click={() => confirmArchiveGroup(group)}>
+						<CssIcon name="lock" />
+						Archivar
+					</button>
+				</OwnerOnly>
 			</footer>
 		</article>
 	{/each}

@@ -9,15 +9,12 @@
 	<title>{data.group.name} - Invitar</title>
 </svelte:head>
 
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href={routes.groups}>Grupos</a></li>
-		<li><a href="{routes.groupMembers}/{data.group.id}">Miembros</a></li>
-		<li>Invitar</li>
-	</ul>
-</nav>
+<header>
+	<hgroup>
+		<h2>Invitar Usuario a {data.group.name}</h2>
+	</hgroup>
+</header>
 
-<h2>Invitar Usuario a {data.group.name}</h2>
 <form method="POST" action="?/submit">
 	<fieldset>
 		<label>

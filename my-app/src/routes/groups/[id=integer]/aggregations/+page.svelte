@@ -2,7 +2,6 @@
 	import { enhance } from '$app/forms';
 	import type { PageData } from './$types';
 	import { formatDateInput } from '$lib/formatter';
-	import { routes } from '$lib';
 
 	export let form;
 	export let data: PageData;
@@ -25,14 +24,12 @@
 	<title>{data.group.name} - Agregaciones</title>
 </svelte:head>
 
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href={routes.groups}>Grupos</a></li>
-		<li>Agregaciones</li>
-	</ul>
-</nav>
+<header>
+	<hgroup>
+		<h2>Rango de la Agregación</h2>
+	</hgroup>
+</header>
 
-<h2>Rango de la Agregación</h2>
 <form method="POST" autocomplete="off" use:enhance>
 	<fieldset>
 		<label>

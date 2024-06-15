@@ -12,16 +12,10 @@
 	<title>{data.group.name} - {pageTitle}</title>
 </svelte:head>
 
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href={routes.groups}>Grupos</a></li>
-		<li><a href="{routes.groupMovements}/{data.group.id}">{data.group.name}</a></li>
-		<li>Miembros</li>
-	</ul>
-</nav>
-
-<header class="row jc-space-between m-b">
-	<h2>Miembros de {data.group.name}</h2>
+<header class="row jc-space-between mb">
+	<hgroup>
+		<h2>Miembros de {data.group.name}</h2>
+	</hgroup>
 	<div>
 		<a href="{routes.sendInvite}/{data.group.id}" role="button">
 			<CssIcon name="user-add" />

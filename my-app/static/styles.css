@@ -1,10 +1,17 @@
-.m-b {
+.mb {
 	margin-bottom: 1em;
+}
+.ml {
+	margin-left: 1em;
 }
 
 .row {
 	display: flex;
 	flex-direction: row;
+}
+
+.ai-center {
+	align-items: center;
 }
 
 .jc-space-between {

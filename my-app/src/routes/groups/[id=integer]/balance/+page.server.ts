@@ -4,9 +4,7 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ cookies, params }) => {
 	const id = Number(params.id);
-	const group: Group = await groupService.get(id, cookies);
 	const groupMembers: User[] = await groupService.listAllMembers(id, cookies);
-
 	const memberBalances: Balance[] = await groupService.listAllMemberBalances(id, cookies);
 
 	const userId = getUserId(cookies);
@@ -17,5 +15,5 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
 		const email = groupMembers.find(({ id }) => id === user_id)!.email;
 		return { email, balance: current_balance };
 	});
-	return { group, balances, userBalance };
+	return { balances, userBalance };
 };

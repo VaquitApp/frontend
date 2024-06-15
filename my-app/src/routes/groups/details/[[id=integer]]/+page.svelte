@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { routes, title } from '$lib';
+	import { title } from '$lib';
 	import { confirmArchiveGroup } from '$lib/client/alerts';
 	import type { PageData } from './$types';
 
@@ -13,14 +13,12 @@
 	<title>{title} - {pageTitle}</title>
 </svelte:head>
 
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href={routes.groups}>Grupos</a></li>
-		<li>Detalles</li>
-	</ul>
-</nav>
+<header>
+	<hgroup>
+		<h2>{pageTitle}</h2>
+	</hgroup>
+</header>
 
-<h2>{pageTitle}</h2>
 <form method="POST">
 	<fieldset>
 		<label>

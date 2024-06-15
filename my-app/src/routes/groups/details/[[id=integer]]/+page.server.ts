@@ -44,6 +44,6 @@ export const actions: Actions = {
 			);
 		}
 
-		redirect(302, `${routes.groupMovements}/${id}`);
+		redirect(302, routes.groupMovements(id));
 	}
 };

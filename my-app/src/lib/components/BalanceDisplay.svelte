@@ -1,50 +1,52 @@
 <script lang="ts">
-	import { BUDGET_NEAR_LIMIT_THRESHOLD } from '$lib';
+	import { routes } from '$lib';
+	import { buildBalance } from '$lib/balance-utils';
 	import { formatMoney } from '$lib/formatter';
 	import CssIcon from './CssIcon.svelte';
 
-	export let balance: {
-		budgets: number;
-		spendings: number;
-	};
-	$: total = balance.budgets - balance.spendings;
-	$: isOverLimit = total < 0;
-	$: isNearLimit = balance.spendings / balance.budgets >= BUDGET_NEAR_LIMIT_THRESHOLD;
-	$: balanceColor = isOverLimit ? '#da3633' : isNearLimit ? '#d29922' : null;
+	export let spendings: Spending[];
+	export let budgets: Budget[];
+	export let categories: Category[];
+	export let group: Group | undefined = undefined;
+	$: balances = buildBalance(spendings, budgets, categories);
 </script>
 
 <div class="grid">
 	<article>
 		<header>
-			<!-- <a href="{routes.groupBudgets}/{data.group.id}"> -->
-			Presupuestos
-			<!-- </a> -->
+			{#if group}
+				<a href={routes.groupBudgets(group.id)}> Presupuestos </a>
+			{:else}
+				Presupuestos
+			{/if}
 		</header>
-		<h3>{formatMoney(balance.budgets)}</h3>
+		<h3>{formatMoney(balances.totalBudgets)}</h3>
 	</article>
 	<article>
 		<header>Gastos</header>
-		<h3>{formatMoney(balance.spendings)}</h3>
+		<h3>{formatMoney(balances.totalSpendings)}</h3>
 	</article>
 	<article>
 		<header>
-			<!-- <a href="{routes.groupCategoryBalance}/{data.group.id}"> -->
-			Saldo
-			<!-- </a> -->
+			{#if group}
+				<a href={routes.groupCategoryBalance(group.id)}> Saldo </a>
+			{:else}
+				Saldo
+			{/if}
 		</header>
-		<h3 style="color: {balanceColor}">
-			<span class="balance">{formatMoney(total)}</span>
+		<h3 style="color: {balances.balanceColor}">
+			<span class="balance">{formatMoney(balances.totalBalance)}</span>
 			<span
-				hidden={!isOverLimit}
+				hidden={!balances.isOverLimit}
 				class="balance no-underline"
-				data-tooltip="Presupuesto sobrepasado"
+				data-tooltip={balances.tooltipInfo}
 			>
 				<CssIcon name="danger" />
 			</span>
 			<span
-				hidden={isOverLimit || !isNearLimit}
+				hidden={balances.isOverLimit || !balances.isNearLimit}
 				class="balance no-underline"
-				data-tooltip="Presupuesto cercano a su límite"
+				data-tooltip={balances.tooltipInfo}
 			>
 				<CssIcon name="danger" />
 			</span>

@@ -15,13 +15,6 @@
 	{/if}
 </svelte:head>
 
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href={routes.groups}>Grupos</a></li>
-		<li>Categorías</li>
-	</ul>
-</nav>
-
 <h2>
 	{#if edit}Editando{:else}Creando{/if} Categoría
 </h2>

@@ -3,9 +3,9 @@
 	import CategoryFilter from '$lib/components/CategoryFilter.svelte';
 	import CssIcon from '$lib/components/CssIcon.svelte';
 	import { formatDateString, formatMoney } from '$lib/formatter';
-	import type { PageServerData } from './$types';
+	import type { PageData } from './$types';
 
-	export let data: PageServerData;
+	export let data: PageData;
 
 	let categoryFilter: Id[] = [];
 
@@ -18,26 +18,24 @@
 	<title>{title} - {data.group.name}</title>
 </svelte:head>
 
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href={routes.groups}>Grupos</a></li>
-		<li><a href="{routes.groupMovements}/{data.group.id}">{data.group.name}</a></li>
-		<li>Presupuestos</li>
-	</ul>
-</nav>
-
 <header class="row jc-space-between">
-	<div>
+	<hgroup>
 		<h2>Presupuestos</h2>
-		<p>{data.group.description}</p>
-	</div>
+	</hgroup>
 	<div>
-		<a href="{routes.budgetDetails}?groupId={data.group.id}" role="button">Nuevo presupuesto</a>
+		<a href="{routes.budgetDetails}?groupId={data.group.id}" role="button">
+			<CssIcon name="add" />
+			Nuevo
+		</a>
 	</div>
 </header>
 
 <article>
-	<CategoryFilter categories={data.categories} bind:filter={categoryFilter} />
+	<CategoryFilter
+		ownerId={data.group.owner_id}
+		categories={data.categories}
+		bind:filter={categoryFilter}
+	/>
 </article>
 
 {#each filteredBudgets as budget}

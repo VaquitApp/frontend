@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { routes, title } from '$lib';
+	import { title } from '$lib';
 	import type { PageData } from './$types';
 	import { computeGraphDataWithFilters } from './graphs-utils';
 	import { formatDateInput } from '$lib/formatter';
@@ -30,19 +30,10 @@
 	<title>{title} - Gráficos de finanzas</title>
 </svelte:head>
 
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href={routes.groups}>Grupos</a></li>
-		<li><a href="{routes.groupMovements}/{data.group.id}">{data.group.name}</a></li>
-		<li>Gráficos de finanzas</li>
-	</ul>
-</nav>
-
-<header class="row">
-	<div>
+<header>
+	<hgroup>
 		<h2>Gráficos de finanzas</h2>
-		<p>{data.group.description}</p>
-	</div>
+	</hgroup>
 </header>
 
 <form>

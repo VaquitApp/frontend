@@ -3,9 +3,9 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 	import CssIcon from '$lib/components/CssIcon.svelte';
 	import { formatMoney } from '$lib/formatter';
-	import type { PageServerData } from './$types';
+	import type { PageData } from './$types';
 
-	export let data: PageServerData;
+	export let data: PageData;
 
 	export let popupEmail: string = '';
 	export let message: string = '';
@@ -33,18 +33,10 @@
 	<title>{title} - {data.group.name}</title>
 </svelte:head>
 
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href={routes.groups}>Grupos</a></li>
-		<li><a href="{routes.groupMovements}/{data.group.id}">{data.group.name}</a></li>
-		<li>Estado de cuenta grupal</li>
-	</ul>
-</nav>
-
-<header class="row jc-space-between">
-	<div>
+<header>
+	<hgroup>
 		<h2>Estado de cuenta grupal</h2>
-	</div>
+	</hgroup>
 </header>
 
 <article class="grid">

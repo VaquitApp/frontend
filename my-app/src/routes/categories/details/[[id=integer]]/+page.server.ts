@@ -36,6 +36,6 @@ export const actions: Actions = {
 		const category: Category = { id, group_id, name, description, strategy };
 		await categoryService.save(category, cookies);
 
-		redirect(302, `${routes.groupMovements}/${group_id}`);
+		redirect(302, routes.groupMovements(group_id));
 	}
 };

@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { routes } from '$lib';
 	import CssIcon from './CssIcon.svelte';
+	import OwnerOnly from './OwnerOnly.svelte';
 
+	export let ownerId: Id;
 	export let categories: Category[];
 	export let filter: Id[];
 
@@ -22,13 +24,15 @@
 			>
 				{category.name}
 			</button>
-			<a
-				class="btn-sm {!active ? 'outline' : ''}"
-				href="{routes.categoryDetails}/{category.id}"
-				role="button"
-			>
-				<CssIcon name="pen" size={0.7} />
-			</a>
+			<OwnerOnly {ownerId}>
+				<a
+					class="btn-sm {!active ? 'outline' : ''}"
+					href="{routes.categoryDetails}/{category.id}"
+					role="button"
+				>
+					<CssIcon name="pen" size={0.7} />
+				</a>
+			</OwnerOnly>
 		</div>
 	{/each}
 </div>

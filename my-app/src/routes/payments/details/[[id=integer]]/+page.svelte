@@ -11,7 +11,7 @@
 		members = [];
 		if (groupId != 0) {
 			try {
-				const response = await fetch(`/${routes.apiMembers}?groupId=${groupId}`);
+				const response = await fetch(`${routes.apiMembers}?groupId=${groupId}`);
 				members = await response.json();
 			} catch {}
 		}
@@ -25,13 +25,6 @@
 <svelte:head>
 	<title>{title} - Nuevo Pago</title>
 </svelte:head>
-
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href={routes.groups}>Grupos</a></li>
-		<li>Pagos</li>
-	</ul>
-</nav>
 
 <h2>Registrando Pago</h2>
 <form method="POST">

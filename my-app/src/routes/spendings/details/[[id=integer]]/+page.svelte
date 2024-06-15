@@ -61,13 +61,6 @@
 	<title>{title} - Nuevo Gasto Unico</title>
 </svelte:head>
 
-<nav aria-label="breadcrumb">
-	<ul>
-		<li><a href={routes.groups}>Grupos</a></li>
-		<li>Gastos</li>
-	</ul>
-</nav>
-
 <h2>Nuevo Gasto</h2>
 <form method="POST" autocomplete="off">
 	<fieldset>
