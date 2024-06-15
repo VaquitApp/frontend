@@ -25,8 +25,20 @@
 </header>
 
 {#each data.members as user}
-	<article>
-		<Avatar seed={user.email} size={40} />
-		{user.email}
+	<article class="row jc-space-between">
+		<div>
+			<Avatar seed={user.email} size={40} />
+			{user.email}
+		</div>
+		<div>
+			<div>
+				CBU / CVU:
+				{user.cbu}
+			</div>
+			<div>
+				Alias:
+				{user.alias}
+			</div>
+		</div>
 	</article>
 {/each}

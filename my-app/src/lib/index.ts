@@ -28,7 +28,7 @@ export const routes = {
 	login: '/user/login',
 	logout: '/user/logout',
 	register: '/user/register',
-	recover: '/user/recover',
+	profile: '/user/profile',
 	// groups
 	groups: '/groups',
 	groupDetails: '/groups/details',

@@ -4,7 +4,11 @@ declare global {
 	type User = {
 		id: Id;
 		email: string;
+		cbu: string;
+		alias: string;
 	};
+	type UserRegistration = { email: string; password: string };
+	type UserProfile = Omit<User, 'id' | 'email'>;
 
 	type Group = {
 		id: Id;

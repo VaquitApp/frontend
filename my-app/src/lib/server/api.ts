@@ -55,8 +55,17 @@ function put(path: string, data: object, headers?: Headers) {
 }
 
 export const userService = {
-	register: (data: { email: string; password: string }) => post('user/register', data),
-	login: (data: { email: string; password: string }) => post('user/login', data)
+	register: (data: UserRegistration) => post('user/register', data),
+	login: (data: UserRegistration) => post('user/login', data),
+	save: (data: UserProfile, cookies: Cookies) => {
+		{
+			// Remove when backend is updated
+			cookies.set('cbu', data.cbu, { path: '/' });
+			cookies.set('alias', data.alias, { path: '/' });
+			return;
+		}
+		return post('user/profile', data, getAuthHeader(cookies));
+	}
 };
 export const groupService = {
 	save: (data: Group, cookies: Cookies) =>
