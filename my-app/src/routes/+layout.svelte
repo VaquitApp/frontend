@@ -70,7 +70,7 @@
 		</ul>
 		<ul>
 			<li>
-				<details class="dropdown" style="width: 200px;">
+				<details class="dropdown" style="min-width: 200px;">
 					<summary>
 						{#if data.user}
 							<Avatar seed={data.user} size={30} />
@@ -83,6 +83,8 @@
 					<ul>
 						<li>
 							{#if data.user}
+								<a href={routes.groups}> Ver grupos </a>
+								<a href={routes.profile}> Ver perfil </a>
 								<a href={routes.logout}> Cerrar sesión </a>
 							{:else}
 								<a href={routes.login}>Iniciar sesión</a>

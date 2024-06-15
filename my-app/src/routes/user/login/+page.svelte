@@ -15,7 +15,6 @@
 		<label>
 			Ingrese su contraseña
 			<input type="password" name="password" placeholder="Contaseña" required />
-			<a href={routes.recover}>Olvidé mi contraseña</a>
 		</label>
 	</fieldset>
 
