@@ -37,7 +37,7 @@
 			{user.email}
 		</span>
 
-		{#if data?.userId == user.id}
+		{#if data?.userId == user.id && data?.group?.owner_id != user.id}
 			<span class="t-right">
 				<button class="outline" on:click={leaveGroup}>
 					<CssIcon name="log-out" />

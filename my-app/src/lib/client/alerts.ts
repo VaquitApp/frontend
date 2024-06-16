@@ -17,6 +17,7 @@ export async function confirmLeaveGroup(group: Group) {
 		let body = await response.json();
 		let { detail } = JSON.parse(body.message);
 		alert('No se pudo dejar el grupo. ' + detail);
+		return;
 	}
 	await invalidateAll();
 	goto(routes.groups);
