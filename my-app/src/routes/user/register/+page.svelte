@@ -10,7 +10,7 @@
 <header>
 	<hgroup>
 		<h2>Registro</h2>
-		<p>Dé el primer paso para comenzar a ahorra</p>
+		<p>Dé el primer paso para comenzar a ahorrar</p>
 	</hgroup>
 </header>
 
