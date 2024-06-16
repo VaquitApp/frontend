@@ -57,16 +57,9 @@ function put(path: string, data: object, headers?: Headers) {
 export const userService = {
 	register: (data: UserRegistration) => post('user/register', data),
 	login: (data: UserRegistration) => post('user/login', data),
-	save: (data: UserProfile, cookies: Cookies) => {
-		{
-			// Remove when backend is updated
-			cookies.set('cbu', data.cbu, { path: '/' });
-			cookies.set('alias', data.alias, { path: '/' });
-			return;
-		}
-		return post('user/profile', data, getAuthHeader(cookies));
-	},
-	getMe: (cookies: Cookies) => get('user', getAuthHeader(cookies)),
+	get: (cookies: Cookies) => get('user', getAuthHeader(cookies)),
+	update: (data: UserProfile, cookies: Cookies) =>
+		put('user/profile', data, getAuthHeader(cookies)),
 	googleSignIn: (data: UserGoogleCredentials) => post('user/googleSignIn', data),
 	googleLink: (data: UserGoogleCredentials, cookies: Cookies) =>
 		put('user/googleSignIn', data, getAuthHeader(cookies)),
