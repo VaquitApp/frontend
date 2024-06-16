@@ -6,9 +6,12 @@ declare global {
 		email: string;
 		cbu: string;
 		alias: string;
+		has_google: boolean;
 	};
 	type UserRegistration = { email: string; password: string };
-	type UserProfile = Omit<User, 'id' | 'email'>;
+	type UserCredentials = Pick<User, 'id' | 'email'> & { jwt: string };
+	type UserGoogleCredentials = { token: string };
+	type UserProfile = Omit<User, 'id' | 'email', 'has_google'>;
 
 	type Group = {
 		id: Id;

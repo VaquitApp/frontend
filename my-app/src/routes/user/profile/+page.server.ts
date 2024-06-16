@@ -2,10 +2,7 @@ import { userService } from '$lib/server/api';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ cookies }) => {
-	const profile: UserProfile = {
-		cbu: cookies.get('cbu')!,
-		alias: cookies.get('cbu')!
-	};
+	const profile: UserProfile = await userService.get(cookies);
 	return { profile };
 };
 
@@ -17,7 +14,7 @@ export const actions: Actions = {
 
 		const profile: UserProfile = { cbu, alias };
 		try {
-			await userService.save(profile, cookies);
+			await userService.update(profile, cookies);
 		} catch {
 			return { success: false };
 		}

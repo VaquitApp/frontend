@@ -5,3 +5,11 @@ export async function confirmArchiveGroup(group: Group) {
 	await fetch(`/api/groups?groupId=${group.id}&archive=${!group.is_archived}`, { method: 'PUT' });
 	location.reload();
 }
+
+export function alertNoGoogleUser() {
+	alert('Su cuenta de Google no se encuentra vinculado a ningun usuario');
+}
+
+export function alertUnexpectedError() {
+	alert('Ocurrió un error');
+}

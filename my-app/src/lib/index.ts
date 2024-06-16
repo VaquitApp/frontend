@@ -1,6 +1,10 @@
 // place files you want to import through the `$lib` alias in this folder.
 
+import { env } from '$env/dynamic/public';
+
 export const title = 'VaquitApp';
+
+export const GOOGLE_CLIENT_ID = env['PUBLIC_GOOGLE_CLIENT_ID'];
 
 // icons from CSS.GG
 export const ICONS = [
@@ -18,7 +22,8 @@ export const ICONS = [
 	'info',
 	'danger',
 	'loadbar-doc',
-	'add'
+	'add',
+	'google'
 ] as const;
 
 // app routes
@@ -29,6 +34,7 @@ export const routes = {
 	logout: '/user/logout',
 	register: '/user/register',
 	profile: '/user/profile',
+	google: '/api/google',
 	// groups
 	groups: '/groups',
 	groupDetails: '/groups/details',
