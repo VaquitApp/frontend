@@ -65,7 +65,12 @@ export const userService = {
 			return;
 		}
 		return post('user/profile', data, getAuthHeader(cookies));
-	}
+	},
+	getMe: (cookies: Cookies) => get('user', getAuthHeader(cookies)),
+	googleSignIn: (data: UserGoogleCredentials) => post('user/googleSignIn', data),
+	googleLink: (data: UserGoogleCredentials, cookies: Cookies) =>
+		put('user/googleSignIn', data, getAuthHeader(cookies)),
+	googleUnlink: (cookies: Cookies) => del('user/googleSignIn', getAuthHeader(cookies))
 };
 export const groupService = {
 	save: (data: Group, cookies: Cookies) =>

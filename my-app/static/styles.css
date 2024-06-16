@@ -10,8 +10,16 @@
 	flex-direction: row;
 }
 
+.gap {
+	gap: 10px;
+}
+
 .ai-center {
 	align-items: center;
+}
+
+.jc-center {
+	justify-content: center;
 }
 
 .jc-space-between {

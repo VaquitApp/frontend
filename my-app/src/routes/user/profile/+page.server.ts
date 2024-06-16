@@ -2,10 +2,15 @@ import { userService } from '$lib/server/api';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ cookies }) => {
-	const profile: UserProfile = {
-		cbu: cookies.get('cbu')!,
-		alias: cookies.get('cbu')!
-	};
+	{
+		const profile: UserProfile = {
+			cbu: cookies.get('cbu')!,
+			alias: cookies.get('cbu')!,
+			has_google: false
+		};
+		return { profile };
+	}
+	const profile: UserProfile = await userService.getMe(cookies);
 	return { profile };
 };
 

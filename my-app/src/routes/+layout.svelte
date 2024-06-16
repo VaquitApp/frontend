@@ -47,6 +47,8 @@
 
 <svelte:head>
 	<title>{title}</title>
+	<!-- Google -->
+	<script src="https://accounts.google.com/gsi/client" async defer></script>
 	<!-- Pico -->
 	<meta name="color-scheme" content="light dark" />
 	<link
@@ -87,7 +89,8 @@
 								<a href={routes.profile}> Ver perfil </a>
 								<a href={routes.logout}> Cerrar sesión </a>
 							{:else}
-								<a href={routes.login}>Iniciar sesión</a>
+								<a href={routes.login}> Iniciar sesión </a>
+								<a href={routes.register}> Registrarse </a>
 							{/if}
 						</li>
 						<li>
