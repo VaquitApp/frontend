@@ -60,10 +60,10 @@ export const userService = {
 	get: (cookies: Cookies) => get('user', getAuthHeader(cookies)),
 	update: (data: UserProfile, cookies: Cookies) =>
 		put('user/profile', data, getAuthHeader(cookies)),
-	googleSignIn: (data: UserGoogleCredentials) => post('user/googleSignIn', data),
+	googleSignIn: (data: UserGoogleCredentials) => post('user/google-signin', data),
 	googleLink: (data: UserGoogleCredentials, cookies: Cookies) =>
-		put('user/googleSignIn', data, getAuthHeader(cookies)),
-	googleUnlink: (cookies: Cookies) => del('user/googleSignIn', getAuthHeader(cookies))
+		put('user/google-signin', data, getAuthHeader(cookies)),
+	googleUnlink: (cookies: Cookies) => del('user/google-signin', getAuthHeader(cookies))
 };
 export const groupService = {
 	save: (data: Group, cookies: Cookies) =>
@@ -139,5 +139,5 @@ export const inviteService = {
 };
 export const paymentReminderService = {
 	send: (data: PaymentReminder, cookies: Cookies) =>
-		post(`payment_reminder`, data, getAuthHeader(cookies))
+		post(`payment-reminder`, data, getAuthHeader(cookies))
 };
