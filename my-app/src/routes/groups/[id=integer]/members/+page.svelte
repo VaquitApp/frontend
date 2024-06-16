@@ -1,11 +1,17 @@
 <script lang="ts">
 	import { routes } from '$lib';
+	import { confirmLeaveGroup } from '$lib/client/alerts';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import CssIcon from '$lib/components/CssIcon.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 	const pageTitle = `Miembros`;
+
+	function leaveGroup() {
+		confirmLeaveGroup(data.group);
+		console.log('left');
+	}
 </script>
 
 <svelte:head>
@@ -25,8 +31,19 @@
 </header>
 
 {#each data.members as user}
-	<article>
-		<Avatar seed={user.email} size={40} />
-		{user.email}
+	<article class="grid ai-center">
+		<span class="centered">
+			<Avatar seed={user.email} size={40} />
+			{user.email}
+		</span>
+
+		{#if data?.userId == user.id}
+			<span class="t-right">
+				<button class="outline" on:click={leaveGroup}>
+					<CssIcon name="log-out" />
+					Abandonar grupo
+				</button>
+			</span>
+		{/if}
 	</article>
 {/each}
