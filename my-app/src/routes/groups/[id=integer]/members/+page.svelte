@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { routes } from '$lib';
-	import { confirmLeaveGroup } from '$lib/client/alerts';
+	import { confirmKickFromGroup, confirmLeaveGroup } from '$lib/client/alerts';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import CssIcon from '$lib/components/CssIcon.svelte';
 	import type { PageData } from './$types';
@@ -40,6 +40,13 @@
 				<button class="outline" on:click={() => confirmLeaveGroup(data?.group)}>
 					<CssIcon name="log-out" />
 					Abandonar grupo
+				</button>
+			</span>
+		{:else if isOwner && !isActiveUser}
+			<span class="t-right">
+				<button class="outline" on:click={() => confirmKickFromGroup(data?.group, user)}>
+					<CssIcon name="close-r" />
+					Echar del grupo
 				</button>
 			</span>
 		{/if}
