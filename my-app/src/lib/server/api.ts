@@ -106,7 +106,8 @@ export const paymentService = {
 		data.id > 0
 			? put(`payment/${data.id}`, data, getAuthHeader(cookies))
 			: post('payment', data, getAuthHeader(cookies)),
-	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/payment`, getAuthHeader(cookies))
+	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/payment`, getAuthHeader(cookies)),
+	confirm: (paymentId: Id, cookies: Cookies) => post(`payment/${paymentId}/confirm`, getAuthHeader(cookies))
 };
 export const budgetService = {
 	save: (data: Budget, cookies: Cookies) =>
