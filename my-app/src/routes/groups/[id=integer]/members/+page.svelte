@@ -8,10 +8,7 @@
 	export let data: PageData;
 	const pageTitle = `Miembros`;
 
-	function leaveGroup() {
-		confirmLeaveGroup(data.group);
-		console.log('left');
-	}
+	const isOwner = data?.group?.owner_id === data?.userId;
 </script>
 
 <svelte:head>
@@ -31,15 +28,16 @@
 </header>
 
 {#each data.members as user}
+	{@const isActiveUser = data?.userId === user.id}
 	<article class="grid ai-center">
 		<span class="centered">
 			<Avatar seed={user.email} size={40} />
 			{user.email}
 		</span>
 
-		{#if data?.userId == user.id && data?.group?.owner_id != user.id}
+		{#if !isOwner && isActiveUser}
 			<span class="t-right">
-				<button class="outline" on:click={leaveGroup}>
+				<button class="outline" on:click={() => confirmLeaveGroup(data?.group)}>
 					<CssIcon name="log-out" />
 					Abandonar grupo
 				</button>
