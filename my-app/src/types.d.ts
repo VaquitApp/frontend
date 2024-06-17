@@ -62,6 +62,7 @@ declare global {
 		group_id: Id;
 		from_id: Id;
 		to_id: Id;
+		confirmed: boolean;
 		amount: number;
 		date: string;
 	};
