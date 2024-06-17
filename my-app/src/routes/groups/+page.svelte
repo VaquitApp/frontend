@@ -30,7 +30,7 @@
 				<li><a href={routes.groupDetails}>Añadir grupo</a></li>
 				<li><a href={routes.spendingDetails}>Añadir gasto</a></li>
 				<li><a href={routes.budgetDetails}>Añadir presupuesto</a></li>
-				<li><a href={routes.categoryDetails}>Añadir categoría</a></li>
+				<li><a href={routes.categoryDetails()}>Añadir categoría</a></li>
 			</ul>
 		</details>
 	</div>

@@ -62,7 +62,7 @@
 			<ul dir="rtl">
 				<li><a href="{routes.spendingDetails}?groupId={data.group.id}">Añadir gasto</a></li>
 				<li><a href="{routes.budgetDetails}?groupId={data.group.id}">Añadir presupuesto</a></li>
-				<li><a href="{routes.categoryDetails}?groupId={data.group.id}">Añadir categoría</a></li>
+				<li><a href="{routes.categoryDetails()}?groupId={data.group.id}">Añadir categoría</a></li>
 				<li><a href="{routes.paymentDetails}?groupId={data.group.id}">Añadir pago</a></li>
 			</ul>
 		</details>

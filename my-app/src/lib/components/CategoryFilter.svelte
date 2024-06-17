@@ -27,7 +27,7 @@
 			<OwnerOnly {ownerId}>
 				<a
 					class="btn-sm {!active ? 'outline' : ''}"
-					href="{routes.categoryDetails}/{category.id}"
+					href={routes.categoryDetails(category.id)}
 					role="button"
 				>
 					<CssIcon name="pen" size={0.7} />

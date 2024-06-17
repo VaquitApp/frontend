@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { goto } from '$app/navigation';
+	import { routes, title } from '$lib';
+	import CssIcon from '$lib/components/CssIcon.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
 	const edit = data.category.id !== 0;
+	const isArchived = data.category.is_archived;
 </script>
 
 <svelte:head>
@@ -18,11 +21,11 @@
 <h2>
 	{#if edit}Editando{:else}Creando{/if} Categoría
 </h2>
-<form method="POST">
+<form method="POST" action="?/update">
 	<fieldset>
 		<label>
 			Ingrese un grupo para la categoría
-			<select name="groupId" required value={data.category.group_id}>
+			<select name="groupId" required disabled={isArchived} value={data.category.group_id}>
 				{#each data.groups as group}
 					<option disabled={edit && group.id !== data.category.group_id} value={group.id}
 						>{group.name}</option
@@ -32,7 +35,14 @@
 		</label>
 		<label>
 			Ingrese un nombre para la categoría
-			<input type="text" name="name" placeholder="Nombre" required value={data.category.name} />
+			<input
+				type="text"
+				name="name"
+				placeholder="Nombre"
+				required
+				disabled={isArchived}
+				value={data.category.name}
+			/>
 		</label>
 		<label>
 			Ingrese una descripción para la categoría
@@ -41,14 +51,30 @@
 				name="description"
 				placeholder="Description"
 				required
+				disabled={isArchived}
 				value={data.category.description}
 			/>
 		</label>
 		{#if edit}
-			<button>Editar</button>
+			{#if isArchived}
+				<button class="contrast" formaction="?/unarchive">
+					<CssIcon name="lock-unlock" />
+					Desarchivar
+				</button>
+			{:else}
+				<button>Editar</button>
+				<button class="outline contrast" formaction="?/archive">
+					<CssIcon name="lock" />
+					Archivar
+				</button>
+			{/if}
 		{:else}
 			<button>Crear</button>
 		{/if}
-		<button type="button" class="outline" on:click={() => history.back()}>Cancelar</button>
+		<button
+			type="button"
+			class="outline"
+			on:click={() => goto(routes.groupMovements(data.category.group_id))}>Volver</button
+		>
 	</fieldset>
 </form>
