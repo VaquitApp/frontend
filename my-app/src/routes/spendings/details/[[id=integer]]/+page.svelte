@@ -36,6 +36,7 @@
 			try {
 				const response = await fetch(`${routes.apiCategories}?groupId=${groupId}`);
 				categories = await response.json();
+				categories = categories.filter((category) => !category.is_archived);
 				return;
 			} catch {}
 		}
