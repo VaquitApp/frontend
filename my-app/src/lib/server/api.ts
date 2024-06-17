@@ -83,7 +83,9 @@ export const groupService = {
 		get(`group/${id}/balance`, getAuthHeader(cookies)),
 	addMember: (id: Id, user_identifier: Id | string, cookies: Cookies) =>
 		post(`group/${id}/member`, { user_identifier }, getAuthHeader(cookies)),
-	leaveGroup: (id: Id, cookies: Cookies) => del(`group/${id}/member`, getAuthHeader(cookies))
+	leaveGroup: (id: Id, cookies: Cookies) => del(`group/${id}/member`, getAuthHeader(cookies)),
+	kickFromGroup: (id: Id, userId: Id, cookies: Cookies) =>
+		del(`group/${id}/member?user_id=${userId}`, getAuthHeader(cookies))
 };
 export const spendingService = {
 	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/spending`, getAuthHeader(cookies)),

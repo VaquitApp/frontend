@@ -24,6 +24,7 @@ export const ICONS = [
 	'loadbar-doc',
 	'add',
 	'log-out',
+	'close-r',
 	'check-o',
 	'arrow-left',
 	'google'

@@ -25,6 +25,22 @@ export async function confirmLeaveGroup(group: Group) {
 	goto(routes.groups);
 }
 
+export async function confirmKickFromGroup(group: Group, userToKick: User) {
+	const message = `¿Estás seguro que querés echar a "${userToKick.email}" de "${group.name}"?`;
+	if (!confirm(message)) return;
+	let response = await fetch(`${routes.apiMembers}?groupId=${group.id}&userId=${userToKick.id}`, {
+		method: 'DELETE'
+	});
+	if (!response.ok) {
+		let body = await response.json();
+		let { detail } = JSON.parse(body.message);
+		alert('No se pudo echar al usuario. ' + detail);
+		return;
+	}
+	await invalidateAll();
+	location.reload();
+}
+
 export function alertNoGoogleUser() {
 	alert('Su cuenta de Google no se encuentra vinculado a ningun usuario');
 }
