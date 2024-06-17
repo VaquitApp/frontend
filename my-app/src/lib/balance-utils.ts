@@ -71,3 +71,9 @@ function computeTotal(objects: { category_id: Id; amount: number }[], categoryId
 function formatCategoryList(categoryList: { categoryName: string }[]): string {
 	return categoryList.map(({ categoryName }) => `"${categoryName}"`).join(', ');
 }
+
+export function archivedCategoriesLast(categories: Category[]) {
+	const archived = categories.filter(({ is_archived }) => is_archived);
+	const active = categories.filter(({ is_archived }) => !is_archived);
+	return [...active, ...archived];
+}

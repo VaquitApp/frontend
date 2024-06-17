@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { routes } from '$lib';
+	import { archivedCategoriesLast } from '$lib/balance-utils';
 	import CssIcon from './CssIcon.svelte';
 	import OwnerOnly from './OwnerOnly.svelte';
 
@@ -12,13 +13,7 @@
 		filter = shouldFilter ? [...filter, categoryId] : filter.filter((id) => id !== categoryId);
 	}
 
-	function sortCategories(categories: Category[]) {
-		const archived = categories.filter(({ is_archived }) => is_archived);
-		const active = categories.filter(({ is_archived }) => !is_archived);
-		return [...active, ...archived];
-	}
-
-	$: sortedCategories = sortCategories(categories);
+	$: sortedCategories = archivedCategoriesLast(categories);
 </script>
 
 <div>
