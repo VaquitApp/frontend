@@ -7,6 +7,7 @@ import { getUserId } from '$lib/auth';
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const paymentId = params.id || 0;
 	const group_id = Number(url.searchParams.get('groupId'));
+	const group = await groupService.get(group_id, cookies);
 
 	const payments: Payment[] = await paymentService.list(group_id, cookies);
 	const currentPayment: Payment = payments.filter((p) => p.id == paymentId)[0];
@@ -14,7 +15,7 @@ export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const members: User[] = await groupService.listAllMembers(group_id, cookies);
 	const currentUserId = getUserId(cookies);
 
-	return { currentPayment, members, currentUserId };
+	return { currentPayment, members, currentUserId, group };
 };
 
 export const actions: Actions = {

@@ -6,6 +6,7 @@
 
 	export let data: PageData;
 	const payment: Payment = data.currentPayment;
+	const group: Group = data.group;
 	const emisor: string = getUserEmailById(data.members, payment.from_id);
 	const receptor: string = getUserEmailById(data.members, payment.to_id);
 	const pageTitle = `Pagos`;
@@ -22,9 +23,9 @@
 </header>
 <form method="POST">
 	<fieldset>
-		<label class="hidden-field">
-			ID del Grupo
-			<input type="text" name="groupId" value={payment.group_id} required disabled />
+		<label>
+			Grupo
+			<input type="text" name="groupName" value={group.name} disabled />
 		</label>
 		<label>
 			Emisor del Pago
@@ -54,10 +55,3 @@
 		</button>
 	</fieldset>
 </form>
-
-<style>
-	.hidden-field {
-		visibility: hidden;
-		display: none;
-	}
-</style>
