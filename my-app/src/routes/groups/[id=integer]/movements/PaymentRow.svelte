@@ -2,6 +2,7 @@
 	import { getUserEmailById } from '$lib';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import { formatDateTimeString, formatMoney } from '$lib/formatter';
+	import PaymentStatus from './PaymentStatus.svelte';
 
 	export let members: User[];
 	export let payment: Payment;
@@ -20,6 +21,6 @@
 		<Avatar seed={receptor} size={40} />
 		{receptor}
 	</td>
-	<td>Pago</td>
+	<td><PaymentStatus {payment} /></td>
 	<td class="t-right">{formatMoney(payment.amount)}</td>
 </tr>

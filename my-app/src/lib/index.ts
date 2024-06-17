@@ -18,7 +18,9 @@ export const ICONS = [
 	'info',
 	'danger',
 	'loadbar-doc',
-	'add'
+	'add',
+	'check-o',
+	'arrow-left'
 ] as const;
 
 // app routes
