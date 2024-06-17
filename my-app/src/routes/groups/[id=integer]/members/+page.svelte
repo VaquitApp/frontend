@@ -29,7 +29,7 @@
 
 {#each data.members as user}
 	{@const isActiveUser = data?.userId === user.id}
-	<article class="row jc-space-between">
+	<article class="grid ai-center">
 		<div>
 			<Avatar seed={user.email} size={40} />
 			{user.email}
@@ -43,14 +43,14 @@
 				Alias:
 				{user.alias}
 			</div>
-      {#if !isOwner && isActiveUser}
-			<span class="t-right">
+		</div>
+		<div class="t-right">
+			{#if !isOwner && isActiveUser}
 				<button class="outline" on:click={() => confirmLeaveGroup(data?.group)}>
 					<CssIcon name="log-out" />
 					Abandonar grupo
 				</button>
-			</span>
-		{/if}
+			{/if}
 		</div>
 	</article>
 {/each}
