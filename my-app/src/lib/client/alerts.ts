@@ -28,7 +28,9 @@ export async function confirmLeaveGroup(group: Group) {
 export async function confirmKickFromGroup(group: Group, userToKick: User) {
 	const message = `¿Estás seguro que querés echar a "${userToKick.email}" de "${group.name}"?`;
 	if (!confirm(message)) return;
-	let response = await fetch(`${routes.apiMembers}?groupId=${group.id}&userId=${userToKick.id}`, { method: 'DELETE' });
+	let response = await fetch(`${routes.apiMembers}?groupId=${group.id}&userId=${userToKick.id}`, {
+		method: 'DELETE'
+	});
 	if (!response.ok) {
 		let body = await response.json();
 		let { detail } = JSON.parse(body.message);
