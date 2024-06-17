@@ -2,7 +2,10 @@
 	export let payment: Payment;
 </script>
 
-<a href="#" class={payment.confirmed ? 'confirmed' : 'pending'}>
+<a
+	href="/payments/info/{payment.id}?groupId={payment.group_id}"
+	class={payment.confirmed ? 'confirmed' : 'pending'}
+>
 	Pago ({payment.confirmed ? 'Confirmado' : 'Pendiente'})
 </a>
 
