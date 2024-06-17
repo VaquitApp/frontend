@@ -19,6 +19,7 @@ export const ICONS = [
 	'danger',
 	'loadbar-doc',
 	'add',
+	'log-out',
 	'check-o',
 	'arrow-left'
 ] as const;
