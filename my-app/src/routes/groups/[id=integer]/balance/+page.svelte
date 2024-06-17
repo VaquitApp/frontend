@@ -94,9 +94,3 @@
 		</p>
 	</article>
 {/each}
-
-<style>
-	.no-underline {
-		border-bottom: 0px;
-	}
-</style>

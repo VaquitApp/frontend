@@ -27,6 +27,7 @@ declare global {
 		group_id: Id;
 		description: string;
 		strategy: string;
+		is_archived: boolean;
 	};
 
 	type Budget = {
@@ -49,13 +50,13 @@ declare global {
 		date: string;
 	};
 
-	interface UniqueSpending extends Spending {}
+	interface UniqueSpending extends Spending { }
 
 	interface InstallmentSpending extends Spending {
 		amount_of_installments: number;
 	}
 
-	interface RecurringSpending extends Spending {}
+	interface RecurringSpending extends Spending { }
 
 	type Payment = {
 		id: Id;
@@ -108,4 +109,4 @@ declare global {
 	};
 }
 
-export {};
+export { };

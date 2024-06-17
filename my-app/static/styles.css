@@ -1,6 +1,7 @@
 .mb {
 	margin-bottom: 1em;
 }
+
 .ml {
 	margin-left: 1em;
 }
@@ -29,6 +30,7 @@
 .t-center {
 	text-align: center;
 }
+
 .t-right {
 	text-align: right;
 }
@@ -36,4 +38,8 @@
 .btn-sm {
 	font-size: small;
 	padding: 0.5em;
+}
+
+.no-underline {
+	border-bottom: 0px;
 }

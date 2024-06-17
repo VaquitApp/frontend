@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { getCategoryNameById, routes, title } from '$lib';
 	import CategoryFilter from '$lib/components/CategoryFilter.svelte';
 	import CssIcon from '$lib/components/CssIcon.svelte';
@@ -39,10 +40,18 @@
 </article>
 
 {#each filteredBudgets as budget}
+	{@const isReadOnly = data.categories.find((c) => c.id === budget.category_id).is_archived}
 	<article>
 		<header class="row jc-space-between">
 			<b>{budget.description}</b>
-			<p>{getCategoryNameById(data.categories, budget.category_id)}</p>
+			<p>
+				{#if isReadOnly}
+					<span class="no-underline" data-tooltip="Archivada">
+						<CssIcon name="lock" />
+					</span>
+				{/if}
+				{getCategoryNameById(data.categories, budget.category_id)}
+			</p>
 		</header>
 		<div class="grid">
 			{formatDateString(budget.start_date)} — {formatDateString(budget.end_date)}
@@ -50,14 +59,14 @@
 				<p class="t-right" style="margin-left: auto; padding-right:5%">
 					{formatMoney(budget.amount)}
 				</p>
-				<a
+				<button
 					class="secondary outline btn-sm"
-					href="{routes.budgetDetails}/{budget.id}"
-					role="button"
+					on:click={() => goto(`${routes.budgetDetails}/${budget.id}`)}
+					disabled={isReadOnly}
 					data-tooltip="Editar"
 				>
 					<CssIcon name="pen" />
-				</a>
+				</button>
 			</div>
 		</div>
 	</article>
