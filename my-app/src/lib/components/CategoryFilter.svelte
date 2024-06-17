@@ -6,7 +6,6 @@
 
 	export let ownerId: Id;
 	export let categories: Category[];
-	export let sortedCategories: Category[];
 	export let filter: Id[];
 
 	function toggleCategoryFilter(categoryId: Id, shouldFilter: boolean) {
