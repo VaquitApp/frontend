@@ -17,16 +17,18 @@
 	Categorías:
 	{#each categories as category}
 		{@const active = filter.includes(category.id)}
+		{@const activeClass = !active ? 'outline' : ''}
+		{@const archivedClass = category.is_archived ? 'contrast' : ''}
 		<div style="width: auto; vertical-align: baseline; margin:5px;" role="group">
 			<button
 				on:click={() => toggleCategoryFilter(category.id, !active)}
-				class="btn-sm {!active ? 'outline' : ''}"
+				class="btn-sm {activeClass} {archivedClass}"
 			>
 				{category.name}
 			</button>
 			<OwnerOnly {ownerId}>
 				<a
-					class="btn-sm {!active ? 'outline' : ''}"
+					class="btn-sm {activeClass} {archivedClass}"
 					href={routes.categoryDetails(category.id)}
 					role="button"
 				>
