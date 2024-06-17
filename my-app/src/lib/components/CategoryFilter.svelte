@@ -5,17 +5,26 @@
 
 	export let ownerId: Id;
 	export let categories: Category[];
+	export let sortedCategories: Category[];
 	export let filter: Id[];
 
 	function toggleCategoryFilter(categoryId: Id, shouldFilter: boolean) {
 		filter = shouldFilter ? [...filter, categoryId] : filter.filter((id) => id !== categoryId);
 	}
+
+	function sortCategories(categories: Category[]) {
+		const archived = categories.filter(({ is_archived }) => is_archived);
+		const active = categories.filter(({ is_archived }) => !is_archived);
+		return [...active, ...archived];
+	}
+
+	$: sortedCategories = sortCategories(categories);
 </script>
 
 <div>
 	<CssIcon name="tag" />
 	Categorías:
-	{#each categories as category}
+	{#each sortedCategories as category}
 		{@const active = filter.includes(category.id)}
 		{@const activeClass = !active ? 'outline' : ''}
 		{@const archivedClass = category.is_archived ? 'contrast' : ''}
