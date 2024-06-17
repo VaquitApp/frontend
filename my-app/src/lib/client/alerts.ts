@@ -40,3 +40,11 @@ export async function confirmKickFromGroup(group: Group, userToKick: User) {
 	await invalidateAll();
 	location.reload();
 }
+
+export function alertNoGoogleUser() {
+	alert('Su cuenta de Google no se encuentra vinculado a ningun usuario');
+}
+
+export function alertUnexpectedError() {
+	alert('Ocurrió un error');
+}

@@ -7,8 +7,7 @@ import { routes } from '$lib';
 export const load: PageServerLoad = async ({ url, cookies }) => {
 	const groupId = Number(url.searchParams.get('groupId')) || 0;
 	const groups: Group[] = await groupService.list(cookies);
-	const userId = getUserId(cookies);
-	return { userId, groupId, groups };
+	return { groupId, groups };
 };
 
 export const actions: Actions = {

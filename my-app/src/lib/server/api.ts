@@ -55,8 +55,15 @@ function put(path: string, data: object, headers?: Headers) {
 }
 
 export const userService = {
-	register: (data: { email: string; password: string }) => post('user/register', data),
-	login: (data: { email: string; password: string }) => post('user/login', data)
+	register: (data: UserRegistration) => post('user/register', data),
+	login: (data: UserRegistration) => post('user/login', data),
+	get: (cookies: Cookies) => get('user', getAuthHeader(cookies)),
+	update: (data: UserProfile, cookies: Cookies) =>
+		put('user/profile', data, getAuthHeader(cookies)),
+	googleSignIn: (data: UserGoogleCredentials) => post('user/google-signin', data),
+	googleLink: (data: UserGoogleCredentials, cookies: Cookies) =>
+		put('user/google-signin', data, getAuthHeader(cookies)),
+	googleUnlink: (cookies: Cookies) => del('user/google-signin', getAuthHeader(cookies))
 };
 export const groupService = {
 	save: (data: Group, cookies: Cookies) =>
@@ -137,5 +144,5 @@ export const inviteService = {
 };
 export const paymentReminderService = {
 	send: (data: PaymentReminder, cookies: Cookies) =>
-		post(`payment_reminder`, data, getAuthHeader(cookies))
+		post(`payment-reminder`, data, getAuthHeader(cookies))
 };

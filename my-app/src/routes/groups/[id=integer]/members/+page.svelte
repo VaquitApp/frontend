@@ -30,25 +30,32 @@
 {#each data.members as user}
 	{@const isActiveUser = data?.userId === user.id}
 	<article class="grid ai-center">
-		<span class="centered">
+		<div>
 			<Avatar seed={user.email} size={40} />
 			{user.email}
-		</span>
-
-		{#if !isOwner && isActiveUser}
-			<span class="t-right">
+		</div>
+		<div>
+			<div>
+				CBU / CVU:
+				{user.cbu}
+			</div>
+			<div>
+				Alias:
+				{user.alias}
+			</div>
+		</div>
+		<div class="t-right">
+			{#if !isOwner && isActiveUser}
 				<button class="outline" on:click={() => confirmLeaveGroup(data?.group)}>
 					<CssIcon name="log-out" />
 					Abandonar grupo
-				</button>
-			</span>
-		{:else if isOwner && !isActiveUser}
-			<span class="t-right">
-				<button class="outline" on:click={() => confirmKickFromGroup(data?.group, user)}>
-					<CssIcon name="close-r" />
-					Echar del grupo
-				</button>
-			</span>
-		{/if}
+        </button>
+      {:else if isOwner && !isActiveUser}
+        <button class="outline" on:click={() => confirmKickFromGroup(data?.group, user)}>
+          <CssIcon name="close-r" />
+          Echar del grupo
+        </button>
+      {/if}
+		</div>
 	</article>
 {/each}
