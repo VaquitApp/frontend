@@ -24,3 +24,11 @@ export async function confirmLeaveGroup(group: Group) {
 	await invalidateAll();
 	goto(routes.groups);
 }
+
+export function alertNoGoogleUser() {
+	alert('Su cuenta de Google no se encuentra vinculado a ningun usuario');
+}
+
+export function alertUnexpectedError() {
+	alert('Ocurrió un error');
+}

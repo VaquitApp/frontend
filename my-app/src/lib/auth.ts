@@ -1,11 +1,5 @@
 import type { Cookies } from '@sveltejs/kit';
 
-type UserCredentials = {
-	id: number;
-	email: string;
-	jwt: string;
-};
-
 export function saveUserCredentials(cookies: Cookies, userCredentials: UserCredentials) {
 	cookies.set('jwt', userCredentials.jwt, { httpOnly: true, secure: true, path: '/' });
 	cookies.set('userId', userCredentials.id.toFixed(0), { path: '/' });
