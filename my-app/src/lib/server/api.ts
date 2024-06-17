@@ -108,7 +108,7 @@ export const paymentService = {
 			: post('payment', data, getAuthHeader(cookies)),
 	list: (groupId: Id, cookies: Cookies) => get(`group/${groupId}/payment`, getAuthHeader(cookies)),
 	confirm: (paymentId: Id, cookies: Cookies) =>
-		post(`payment/${paymentId}/confirm`, getAuthHeader(cookies))
+		post(`payment/${paymentId}/confirm`, undefined!, getAuthHeader(cookies))
 };
 export const budgetService = {
 	save: (data: Budget, cookies: Cookies) =>
