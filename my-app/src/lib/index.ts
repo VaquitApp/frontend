@@ -50,7 +50,7 @@ export const routes = {
 	groupMembers: (groupId: Id) => `/groups/${groupId}/members`,
 	groupMovements: (groupId: Id) => `/groups/${groupId}/movements`,
 	// categories
-	categoryDetails: '/categories/details',
+	categoryDetails: (categoryId?: Id) => `/categories/details${categoryId ? `/${categoryId}` : ''}`,
 	// budgets
 	budgetDetails: '/budgets/details',
 	// spendings

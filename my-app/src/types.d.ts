@@ -27,6 +27,7 @@ declare global {
 		group_id: Id;
 		description: string;
 		strategy: Strategy;
+		is_archived: boolean;
 	};
 
 	type Strategy = 'equalparts' | 'percentage' | 'custom';

@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ params, url, cookies }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ cookies, request, params }) => {
+	update: async ({ cookies, request, params }) => {
 		const id = Number(params.id) || 0;
 		const data = await request.formData();
 		const name = data.get('name')?.toString();
@@ -42,5 +42,13 @@ export const actions: Actions = {
 		await categoryService.save(category, cookies);
 
 		redirect(302, routes.groupMovements(group_id));
+	},
+	archive: async ({ cookies, params }) => {
+		const id = Number(params.id) || 0;
+		await categoryService.archive(id, cookies);
+	},
+	unarchive: async ({ cookies, params }) => {
+		const id = Number(params.id) || 0;
+		await categoryService.unarchive(id, cookies);
 	}
 };

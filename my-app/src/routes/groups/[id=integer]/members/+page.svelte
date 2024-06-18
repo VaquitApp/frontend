@@ -3,6 +3,7 @@
 	import { confirmKickFromGroup, confirmLeaveGroup } from '$lib/client/alerts';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import CssIcon from '$lib/components/CssIcon.svelte';
+	import OwnerOnly from '$lib/components/OwnerOnly.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -20,10 +21,12 @@
 		<h2>Miembros de {data.group.name}</h2>
 	</hgroup>
 	<div>
-		<a href="{routes.sendInvite}/{data.group.id}" role="button">
-			<CssIcon name="user-add" />
-			Invitar
-		</a>
+		<OwnerOnly ownerId={data.group.owner_id}>
+			<a href="{routes.sendInvite}/{data.group.id}" role="button">
+				<CssIcon name="user-add" />
+				Invitar
+			</a>
+		</OwnerOnly>
 	</div>
 </header>
 
