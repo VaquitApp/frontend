@@ -105,7 +105,7 @@
 	<title>{title} - Nuevo Gasto Unico</title>
 </svelte:head>
 
-{#if form && form.success}
+{#if form && !form.success}
 	Ocurrió un error
 {/if}
 
