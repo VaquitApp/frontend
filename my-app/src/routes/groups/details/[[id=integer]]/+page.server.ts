@@ -38,7 +38,7 @@ export const actions: Actions = {
 					group_id: id,
 					name: 'Sin categorizar',
 					description: '',
-					strategy: ''
+					strategy: 'equalparts'
 				},
 				cookies
 			);

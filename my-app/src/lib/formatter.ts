@@ -32,9 +32,13 @@ export function fixDateString(dateString: string, timezoneOffset: number) {
 }
 
 export function formatMoney(amount: number) {
-	const fixed = amount
-		.toFixed(2)
-		.replace('.', ',')
-		.replace(/\d(?=(\d{3})+,)/g, '$&.');
-	return `$ ${fixed}`;
+	try {
+		const fixed = amount
+			.toFixed(2)
+			.replace('.', ',')
+			.replace(/\d(?=(\d{3})+,)/g, '$&.');
+		return `$ ${fixed}`;
+	} catch (error) {
+		return '-';
+	}
 }

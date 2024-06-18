@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { routes, title } from '$lib';
+	import { routes, strategies, title } from '$lib';
 	import CssIcon from '$lib/components/CssIcon.svelte';
 	import type { PageData } from './$types';
 
@@ -54,6 +54,14 @@
 				disabled={isArchived}
 				value={data.category.description}
 			/>
+		</label>
+		<label>
+			Elija una estrategia de distribución de gastos por default
+			<select name="stategy" value={data.category.strategy}>
+				{#each Object.entries(strategies) as [strategy, description]}
+					<option value={strategy}>{description}</option>
+				{/each}
+			</select>
 		</label>
 		{#if edit}
 			{#if isArchived}

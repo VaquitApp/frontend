@@ -78,3 +78,9 @@ export function getUserEmailById(users: User[], id: number): User['email'] {
 
 /// When a budget is greater or equal to this threshold, it is considered to be near its limit.
 export const BUDGET_NEAR_LIMIT_THRESHOLD = 0.9;
+
+export const strategies: Record<Strategy, string> = {
+	equalparts: 'En partes iguales',
+	percentage: 'En porcentajes',
+	custom: 'Manual'
+};
