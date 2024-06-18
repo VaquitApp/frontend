@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { title } from '$lib';
+	import { strategies, title } from '$lib';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -43,6 +43,14 @@
 				required
 				value={data.category.description}
 			/>
+		</label>
+		<label>
+			Elija una estrategia de distribución de gastos por default
+			<select name="stategy" value={data.category.strategy}>
+				{#each Object.entries(strategies) as [strategy, description]}
+					<option value={strategy}>{description}</option>
+				{/each}
+			</select>
 		</label>
 		{#if edit}
 			<button>Editar</button>

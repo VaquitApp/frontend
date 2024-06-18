@@ -26,8 +26,10 @@ declare global {
 		name: string;
 		group_id: Id;
 		description: string;
-		strategy: string;
+		strategy: Strategy;
 	};
+
+	type Strategy = 'equalparts' | 'percentage' | 'custom';
 
 	type Budget = {
 		id: Id;
@@ -47,6 +49,12 @@ declare global {
 		description: string;
 		amount: number;
 		date: string;
+		strategy_data: Distribution[];
+	};
+
+	type Distribution = {
+		user_id: Id;
+		value: number;
 	};
 
 	interface UniqueSpending extends Spending {}

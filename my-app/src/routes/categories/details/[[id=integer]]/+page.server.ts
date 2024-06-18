@@ -2,14 +2,14 @@ import { error, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { categoryService, groupService } from '$lib/server/api';
 import type { PageServerLoad } from './$types';
-import { routes } from '$lib';
+import { routes, strategies } from '$lib';
 
 export const load: PageServerLoad = async ({ params, url, cookies }) => {
 	const group_id = Number(url.searchParams.get('groupId')) || 0;
 	const id = Number(params.id) || 0;
 	const category: Category = id
 		? await categoryService.get(id, cookies)
-		: { id: 0, group_id, name: '', description: '', strategy: '' };
+		: { id: 0, group_id, name: '', description: '', strategy: 'equalparts' };
 	const groups: Group[] = await groupService.list(cookies);
 	return { category, groups };
 };
@@ -21,7 +21,7 @@ export const actions: Actions = {
 		const name = data.get('name')?.toString();
 		const description = data.get('description')?.toString();
 		const group_id = Number(data.get('groupId'));
-		const strategy = '';
+		const strategyData = data.get('stategy')?.toString();
 
 		if (!name) {
 			throw error(400, 'Name is required');
@@ -32,6 +32,11 @@ export const actions: Actions = {
 		if (!group_id) {
 			throw error(400, 'Group is required');
 		}
+		if (!strategyData || !Object.keys(strategies).includes(strategyData)) {
+			throw error(400, 'Strategy is required');
+		}
+
+		const strategy = strategyData as Strategy;
 
 		const category: Category = { id, group_id, name, description, strategy };
 		await categoryService.save(category, cookies);
