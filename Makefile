@@ -11,6 +11,12 @@ env:
 dev: install
 	$(NPM) run dev -- --open
 
+build: install
+	$(NPM) run build
+
+preview: build
+	$(NPM) run preview -- --open
+
 test: install
 	$(NPM) run test:unit
 
